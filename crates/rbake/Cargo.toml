@@ -1,0 +1,23 @@
+[package]
+name = "rbake"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[features]
+default = ["parallel", "gpu"]
+parallel = ["dep:rayon"]
+gpu = ["dep:wgpu", "dep:wgpu-types", "dep:pollster"]
+
+[dependencies]
+rbsp.workspace = true
+rir.workspace = true
+glam.workspace = true
+serde.workspace = true
+thiserror.workspace = true
+uuid.workspace = true
+bytemuck.workspace = true
+rayon = { workspace = true, optional = true }
+wgpu = { version = "24", features = ["wgsl"], optional = true }
+wgpu-types = { version = "24", optional = true }
+pollster = { version = "0.4", optional = true }

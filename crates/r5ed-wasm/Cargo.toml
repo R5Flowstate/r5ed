@@ -1,0 +1,23 @@
+[package]
+name = "r5ed-wasm"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+rdoc = { workspace = true, default-features = false }
+rterrain = { workspace = true, default-features = false }
+rcomp = { path = "../rcomp", default-features = false }
+rbake = { workspace = true, default-features = false }
+rbsp.workspace = true
+rir.workspace = true
+glam.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+uuid.workspace = true
+anyhow.workspace = true
+wasm-bindgen = "=0.2.100"
+js-sys = "0.3"

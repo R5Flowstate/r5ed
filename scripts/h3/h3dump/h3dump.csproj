@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Needs a clone of github.com/Gravemind2401/Reclaimer; pass -p:ReclaimerDir=<clone> when it is not beside r5ed. -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <NoWarn>$(NoWarn);CS0618</NoWarn>
+    <ReclaimerDir Condition="'$(ReclaimerDir)' == ''">$(MSBuildThisFileDirectory)..\..\..\..\Reclaimer</ReclaimerDir>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="$(ReclaimerDir)\Reclaimer.Blam\Reclaimer.Blam.csproj" />
+  </ItemGroup>
+</Project>

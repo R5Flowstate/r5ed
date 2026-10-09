@@ -1,0 +1,1076 @@
+{
+ "factories": [
+  {
+   "cpp_class": "CScriptNetData_SNDC_GLOBAL",
+   "classname": "script_net_data_SNDC_GLOBAL"
+  },
+  {
+   "cpp_class": "CScriptNetData_SNDC_PLAYER_GLOBAL",
+   "classname": "script_net_data_SNDC_PLAYER_GLOBAL"
+  },
+  {
+   "cpp_class": "CScriptNetData_SNDC_PLAYER_EXCLUSIVE",
+   "classname": "script_net_data_SNDC_PLAYER_EXCLUSIVE"
+  },
+  {
+   "cpp_class": "CScriptNetData_SNDC_TITAN_SOUL",
+   "classname": "script_net_data_SNDC_TITAN_SOUL"
+  },
+  {
+   "cpp_class": "CScriptNetData_SNDC_DEATH_BOX",
+   "classname": "script_net_data_SNDC_DEATH_BOX"
+  },
+  {
+   "cpp_class": "CAI_BaseNPC",
+   "classname": "base_npc"
+  },
+  {
+   "cpp_class": "CAssaultPoint",
+   "classname": "assault_assaultpoint"
+  },
+  {
+   "cpp_class": "CAI_DynamicLinkController",
+   "classname": "info_node_link_controller"
+  },
+  {
+   "cpp_class": "CAI_DynamicLink",
+   "classname": "info_node_link"
+  },
+  {
+   "cpp_class": "CAI_RadialLinkController",
+   "classname": "info_radial_link_controller"
+  },
+  {
+   "cpp_class": "CAI_Hint",
+   "classname": "ai_hint"
+  },
+  {
+   "cpp_class": "CNodeEnt",
+   "classname": "info_hint"
+  },
+  {
+   "cpp_class": "CNodeEnt",
+   "classname": "info_node"
+  },
+  {
+   "cpp_class": "CNodeEnt",
+   "classname": "info_node_hint"
+  },
+  {
+   "cpp_class": "CNodeEnt",
+   "classname": "info_node_air"
+  },
+  {
+   "cpp_class": "CNodeEnt",
+   "classname": "info_node_air_hint"
+  },
+  {
+   "cpp_class": "CNodeEnt",
+   "classname": "info_node_climb"
+  },
+  {
+   "cpp_class": "CNodeEnt",
+   "classname": "info_node_cover_left"
+  },
+  {
+   "cpp_class": "CNodeEnt",
+   "classname": "info_node_cover_right"
+  },
+  {
+   "cpp_class": "CNodeEnt",
+   "classname": "info_node_cover_stand"
+  },
+  {
+   "cpp_class": "CNodeEnt",
+   "classname": "info_node_cover_crouch"
+  },
+  {
+   "cpp_class": "CNodeEnt",
+   "classname": "info_node_cover_vantage"
+  },
+  {
+   "cpp_class": "CNodeEnt",
+   "classname": "info_node_sniper"
+  },
+  {
+   "cpp_class": "CNodeEnt",
+   "classname": "info_node_safe_hint"
+  },
+  {
+   "cpp_class": "CTraverseRef",
+   "classname": "traverse"
+  },
+  {
+   "cpp_class": "CAI_TestHull",
+   "classname": "aitesthull"
+  },
+  {
+   "cpp_class": "CPointEntity",
+   "classname": "info_frontline"
+  },
+  {
+   "cpp_class": "CAI_NetworkManager",
+   "classname": "ai_network"
+  },
+  {
+   "cpp_class": "CAI_SkitNode",
+   "classname": "ai_skit_node"
+  },
+  {
+   "cpp_class": "CAmbientGeneric",
+   "classname": "ambient_generic"
+  },
+  {
+   "cpp_class": "CBaseAnimating",
+   "classname": "base_animating"
+  },
+  {
+   "cpp_class": "CBaseEntity",
+   "classname": "base_entity"
+  },
+  {
+   "cpp_class": "CPointClientCommand",
+   "classname": "point_clientcommand"
+  },
+  {
+   "cpp_class": "CPointServerCommand",
+   "classname": "point_servercommand"
+  },
+  {
+   "cpp_class": "CPointBroadcastClientCommand",
+   "classname": "point_broadcastclientcommand"
+  },
+  {
+   "cpp_class": "CColorCorrection",
+   "classname": "color_correction"
+  },
+  {
+   "cpp_class": "CDynamicLight",
+   "classname": "light_dynamic"
+  },
+  {
+   "cpp_class": "CEnvWind",
+   "classname": "env_wind"
+  },
+  {
+   "cpp_class": "CEntityDissolve",
+   "classname": "env_entity_dissolver"
+  },
+  {
+   "cpp_class": "CInfoPlacementHelper",
+   "classname": "info_placement_helper"
+  },
+  {
+   "cpp_class": "CEnvBeam",
+   "classname": "env_beam"
+  },
+  {
+   "cpp_class": "CEnvLaser",
+   "classname": "env_laser"
+  },
+  {
+   "cpp_class": "CEnvShake",
+   "classname": "env_shake"
+  },
+  {
+   "cpp_class": "CTempEntTester",
+   "classname": "te_tester"
+  },
+  {
+   "cpp_class": "CEnvExplosion",
+   "classname": "env_explosion"
+  },
+  {
+   "cpp_class": "CBreakable",
+   "classname": "func_breakable"
+  },
+  {
+   "cpp_class": "CPushable",
+   "classname": "func_pushable"
+  },
+  {
+   "cpp_class": "CWindowPane",
+   "classname": "window_pane"
+  },
+  {
+   "cpp_class": "CBreakableSurface",
+   "classname": "func_breakable_surf"
+  },
+  {
+   "cpp_class": "CFuncMoveLinear",
+   "classname": "func_movelinear"
+  },
+  {
+   "cpp_class": "CGameUIEntity",
+   "classname": "game_ui"
+  },
+  {
+   "cpp_class": "CGameOperator",
+   "classname": "game_operator"
+  },
+  {
+   "cpp_class": "CHealthKit",
+   "classname": "item_healthcore"
+  },
+  {
+   "cpp_class": "CHealthKit",
+   "classname": "item_titan_battery"
+  },
+  {
+   "cpp_class": "CHealthKit",
+   "classname": "item_flag"
+  },
+  {
+   "cpp_class": "CHealthKit",
+   "classname": "item_bomb"
+  },
+  {
+   "cpp_class": "CHealthKit",
+   "classname": "item_powerup"
+  },
+  {
+   "cpp_class": "CHealthKit",
+   "classname": "item_blackbox"
+  },
+  {
+   "cpp_class": "CNPC_Bullseye",
+   "classname": "npc_bullseye"
+  },
+  {
+   "cpp_class": "CInfoCameraLink",
+   "classname": "info_camera_link"
+  },
+  {
+   "cpp_class": "CInfoIntermission",
+   "classname": "info_intermission"
+  },
+  {
+   "cpp_class": "CWorldItem",
+   "classname": "world_items"
+  },
+  {
+   "cpp_class": "CLight",
+   "classname": "light"
+  },
+  {
+   "cpp_class": "CLight",
+   "classname": "light_spot"
+  },
+  {
+   "cpp_class": "CEnvLight",
+   "classname": "light_environment"
+  },
+  {
+   "cpp_class": "CGameText",
+   "classname": "game_text"
+  },
+  {
+   "cpp_class": "CGamePlayerEquip",
+   "classname": "game_player_equip"
+  },
+  {
+   "cpp_class": "CGamePlayerTeam",
+   "classname": "game_player_team"
+  },
+  {
+   "cpp_class": "CMessageEntity",
+   "classname": "point_message"
+  },
+  {
+   "cpp_class": "CFuncBrush",
+   "classname": "func_brush"
+  },
+  {
+   "cpp_class": "CFuncBrushLightweight",
+   "classname": "func_brush_lightweight"
+  },
+  {
+   "cpp_class": "CTriggerBrush",
+   "classname": "trigger_brush"
+  },
+  {
+   "cpp_class": "CNPC_Drone",
+   "classname": "npc_operator"
+  },
+  {
+   "cpp_class": "CNPC_Drone",
+   "classname": "npc_drone"
+  },
+  {
+   "cpp_class": "CNPC_Drone",
+   "classname": "npc_drone_worker"
+  },
+  {
+   "cpp_class": "CNPC_Drone",
+   "classname": "npc_drone_cloak"
+  },
+  {
+   "cpp_class": "CNPC_Dropship",
+   "classname": "npc_gunship_scripted"
+  },
+  {
+   "cpp_class": "CNPC_Flyer",
+   "classname": "npc_flyer"
+  },
+  {
+   "cpp_class": "CNPC_Gunship",
+   "classname": "npc_gunship"
+  },
+  {
+   "cpp_class": "CNPC_MeleeOnly",
+   "classname": "npc_prowler"
+  },
+  {
+   "cpp_class": "CNPC_Goliath",
+   "classname": "npc_goliath"
+  },
+  {
+   "cpp_class": "CNPC_MeleeOnly",
+   "classname": "npc_frag_drone"
+  },
+  {
+   "cpp_class": "CNPC_SuperSpectre",
+   "classname": "npc_super_spectre"
+  },
+  {
+   "cpp_class": "CParticleSystem",
+   "classname": "info_particle_system"
+  },
+  {
+   "cpp_class": "CPathCorner",
+   "classname": "path_corner"
+  },
+  {
+   "cpp_class": "CPathCorner",
+   "classname": "path_patrol_point"
+  },
+  {
+   "cpp_class": "CPathCorner",
+   "classname": "path_search_point"
+  },
+  {
+   "cpp_class": "CPathCornerCrash",
+   "classname": "path_corner_crash"
+  },
+  {
+   "cpp_class": "CSearchPath",
+   "classname": "search_path"
+  },
+  {
+   "cpp_class": "CPatrolPath",
+   "classname": "patrol_path"
+  },
+  {
+   "cpp_class": "CPathTrack",
+   "classname": "path_track"
+  },
+  {
+   "cpp_class": "CBoneFollower",
+   "classname": "phys_bone_follower"
+  },
+  {
+   "cpp_class": "CPhysicsNPCSolver",
+   "classname": "physics_npc_solver"
+  },
+  {
+   "cpp_class": "CPhysicsEntitySolver",
+   "classname": "physics_entity_solver"
+  },
+  {
+   "cpp_class": "CPhysBox",
+   "classname": "func_physbox"
+  },
+  {
+   "cpp_class": "CPhysExplosion",
+   "classname": "env_physexplosion"
+  },
+  {
+   "cpp_class": "CPhysImpact",
+   "classname": "env_physimpact"
+  },
+  {
+   "cpp_class": "CSimplePhysicsBrush",
+   "classname": "simple_physics_brush"
+  },
+  {
+   "cpp_class": "CSimplePhysicsProp",
+   "classname": "simple_physics_prop"
+  },
+  {
+   "cpp_class": "CRevertSaved",
+   "classname": "player_loadsaved"
+  },
+  {
+   "cpp_class": "CMovementSpeedMod",
+   "classname": "player_speedmod"
+  },
+  {
+   "cpp_class": "CPlayerResource",
+   "classname": "player_manager"
+  },
+  {
+   "cpp_class": "CPointCamera",
+   "classname": "point_camera"
+  },
+  {
+   "cpp_class": "CPointPlayerMoveConstraint",
+   "classname": "point_playermoveconstraint"
+  },
+  {
+   "cpp_class": "CPointSpotlight",
+   "classname": "point_spotlight"
+  },
+  {
+   "cpp_class": "CPointTemplate",
+   "classname": "point_template"
+  },
+  {
+   "cpp_class": "CPointTemplate",
+   "classname": "point_template_droppod"
+  },
+  {
+   "cpp_class": "CEnvDropZone",
+   "classname": "env_dropzone"
+  },
+  {
+   "cpp_class": "CDropPoint",
+   "classname": "point_droppoint"
+  },
+  {
+   "cpp_class": "CPortal_PointPush",
+   "classname": "point_push"
+  },
+  {
+   "cpp_class": "CPostProcessController",
+   "classname": "postprocess_controller"
+  },
+  {
+   "cpp_class": "CEnableMotionFixup",
+   "classname": "point_enable_motion_fixup"
+  },
+  {
+   "cpp_class": "CDynamicProp",
+   "classname": "dynamic_prop"
+  },
+  {
+   "cpp_class": "CDynamicProp",
+   "classname": "prop_dynamic"
+  },
+  {
+   "cpp_class": "CDynamicPropLightweight",
+   "classname": "prop_dynamic_lightweight"
+  },
+  {
+   "cpp_class": "CPropSurvival",
+   "classname": "prop_survival"
+  },
+  {
+   "cpp_class": "CDynamicProp",
+   "classname": "prop_weapon_rack"
+  },
+  {
+   "cpp_class": "CDynamicProp",
+   "classname": "prop_exfil_panel"
+  },
+  {
+   "cpp_class": "CDynamicProp",
+   "classname": "prop_refuel_pump"
+  },
+  {
+   "cpp_class": "CDynamicProp",
+   "classname": "prop_dynamic_override"
+  },
+  {
+   "cpp_class": "CScriptProp",
+   "classname": "prop_control_panel"
+  },
+  {
+   "cpp_class": "CScriptProp",
+   "classname": "prop_script"
+  },
+  {
+   "cpp_class": "CDeathBoxProp",
+   "classname": "prop_death_box"
+  },
+  {
+   "cpp_class": "CShieldProp",
+   "classname": "prop_shield"
+  },
+  {
+   "cpp_class": "CPointEntity",
+   "classname": "info_spawnpoint_control_panel"
+  },
+  {
+   "cpp_class": "CPointEntity",
+   "classname": "info_spawnpoint_marvin_barrel"
+  },
+  {
+   "cpp_class": "CDropPodProp",
+   "classname": "prop_droppod"
+  },
+  {
+   "cpp_class": "CPhysicsProp",
+   "classname": "physics_prop"
+  },
+  {
+   "cpp_class": "CPhysicsProp",
+   "classname": "prop_physics"
+  },
+  {
+   "cpp_class": "CPhysicsProp",
+   "classname": "prop_physics_override"
+  },
+  {
+   "cpp_class": "CNPC_Marvin",
+   "classname": "npc_marvin"
+  },
+  {
+   "cpp_class": "CNPC_Soldier",
+   "classname": "npc_soldier"
+  },
+  {
+   "cpp_class": "CNPC_Soldier",
+   "classname": "npc_support"
+  },
+  {
+   "cpp_class": "CNPC_Soldier",
+   "classname": "npc_anchor"
+  },
+  {
+   "cpp_class": "CNPC_Soldier",
+   "classname": "npc_bish"
+  },
+  {
+   "cpp_class": "CNPC_Soldier",
+   "classname": "npc_sarah"
+  },
+  {
+   "cpp_class": "CNPC_Soldier",
+   "classname": "npc_saito"
+  },
+  {
+   "cpp_class": "CNPC_Spectre",
+   "classname": "npc_spectre"
+  },
+  {
+   "cpp_class": "CNPC_Spectre",
+   "classname": "npc_stalker"
+  },
+  {
+   "cpp_class": "CNPC_MeleeOnly",
+   "classname": "npc_spider"
+  },
+  {
+   "cpp_class": "CNPC_Spectre",
+   "classname": "npc_dummie"
+  },
+  {
+   "cpp_class": "CNPC_Pilot",
+   "classname": "npc_pilot"
+  },
+  {
+   "cpp_class": "CNPC_Spectre",
+   "classname": "npc_pilot_elite"
+  },
+  {
+   "cpp_class": "CNPC_Titan",
+   "classname": "npc_titan"
+  },
+  {
+   "cpp_class": "CTitanSoul",
+   "classname": "titan_soul"
+  },
+  {
+   "cpp_class": "CNPC_SentryTurret",
+   "classname": "npc_turret_sentry"
+  },
+  {
+   "cpp_class": "CNPC_SentryTurret",
+   "classname": "npc_turret_mega"
+  },
+  {
+   "cpp_class": "CRopeKeyframe",
+   "classname": "move_rope"
+  },
+  {
+   "cpp_class": "CRopeKeyframe",
+   "classname": "keyframe_rope"
+  },
+  {
+   "cpp_class": "CSkyboxSwapper",
+   "classname": "skybox_swapper"
+  },
+  {
+   "cpp_class": "CSkyCamera",
+   "classname": "sky_camera"
+  },
+  {
+   "cpp_class": "CSoundEnt",
+   "classname": "soundent"
+  },
+  {
+   "cpp_class": "CEnvSoundscapeProxy",
+   "classname": "env_soundscape_proxy"
+  },
+  {
+   "cpp_class": "CEnvSoundscape",
+   "classname": "env_soundscape"
+  },
+  {
+   "cpp_class": "CEnvSoundscapeTriggerable",
+   "classname": "env_soundscape_triggerable"
+  },
+  {
+   "cpp_class": "CTriggerSoundscape",
+   "classname": "trigger_soundscape"
+  },
+  {
+   "cpp_class": "CSpawner",
+   "classname": "spawner"
+  },
+  {
+   "cpp_class": "CSpotlightEnd",
+   "classname": "spotlight_end"
+  },
+  {
+   "cpp_class": "CNullEntity",
+   "classname": "info_null"
+  },
+  {
+   "cpp_class": "CNullEntity",
+   "classname": "info_lightprobe"
+  },
+  {
+   "cpp_class": "CBaseDMStart",
+   "classname": "info_player_deathmatch"
+  },
+  {
+   "cpp_class": "CPointEntity",
+   "classname": "info_player_start"
+  },
+  {
+   "cpp_class": "CPointEntity",
+   "classname": "info_landmark"
+  },
+  {
+   "cpp_class": "CHardPointEntity",
+   "classname": "info_hardpoint"
+  },
+  {
+   "cpp_class": "CHardPointFrontierEntity",
+   "classname": "info_hardpoint_frontier"
+  },
+  {
+   "cpp_class": "CTeam",
+   "classname": "team_manager"
+  },
+  {
+   "cpp_class": "CTeamSpawnPoint",
+   "classname": "info_player_teamspawn"
+  },
+  {
+   "cpp_class": "CTeamVehicleSpawnPoint",
+   "classname": "info_vehicle_groundspawn"
+  },
+  {
+   "cpp_class": "CDropShipSpawnPoint",
+   "classname": "info_spawnpoint_dropship"
+  },
+  {
+   "cpp_class": "CDropShipSpawnPoint",
+   "classname": "info_spawnpoint_dropship_start"
+  },
+  {
+   "cpp_class": "CHumanSizeNPCSpawnPoint",
+   "classname": "info_spawnpoint_marvin"
+  },
+  {
+   "cpp_class": "CHumanSizeNPCSpawnPoint",
+   "classname": "info_spawnpoint_spectre"
+  },
+  {
+   "cpp_class": "CNPCProwlerSpawnPoint",
+   "classname": "info_spawnpoint_prowler"
+  },
+  {
+   "cpp_class": "CDropPodSpawnPoint",
+   "classname": "info_spawnpoint_droppod"
+  },
+  {
+   "cpp_class": "CDropPodSpawnPoint",
+   "classname": "info_spawnpoint_droppod_start"
+  },
+  {
+   "cpp_class": "CHumanSpawnPoint",
+   "classname": "info_spawnpoint_human"
+  },
+  {
+   "cpp_class": "CHumanSpawnPoint",
+   "classname": "info_spawnpoint_human_start"
+  },
+  {
+   "cpp_class": "CPointEntity",
+   "classname": "info_spawnpoint_turret"
+  },
+  {
+   "cpp_class": "CPointEntity",
+   "classname": "info_spawnpoint_mega_turret"
+  },
+  {
+   "cpp_class": "CTitanSpawnPoint",
+   "classname": "info_spawnpoint_titan"
+  },
+  {
+   "cpp_class": "CTitanSpawnPoint",
+   "classname": "info_spawnpoint_titan_start"
+  },
+  {
+   "cpp_class": "CTitanSpawnPoint",
+   "classname": "info_replacement_titan_spawn"
+  },
+  {
+   "cpp_class": "CSpawnPointFlag",
+   "classname": "info_spawnpoint_flag"
+  },
+  {
+   "cpp_class": "CBaseTrigger",
+   "classname": "trigger"
+  },
+  {
+   "cpp_class": "CTriggerRemove",
+   "classname": "trigger_remove"
+  },
+  {
+   "cpp_class": "CTriggerHurt",
+   "classname": "trigger_hurt"
+  },
+  {
+   "cpp_class": "CTriggerMultiple",
+   "classname": "trigger_multiple"
+  },
+  {
+   "cpp_class": "CTriggerMultiple",
+   "classname": "trigger_startpoint"
+  },
+  {
+   "cpp_class": "CTriggerMultiple",
+   "classname": "trigger_spawn"
+  },
+  {
+   "cpp_class": "CTriggerMultiple",
+   "classname": "trigger_flag_set"
+  },
+  {
+   "cpp_class": "CTriggerMultiple",
+   "classname": "trigger_flag_clear"
+  },
+  {
+   "cpp_class": "CTriggerMultiple",
+   "classname": "trigger_capture_point"
+  },
+  {
+   "cpp_class": "CTriggerMultiple",
+   "classname": "trigger_player_flashlight_zone"
+  },
+  {
+   "cpp_class": "CTriggerMultiple",
+   "classname": "trigger_player_flashlight_on"
+  },
+  {
+   "cpp_class": "CTriggerMultiple",
+   "classname": "trigger_player_flashlight_off"
+  },
+  {
+   "cpp_class": "CTriggerMultiple",
+   "classname": "trigger_weaponless"
+  },
+  {
+   "cpp_class": "CTriggerMultiple",
+   "classname": "trigger_door"
+  },
+  {
+   "cpp_class": "CTriggerMultiple",
+   "classname": "trigger_hardpoint"
+  },
+  {
+   "cpp_class": "CTriggerMultiple",
+   "classname": "trigger_indoor_area"
+  },
+  {
+   "cpp_class": "CTriggerMultiple",
+   "classname": "trigger_out_of_bounds"
+  },
+  {
+   "cpp_class": "CTriggerMultiple",
+   "classname": "trigger_mp_spawn_zone"
+  },
+  {
+   "cpp_class": "CTriggerOnce",
+   "classname": "trigger_once"
+  },
+  {
+   "cpp_class": "CTriggerLook",
+   "classname": "trigger_look"
+  },
+  {
+   "cpp_class": "CTriggerPush",
+   "classname": "trigger_push"
+  },
+  {
+   "cpp_class": "CTriggerTeleport",
+   "classname": "trigger_teleport"
+  },
+  {
+   "cpp_class": "CTriggerSlip",
+   "classname": "trigger_slip"
+  },
+  {
+   "cpp_class": "CPointEntity",
+   "classname": "info_teleport_destination"
+  },
+  {
+   "cpp_class": "CTriggerGravity",
+   "classname": "trigger_gravity"
+  },
+  {
+   "cpp_class": "CAI_ChangeTarget",
+   "classname": "ai_changetarget"
+  },
+  {
+   "cpp_class": "CTriggerCamera",
+   "classname": "point_viewcontrol"
+  },
+  {
+   "cpp_class": "CTriggerViewProxy",
+   "classname": "point_viewproxy"
+  },
+  {
+   "cpp_class": "CTriggerProximity",
+   "classname": "trigger_proximity"
+  },
+  {
+   "cpp_class": "CPointEntity",
+   "classname": "logic_proximity"
+  },
+  {
+   "cpp_class": "CTriggerWind",
+   "classname": "trigger_wind"
+  },
+  {
+   "cpp_class": "CTriggerImpact",
+   "classname": "trigger_impact"
+  },
+  {
+   "cpp_class": "CTriggerPlayerMovement",
+   "classname": "trigger_playermovement"
+  },
+  {
+   "cpp_class": "CTriggerAutoCrouch",
+   "classname": "trigger_auto_crouch"
+  },
+  {
+   "cpp_class": "CTriggerLocation",
+   "classname": "trigger_location"
+  },
+  {
+   "cpp_class": "CTriggerLocationSP",
+   "classname": "trigger_location_sp"
+  },
+  {
+   "cpp_class": "CTriggerNoGrapple",
+   "classname": "trigger_no_grapple"
+  },
+  {
+   "cpp_class": "CTriggerNoZipline",
+   "classname": "trigger_no_zipline"
+  },
+  {
+   "cpp_class": "CTriggerCylinder",
+   "classname": "trigger_cylinder"
+  },
+  {
+   "cpp_class": "CTriggerCylinderHeavy",
+   "classname": "trigger_cylinder_heavy"
+  },
+  {
+   "cpp_class": "CTriggerPointGravity",
+   "classname": "trigger_point_gravity"
+  },
+  {
+   "cpp_class": "CWaterLODControl",
+   "classname": "water_lod_control"
+  },
+  {
+   "cpp_class": "CWorld",
+   "classname": "worldspawn"
+  },
+  {
+   "cpp_class": "CEntityLinkPage",
+   "classname": "entity_link_page"
+  },
+  {
+   "cpp_class": "CBaseGrenade",
+   "classname": "grenade"
+  },
+  {
+   "cpp_class": "CBaseViewModel",
+   "classname": "viewmodel"
+  },
+  {
+   "cpp_class": "CInfoTarget",
+   "classname": "info_target"
+  },
+  {
+   "cpp_class": "CInfoTarget",
+   "classname": "script_ref"
+  },
+  {
+   "cpp_class": "CInfoTarget",
+   "classname": "script_startpoint"
+  },
+  {
+   "cpp_class": "CInfoTarget",
+   "classname": "script_marvin_job"
+  },
+  {
+   "cpp_class": "CInfoTargetMinimap",
+   "classname": "script_ref_minimap"
+  },
+  {
+   "cpp_class": "CBeam",
+   "classname": "beam"
+  },
+  {
+   "cpp_class": "CEntityBlocker",
+   "classname": "entity_blocker"
+  },
+  {
+   "cpp_class": "CGameRulesProxy",
+   "classname": "gamerules"
+  },
+  {
+   "cpp_class": "CGlobalNonRewinding",
+   "classname": "global_non_rewinding"
+  },
+  {
+   "cpp_class": "CPlayerWaypoint",
+   "classname": "player_waypoint"
+  },
+  {
+   "cpp_class": "CGameGibManager",
+   "classname": "game_gib_manager"
+  },
+  {
+   "cpp_class": "CFirstPersonProxy",
+   "classname": "first_person_proxy"
+  },
+  {
+   "cpp_class": "CPredictedFirstPersonProxy",
+   "classname": "predicted_first_person_proxy"
+  },
+  {
+   "cpp_class": "CWindowHint",
+   "classname": "func_window_hint"
+  },
+  {
+   "cpp_class": "CWallrunCurve",
+   "classname": "func_wallrun_curve"
+  },
+  {
+   "cpp_class": "CGrappleHook",
+   "classname": "grapple_hook"
+  },
+  {
+   "cpp_class": "CScriptTraceVolume",
+   "classname": "trace_volume"
+  },
+  {
+   "cpp_class": "CTurret",
+   "classname": "turret"
+  },
+  {
+   "cpp_class": "CVortexSphere",
+   "classname": "vortex_sphere"
+  },
+  {
+   "cpp_class": "CCrossbowBolt",
+   "classname": "crossbow_bolt"
+  },
+  {
+   "cpp_class": "CMissile",
+   "classname": "rpg_missile"
+  },
+  {
+   "cpp_class": "CWeaponX",
+   "classname": "weaponx"
+  },
+  {
+   "cpp_class": "CZipline",
+   "classname": "zipline"
+  },
+  {
+   "cpp_class": "CZiplineEnd",
+   "classname": "zipline_end"
+  },
+  {
+   "cpp_class": "CScriptNetDataGlobal",
+   "classname": "script_net_data_global"
+  },
+  {
+   "cpp_class": "CScriptMover",
+   "classname": "script_mover"
+  },
+  {
+   "cpp_class": "ScriptMoverLightweight",
+   "classname": "script_mover_lightweight"
+  },
+  {
+   "cpp_class": "CScriptMoverTrainNode",
+   "classname": "script_mover_train_node"
+  },
+  {
+   "cpp_class": "DoorMover",
+   "classname": "door_mover"
+  },
+  {
+   "cpp_class": "CPropDoor",
+   "classname": "prop_door"
+  },
+  {
+   "cpp_class": "CSprite",
+   "classname": "env_sprite"
+  },
+  {
+   "cpp_class": "CSpriteOriented",
+   "classname": "env_sprite_oriented"
+  },
+  {
+   "cpp_class": "CStatusEffectPlugin",
+   "classname": "status_effect_plugin"
+  },
+  {
+   "cpp_class": "CPlayerTasklist",
+   "classname": "player_tasklist"
+  },
+  {
+   "cpp_class": "CPlayerVehicle",
+   "classname": "player_vehicle"
+  },
+  {
+   "cpp_class": "CImportantOnEntSound",
+   "classname": "important_on_ent_sound"
+  },
+  {
+   "cpp_class": "CVGuiScreen",
+   "classname": "vgui_screen"
+  },
+  {
+   "cpp_class": "CVGuiScreen",
+   "classname": "vgui_screen_team"
+  },
+  {
+   "cpp_class": "CMovieDisplay",
+   "classname": "vgui_movie_display"
+  }
+ ]
+}

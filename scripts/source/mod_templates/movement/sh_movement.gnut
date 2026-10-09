@@ -1,0 +1,64 @@
+global function __NS____ApplyMovement
+global function __NS____IsModMap
+
+global const string __NS_UPPER___MAP = "__MAP__"
+
+// Every class var the F3 Movement Lab tunes. A playlist var movement_<key> sets
+// one; keys the playlist leaves out keep the player's own settings.
+const array<string> __NS_UPPER___MOVEMENT_KEYS = [
+	"speed", "sprintspeed", "acceleration", "deceleration", "lowSpeed", "lowAcceleration",
+	"sprintAcceleration", "sprintDeceleration",
+	"doubleJump", "wallrun", "climbEnabled", "gravityScale", "jumpHeight", "stepHeight",
+	"airSpeed", "airAcceleration", "airFriction", "airDrag",
+	"superjumpMinHeight", "superjumpMaxHeight", "superjumpHorzSpeed", "superjumpLimit",
+	"wallrunAccelerateHorizontal", "wallrunAccelerateVertical",
+	"wallrunMaxSpeedHorizontal", "wallrunMaxSpeedVertical", "wallrunMaxSpeedHorizontalBackward", "wallrunSameWallAllowed",
+	"wallrunJumpOutwardSpeed", "wallrunJumpUpSpeed", "wallrunJumpInputDirSpeed",
+	"slideAccel", "slideDecel", "slideVelocityDecay", "slideRequiredStartSpeed", "slideSpeedBoost",
+	"slideSpeedBoostCap", "slideJumpHeight", "slideMaxJumpSpeed", "slideStopSpeed", "slideMaxStopSpeed",
+	"slideWantToStopDecel",
+	"sprintStartDelay", "sprintStartDuration", "sprintStartFastDuration", "sprintEndDuration",
+	"mantleAngleScale", "speedScaleSide", "speedScaleBack", "pitchMaxUp", "pitchMaxDown",
+]
+
+bool function __NS____IsModMap()
+{
+	return GetMapName() == __NS_UPPER___MAP
+}
+
+// The map's own preset; a playlist var movement_<key> overrides it, so the
+// map plays the same on any playlist that runs it.
+string function __NS____MovementDefault( string key )
+{
+	switch ( key )
+	{
+__MOVEMENT_DEFAULT_CASES__
+	}
+	return ""
+}
+
+// The playlist's values reach every client before its scripts run, so both
+// engines apply the same numbers and prediction agrees with the server.
+void function __NS____ApplyMovement( entity player )
+{
+	if ( !IsValid( player ) || !player.IsPlayer() )
+		return
+	#if SERVER
+		if ( player.IsBot() )
+			return
+	#endif
+
+	foreach ( string key in __NS_UPPER___MOVEMENT_KEYS )
+	{
+		string value = GetCurrentPlaylistVarString( "movement_" + key, __NS____MovementDefault( key ) )
+		if ( value == "" )
+			continue
+		#if SERVER
+			bool applied = Player_SetClassVar( player, key, value )
+		#else
+			bool applied = SetLocalClassVar( key, value )
+		#endif
+		if ( !applied )
+			printt( "[__NS__] movement key refused: " + key + " = " + value )
+	}
+}

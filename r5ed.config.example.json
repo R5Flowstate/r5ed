@@ -1,0 +1,11 @@
+{
+ "R5ED_GAME_ROOT": "D:/Games/R5Flowstate",
+ "R5ED_RSX": "D:/tools/rsx/rsx.exe",
+ "R5ED_REPAK": "D:/tools/repak/repak.exe",
+ "R5ED_REVPK": "D:/Games/R5Flowstate/bin/revpk.exe",
+ "R5ED_RMDLCONV": "D:/tools/rmdlconv/rmdlconv.exe",
+ "R5ED_TEXCONV": "D:/tools/texconv.exe",
+ "R5ED_PROJECTS": "D:/r5ed/projects",
+ "R5ED_SCRATCH": "D:/r5ed/scratch",
+ "R5ED_BASEMENT": "D:/r5ed/scratch/apex_basement.json"
+}

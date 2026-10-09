@@ -1,0 +1,7737 @@
+{
+ "CLIENTDLL": {
+  "base": null,
+  "fields": []
+ },
+ "CAI_BaseNPC": {
+  "base": "CBaseCombatCharacter",
+  "fields": [
+   {
+    "field": "m_bDoScheduleChangeSignal",
+    "name": "doScheduleChangeSignal",
+    "kind": [
+     "key"
+    ],
+    "field_type": 6
+   },
+   {
+    "field": "m_bDefenseActive",
+    "name": "defenseActive",
+    "kind": [
+     "key"
+    ],
+    "field_type": 6
+   },
+   {
+    "field": "m_bAlwaysAlert",
+    "name": "alwaysalert",
+    "kind": [
+     "key"
+    ],
+    "field_type": 6
+   },
+   {
+    "field": "m_scriptedAnimForceInterrupt",
+    "name": "scriptedAnimForceInterrupt",
+    "kind": [
+     "key"
+    ],
+    "field_type": 6
+   },
+   {
+    "field": "m_bWakeSquad",
+    "name": "wakesquad",
+    "kind": [
+     "key"
+    ],
+    "field_type": 6
+   },
+   {
+    "field": "m_flWakeRadius",
+    "name": "wakeradius",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_SleepState",
+    "name": "sleepstate",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_aiSettings",
+    "name": "aiClass",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_SquadName",
+    "name": "squadname",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_minEnemyDist",
+    "name": "minEnemyDist",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_disengageEnemyDist",
+    "name": "disengageEnemyDist",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_spawnEquipment[0]",
+    "name": "additionalequipment",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_spawnEquipment[1]",
+    "name": "secondaryWeaponName",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_grenadeWeaponName",
+    "name": "grenadeWeaponName",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_reactFriendlyChance",
+    "name": "reactFriendlyChance",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_reactBulletChance",
+    "name": "reactBulletChance",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_reactChance",
+    "name": "reactChance",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_OnDamaged",
+    "name": "OnDamaged",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_OnFoundEnemy",
+    "name": "OnFoundEnemy",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_OnSeeEnemy",
+    "name": "OnSeeEnemy",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_OnCantSeeEnemy",
+    "name": "OnCantSeeEnemy",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_OnNoticePotentialEnemy",
+    "name": "OnNoticePotentialEnemy",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_OnGainEnemyLOS",
+    "name": "OnGainEnemyLOS",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_OnLostEnemyLOS",
+    "name": "OnLostEnemyLOS",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_OnLostEnemy",
+    "name": "OnLostEnemy",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_OnFoundPlayer",
+    "name": "OnFoundPlayer",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_OnLostPlayerLOS",
+    "name": "OnLostPlayerLOS",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_OnLostPlayer",
+    "name": "OnLostPlayer",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_OnHearPlayer",
+    "name": "OnHearPlayer",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_OnHearCombat",
+    "name": "OnHearCombat",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_OnSleep",
+    "name": "OnSleep",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_OnWake",
+    "name": "OnWake",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_OnStateChange",
+    "name": "OnStateChange",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_OnFailedToPath",
+    "name": "OnFailedToPath",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_OnEnterGoalRadius",
+    "name": "OnEnterGoalRadius",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_OnFinishedAssault",
+    "name": "OnFinishedAssault",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_OnSawCorpse",
+    "name": "OnSawCorpse",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_OnGiveWeapon",
+    "name": "OnGiveWeapon",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_OnTakeWeapon",
+    "name": "OnTakeWeapon",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_OnSpecialAttack",
+    "name": "OnSpecialAttack",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_OnScheduleChange",
+    "name": "OnScheduleChange",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_OnSyncedMeleeBegin",
+    "name": "OnSyncedMeleeBegin",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_bAllowShoot",
+    "name": "allowShoot",
+    "kind": [
+     "key"
+    ],
+    "field_type": 6
+   },
+   {
+    "field": "m_bAllowBlockBullets",
+    "name": "allowBlockBullets",
+    "kind": [
+     "key"
+    ],
+    "field_type": 6
+   },
+   {
+    "field": "m_flAccuracyMultiplier",
+    "name": "AccuracyMultiplier",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_LastMissFastPlayerTime",
+    "name": "lastMissFastPlayerTime",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_LastSuppressionTime",
+    "name": "lastSuppressionTime",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_healthEvalMultiplier",
+    "name": "healthEvalMultiplier",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "InputDelete",
+    "name": "Delete",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputSetSquad",
+    "name": "SetSquad",
+    "kind": [
+     "input"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "InputWake",
+    "name": "Wake",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputForgetEntity",
+    "name": "ForgetEntity",
+    "kind": [
+     "input"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "InputBreak",
+    "name": "Break",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputEnableAimAssist",
+    "name": "EnableAimAssist",
+    "kind": [
+     "input"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "InputDisableAimAssist",
+    "name": "DisableAimAssist",
+    "kind": [
+     "input"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "InputSetMoveSpeedScale",
+    "name": "SetMoveSpeedScale",
+    "kind": [
+     "input"
+    ],
+    "field_type": 1
+   }
+  ]
+ },
+ "CAmbientGeneric": {
+  "base": "CBaseEntity",
+  "fields": []
+ },
+ "CTitanSoul": {
+  "base": "CBaseEntity",
+  "fields": []
+ },
+ "CBaseAnimating": {
+  "base": "CBaseEntity",
+  "fields": [
+   {
+    "field": "m_nSkin",
+    "name": "skin",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_skinMod",
+    "name": "skinMod",
+    "kind": [
+     "key"
+    ],
+    "field_type": 7
+   },
+   {
+    "field": "m_nBody",
+    "name": "body",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_camoIndex",
+    "name": "camo",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_decalIndex",
+    "name": "decal",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_flModelScale",
+    "name": "ModelScale",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_animSequence",
+    "name": "sequence",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_animCycle",
+    "name": "cycle",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_animStartTime",
+    "name": "startTime",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_animStartCycle",
+    "name": "startCycle",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   }
+  ]
+ },
+ "CBoneFollower": {
+  "base": "CBaseEntity",
+  "fields": []
+ },
+ "CBaseAnimatingOverlay": {
+  "base": "CBaseAnimating",
+  "fields": []
+ },
+ "CBaseCombatCharacter": {
+  "base": "CBaseAnimatingOverlay",
+  "fields": [
+   {
+    "field": "m_eHull",
+    "name": "HullType",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_impactEnergyScale",
+    "name": "physdamagescale",
+    "kind": [
+     "key",
+     "input"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_CurrentWeaponProficiency",
+    "name": "WeaponProficiency",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_flEnemyAccurcyMultiplier",
+    "name": "EnemyAccuracyMultiplier",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   }
+  ]
+ },
+ "CBaseEntity": {
+  "base": null,
+  "fields": [
+   {
+    "field": "m_ModelName",
+    "name": "model",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_iClassname",
+    "name": "classname",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_wantsDamageCallbacks",
+    "name": "damageNotifications",
+    "kind": [
+     "key",
+     "input"
+    ],
+    "field_type": 6
+   },
+   {
+    "field": "m_wantsDeathCallbacks",
+    "name": "deathNotifications",
+    "kind": [
+     "key",
+     "input"
+    ],
+    "field_type": 6
+   },
+   {
+    "field": "m_fEffects",
+    "name": "effects",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_target",
+    "name": "target",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_nRenderFX",
+    "name": "renderfx",
+    "kind": [
+     "key"
+    ],
+    "field_type": 8
+   },
+   {
+    "field": "m_nRenderMode",
+    "name": "rendermode",
+    "kind": [
+     "key"
+    ],
+    "field_type": 8
+   },
+   {
+    "field": "m_nModelIndex",
+    "name": "modelindex",
+    "kind": [
+     "key"
+    ],
+    "field_type": 7
+   },
+   {
+    "field": "m_clrRender",
+    "name": "rendercolor",
+    "kind": [
+     "key"
+    ],
+    "field_type": 9
+   },
+   {
+    "field": "m_clIntensity",
+    "name": "intensity",
+    "kind": [
+     "key"
+    ],
+    "field_type": 8
+   },
+   {
+    "field": "m_MoveType",
+    "name": "MoveType",
+    "kind": [
+     "key"
+    ],
+    "field_type": 8
+   },
+   {
+    "field": "m_CollisionGroup",
+    "name": "CollisionGroup",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_contents",
+    "name": "contents",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_collideWithOwner",
+    "name": "CollideWithOwner",
+    "kind": [
+     "key"
+    ],
+    "field_type": 6
+   },
+   {
+    "field": "m_vecAngVelocity",
+    "name": "avelocity",
+    "kind": [
+     "key"
+    ],
+    "field_type": 3
+   },
+   {
+    "field": "m_flFriction",
+    "name": "friction",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_flLocalTime",
+    "name": "ltime",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_vecVelocity",
+    "name": "velocity",
+    "kind": [
+     "key"
+    ],
+    "field_type": 3
+   },
+   {
+    "field": "m_iParent",
+    "name": "parentname",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_iHammerID",
+    "name": "hammerid",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_flSpeed",
+    "name": "speed",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_iMaxHealth",
+    "name": "max_health",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_iHealth",
+    "name": "health",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_visibilityFlags",
+    "name": "VisibilityFlags",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_OnUser1",
+    "name": "OnUser1",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_OnDeath",
+    "name": "OnDeath",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_OnDestroy",
+    "name": "OnDestroy",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_vecViewOffset",
+    "name": "view_ofs",
+    "kind": [
+     "key"
+    ],
+    "field_type": 3
+   },
+   {
+    "field": "m_iInitialTeamNum",
+    "name": "TeamNum",
+    "kind": [
+     "key",
+     "input"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_iTeamNum",
+    "name": "teamnumber",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_spawnflags",
+    "name": "spawnflags",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_flGravity",
+    "name": "gravity",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_fadeDist",
+    "name": "fadedist",
+    "kind": [
+     "key",
+     "input"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_bLagCompensate",
+    "name": "LagCompensate",
+    "kind": [
+     "key"
+    ],
+    "field_type": 6
+   },
+   {
+    "field": "InputSetTeam",
+    "name": "SetTeam",
+    "kind": [
+     "input"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "InputKill",
+    "name": "Kill",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputKillHierarchy",
+    "name": "KillHierarchy",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputAlpha",
+    "name": "Alpha",
+    "kind": [
+     "input"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "InputColor",
+    "name": "Color",
+    "kind": [
+     "input"
+    ],
+    "field_type": 9
+   },
+   {
+    "field": "InputEnableDamageForces",
+    "name": "EnableDamageForces",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputDisableDamageForces",
+    "name": "DisableDamageForces",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputDisableDraw",
+    "name": "DisableDraw",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputEnableDraw",
+    "name": "EnableDraw",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputAddOutput",
+    "name": "AddOutput",
+    "kind": [
+     "input"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "InputFireUser1",
+    "name": "FireUser1",
+    "kind": [
+     "input"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "InputCallScriptFunction",
+    "name": "CallScriptFunction",
+    "kind": [
+     "input"
+    ],
+    "field_type": 2
+   }
+  ]
+ },
+ "CSkyCamera": {
+  "base": "CBaseEntity",
+  "fields": [
+   {
+    "field": "m_bUseAngles",
+    "name": "use_angles",
+    "kind": [
+     "key"
+    ],
+    "field_type": 6
+   },
+   {
+    "field": "m_fogAngles",
+    "name": "fogangles",
+    "kind": [
+     "key"
+    ],
+    "field_type": 3
+   },
+   {
+    "field": "m_skyboxData.scale",
+    "name": "scale",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_skyboxData.scale",
+    "name": "skyscale",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_skyboxData.useWorldFog",
+    "name": "useworldfog",
+    "kind": [
+     "key"
+    ],
+    "field_type": 6
+   },
+   {
+    "field": "m_skyboxData.fog.enable",
+    "name": "fogenable",
+    "kind": [
+     "key"
+    ],
+    "field_type": 6
+   },
+   {
+    "field": "m_skyboxData.fog.distColor",
+    "name": "fogcolor",
+    "kind": [
+     "key"
+    ],
+    "field_type": 9
+   },
+   {
+    "field": "m_skyboxData.fog.dirColor",
+    "name": "fogdircolor",
+    "kind": [
+     "key"
+    ],
+    "field_type": 9
+   },
+   {
+    "field": "m_skyboxData.fog.botAlt",
+    "name": "fogzbottom",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_skyboxData.fog.topAlt",
+    "name": "fogztop",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_skyboxData.fog.halfDistBot",
+    "name": "foghalfdistbottom",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_skyboxData.fog.halfDistTop",
+    "name": "foghalfdisttop",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_skyboxData.fog.distOffset",
+    "name": "fogdistoffset",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_skyboxData.fog.densityScale",
+    "name": "fogdensity",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_skyboxData.fog.halfAngleDeg",
+    "name": "fogdirhalfangle",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_skyboxData.fog.distColorStr",
+    "name": "fogcolorstrength",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_skyboxData.fog.dirColorStr",
+    "name": "fogdircolorstrength",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_skyboxData.fog.HDRColorScale",
+    "name": "HDRColorScale",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "InputActivateSkybox",
+    "name": "ActivateSkybox",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   }
+  ]
+ },
+ "CBaseToggle": {
+  "base": "CBaseEntity",
+  "fields": []
+ },
+ "CBreakableProp": {
+  "base": "CBaseAnimating",
+  "fields": [
+   {
+    "field": "m_OnBreak",
+    "name": "OnBreak",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_OnHealthChanged",
+    "name": "OnHealthChanged",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_OnDamaged",
+    "name": "OnDamaged",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_impactEnergyScale",
+    "name": "physdamagescale",
+    "kind": [
+     "key",
+     "input"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_iMinHealthDmg",
+    "name": "minhealthdmg",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_flPressureDelay",
+    "name": "PressureDelay",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_PerformanceMode",
+    "name": "PerformanceMode",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_explodeDamage",
+    "name": "ExplodeDamage",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_explodeRadius",
+    "name": "ExplodeRadius",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "InputBreak",
+    "name": "Break",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputSetHealth",
+    "name": "SetHealth",
+    "kind": [
+     "input"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "InputAddHealth",
+    "name": "AddHealth",
+    "kind": [
+     "input"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "InputRemoveHealth",
+    "name": "RemoveHealth",
+    "kind": [
+     "input"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "InputBecomeDebris",
+    "name": "BecomeDebris",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   }
+  ]
+ },
+ "CColorCorrection": {
+  "base": "CBaseEntity",
+  "fields": [
+   {
+    "field": "m_flFadeInDuration",
+    "name": "fadeInDuration",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_flFadeOutDuration",
+    "name": "fadeOutDuration",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_flMaxWeight",
+    "name": "maxweight",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_bStartDisabled",
+    "name": "StartDisabled",
+    "kind": [
+     "key"
+    ],
+    "field_type": 6
+   },
+   {
+    "field": "m_bEnabled",
+    "name": "enabled",
+    "kind": [
+     "key"
+    ],
+    "field_type": 6
+   },
+   {
+    "field": "m_bExclusive",
+    "name": "exclusive",
+    "kind": [
+     "key"
+    ],
+    "field_type": 6
+   },
+   {
+    "field": "m_MinFalloff",
+    "name": "minfalloff",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_MaxFalloff",
+    "name": "maxfalloff",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_lookupFilename",
+    "name": "filename",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "InputEnable",
+    "name": "Enable",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputSetFadeInDuration",
+    "name": "SetFadeInDuration",
+    "kind": [
+     "input"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "InputSetFadeOutDuration",
+    "name": "SetFadeOutDuration",
+    "kind": [
+     "input"
+    ],
+    "field_type": 1
+   }
+  ]
+ },
+ "CDynamicLight": {
+  "base": "CBaseEntity",
+  "fields": [
+   {
+    "field": "m_LightStyle",
+    "name": "style",
+    "kind": [
+     "key",
+     "input"
+    ],
+    "field_type": 8
+   },
+   {
+    "field": "m_Radius",
+    "name": "distance",
+    "kind": [
+     "key",
+     "input"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_Exponent",
+    "name": "brightness",
+    "kind": [
+     "key",
+     "input"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_InnerAngle",
+    "name": "_inner_cone",
+    "kind": [
+     "key",
+     "input"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_OuterAngle",
+    "name": "_cone",
+    "kind": [
+     "key",
+     "input"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_SpotRadius",
+    "name": "spotlight_radius",
+    "kind": [
+     "key",
+     "input"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "InputTurnOn",
+    "name": "TurnOn",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputTurnOff",
+    "name": "TurnOff",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputToggle",
+    "name": "Toggle",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   }
+  ]
+ },
+ "CEnvWind": {
+  "base": "CBaseEntity",
+  "fields": [
+   {
+    "field": "m_EnvWindShared.m_iMinWind",
+    "name": "minwind",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_EnvWindShared.m_iMaxWind",
+    "name": "maxwind",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_EnvWindShared.m_iMinGust",
+    "name": "mingust",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_EnvWindShared.m_iMaxGust",
+    "name": "maxgust",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_EnvWindShared.m_flMinGustDelay",
+    "name": "mingustdelay",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_EnvWindShared.m_flMaxGustDelay",
+    "name": "maxgustdelay",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_EnvWindShared.m_iGustDirChange",
+    "name": "gustdirchange",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_EnvWindShared.m_flGustDuration",
+    "name": "gustduration",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_EnvWindShared.m_OnGustStart",
+    "name": "OnGustStart",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_EnvWindShared.m_OnGustEnd",
+    "name": "OnGustEnd",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   }
+  ]
+ },
+ "CEntityDissolve": {
+  "base": "CBaseEntity",
+  "fields": [
+   {
+    "field": "m_flFadeInStart",
+    "name": "fadeinstart",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_flFadeInLength",
+    "name": "fadeinlength",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_flFadeOutModelStart",
+    "name": "modelfadeoutstart",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_flFadeOutModelLength",
+    "name": "modelfadeoutlength",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_flFadeOutStart",
+    "name": "fadeoutstart",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_flFadeOutLength",
+    "name": "fadeoutlength",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "fadeColorR",
+    "name": "fadeColorR",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "fadeColorG",
+    "name": "fadeColorG",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "fadeColorB",
+    "name": "fadeColorB",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_nDissolveType",
+    "name": "dissolvetype",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_nMagnitude",
+    "name": "magnitude",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   }
+  ]
+ },
+ "CCascadeLight": {
+  "base": "CBaseEntity",
+  "fields": [
+   {
+    "field": "m_bEnabled",
+    "name": "enabled",
+    "kind": [
+     "key"
+    ],
+    "field_type": 6
+   },
+   {
+    "field": "m_bStartDisabled",
+    "name": "StartDisabled",
+    "kind": [
+     "key"
+    ],
+    "field_type": 6
+   }
+  ]
+ },
+ "CBreakableSurface": {
+  "base": "CBreakable",
+  "fields": [
+   {
+    "field": "m_nSurfaceType",
+    "name": "surfacetype",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_nFragility",
+    "name": "fragility",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_vLLVertex",
+    "name": "lowerleft",
+    "kind": [
+     "key"
+    ],
+    "field_type": 3
+   },
+   {
+    "field": "m_vULVertex",
+    "name": "upperleft",
+    "kind": [
+     "key"
+    ],
+    "field_type": 3
+   },
+   {
+    "field": "m_vLRVertex",
+    "name": "lowerright",
+    "kind": [
+     "key"
+    ],
+    "field_type": 3
+   },
+   {
+    "field": "m_vURVertex",
+    "name": "upperright",
+    "kind": [
+     "key"
+    ],
+    "field_type": 3
+   },
+   {
+    "field": "m_nQuadError",
+    "name": "error",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "InputShatter",
+    "name": "Shatter",
+    "kind": [
+     "input"
+    ],
+    "field_type": 3
+   }
+  ]
+ },
+ "CNPC_Drone": {
+  "base": "CAI_BaseFlyingBot",
+  "fields": []
+ },
+ "CFuncBrushLightweight": {
+  "base": "CFuncBrush",
+  "fields": []
+ },
+ "CFuncBrush": {
+  "base": "CBaseEntity",
+  "fields": [
+   {
+    "field": "m_iSolidity",
+    "name": "Solidity",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_iDisabled",
+    "name": "StartDisabled",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_iszExcludedClass",
+    "name": "excludednpc",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_bInvertExclusion",
+    "name": "invert_exclusion",
+    "kind": [
+     "key"
+    ],
+    "field_type": 6
+   },
+   {
+    "field": "InputTurnOn",
+    "name": "Enable",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputToggle",
+    "name": "Toggle",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputSetExcluded",
+    "name": "SetExcluded",
+    "kind": [
+     "input"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "InputSetInvert",
+    "name": "SetInvert",
+    "kind": [
+     "input"
+    ],
+    "field_type": 6
+   }
+  ]
+ },
+ "CFuncMoveLinear": {
+  "base": "CBaseToggle",
+  "fields": [
+   {
+    "field": "m_vecMoveDir",
+    "name": "movedir",
+    "kind": [
+     "key"
+    ],
+    "field_type": 3
+   },
+   {
+    "field": "m_soundStart",
+    "name": "StartSound",
+    "kind": [
+     "key"
+    ],
+    "field_type": 19
+   },
+   {
+    "field": "m_soundStop",
+    "name": "StopSound",
+    "kind": [
+     "key"
+    ],
+    "field_type": 19
+   },
+   {
+    "field": "m_flBlockDamage",
+    "name": "BlockDamage",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_flStartPosition",
+    "name": "StartPosition",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_flMoveDistance",
+    "name": "MoveDistance",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "InputOpen",
+    "name": "Open",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputClose",
+    "name": "Close",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputSetPosition",
+    "name": "SetPosition",
+    "kind": [
+     "input"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "InputSetSpeed",
+    "name": "SetSpeed",
+    "kind": [
+     "input"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_OnFullyOpen",
+    "name": "OnFullyOpen",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_OnFullyClosed",
+    "name": "OnFullyClosed",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   }
+  ]
+ },
+ "CMovieDisplay": {
+  "base": "CBaseEntity",
+  "fields": [
+   {
+    "field": "m_bLooping",
+    "name": "looping",
+    "kind": [
+     "key"
+    ],
+    "field_type": 6
+   },
+   {
+    "field": "m_bStretchToFill",
+    "name": "stretch",
+    "kind": [
+     "key"
+    ],
+    "field_type": 6
+   },
+   {
+    "field": "m_bLetterbox",
+    "name": "letterbox",
+    "kind": [
+     "key"
+    ],
+    "field_type": 6
+   },
+   {
+    "field": "m_bPausesWithClient",
+    "name": "pauses_with_client",
+    "kind": [
+     "key"
+    ],
+    "field_type": 6
+   },
+   {
+    "field": "m_bVisible",
+    "name": "start_visible",
+    "kind": [
+     "key"
+    ],
+    "field_type": 6
+   },
+   {
+    "field": "m_bForcedSlave",
+    "name": "forcedslave",
+    "kind": [
+     "key"
+    ],
+    "field_type": 6
+   },
+   {
+    "field": "m_bForcePrecache",
+    "name": "forceprecache",
+    "kind": [
+     "key"
+    ],
+    "field_type": 6
+   },
+   {
+    "field": "m_szDisplayText",
+    "name": "displaytext",
+    "kind": [],
+    "field_type": 8
+   },
+   {
+    "field": "m_strMovieFilename",
+    "name": "moviefilename",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_strGroupName",
+    "name": "groupname",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_strExternalAudioFilename",
+    "name": "external_audio_file",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_iScreenWidth",
+    "name": "width",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_iScreenHeight",
+    "name": "height",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   }
+  ]
+ },
+ "CNPC_SentryTurret": {
+  "base": "CAI_BaseNPC",
+  "fields": [
+   {
+    "field": "m_killCount",
+    "name": "killCount",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_titanKillCount",
+    "name": "titanKillCount",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_OnDeploy",
+    "name": "OnDeploy",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_OnRetire",
+    "name": "OnRetire",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_OnTurretStateChange",
+    "name": "OnTurretStateChange",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   }
+  ]
+ },
+ "CNPC_Dropship": {
+  "base": "CBaseHelicopter",
+  "fields": [
+   {
+    "field": "InputFlyToPathTrack",
+    "name": "FlyToPathTrack",
+    "kind": [
+     "input"
+    ],
+    "field_type": 2
+   }
+  ]
+ },
+ "CNPC_Titan": {
+  "base": "CAI_Combatant",
+  "fields": []
+ },
+ "CParticleSystem": {
+  "base": "CBaseEntity",
+  "fields": [
+   {
+    "field": "m_bClientSide",
+    "name": "ClientSide",
+    "kind": [
+     "key"
+    ],
+    "field_type": 6
+   },
+   {
+    "field": "m_bStartActive",
+    "name": "start_active",
+    "kind": [
+     "key"
+    ],
+    "field_type": 6
+   },
+   {
+    "field": "m_iszEffectName",
+    "name": "effect_name",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_bInSkybox",
+    "name": "in_skybox",
+    "kind": [
+     "key"
+    ],
+    "field_type": 6
+   },
+   {
+    "field": "m_killForReplay",
+    "name": "kill_for_replay",
+    "kind": [
+     "key"
+    ],
+    "field_type": 6
+   },
+   {
+    "field": "m_iszControlPointNames[0]",
+    "name": "cpoint1",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_iszControlPointNames[1]",
+    "name": "cpoint2",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_iszControlPointNames[2]",
+    "name": "cpoint3",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_iszControlPointNames[3]",
+    "name": "cpoint4",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_iszControlPointNames[4]",
+    "name": "cpoint5",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "InputStart",
+    "name": "Start",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputStop",
+    "name": "Stop",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputStopEndCap",
+    "name": "StopPlayEndCap",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputDestroy",
+    "name": "DestroyImmediately",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   }
+  ]
+ },
+ "CPhysBox": {
+  "base": "CBreakable",
+  "fields": [
+   {
+    "field": "m_damageType",
+    "name": "Damagetype",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_massScale",
+    "name": "massScale",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_iszOverrideScript",
+    "name": "overridescript",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_damageToEnableMotion",
+    "name": "damagetoenablemotion",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_flForceToEnableMotion",
+    "name": "forcetoenablemotion",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_angPreferredCarryAngles",
+    "name": "preferredcarryangles",
+    "kind": [
+     "key"
+    ],
+    "field_type": 3
+   },
+   {
+    "field": "m_bNotSolidToWorld",
+    "name": "notsolid",
+    "kind": [
+     "key"
+    ],
+    "field_type": 6
+   },
+   {
+    "field": "m_iExploitableByPlayer",
+    "name": "ExploitableByPlayer",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_targetUseInputFlags",
+    "name": "UseInputFlags",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_OnDamaged",
+    "name": "OnDamaged",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_OnAwakened",
+    "name": "OnAwakened",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_OnMotionEnabled",
+    "name": "OnMotionEnabled",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_OnPhysGunPunt",
+    "name": "OnPhysGunPunt",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_OnPhysGunOnlyPickup",
+    "name": "OnPhysGunOnlyPickup",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "InputWake",
+    "name": "Wake",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputSleep",
+    "name": "Sleep",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputEnableMotion",
+    "name": "EnableMotion",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputDisableMotion",
+    "name": "DisableMotion",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputDisableFloating",
+    "name": "DisableFloating",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputBecomeDebris",
+    "name": "BecomeDebris",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputEnable",
+    "name": "Enable",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   }
+  ]
+ },
+ "CPhysicsProp": {
+  "base": "CBreakableProp",
+  "fields": [
+   {
+    "field": "m_MotionEnabled",
+    "name": "OnMotionEnabled",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_OnAwakened",
+    "name": "OnAwakened",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_OnPhysGunPunt",
+    "name": "OnPhysGunPunt",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_OnPhysGunOnlyPickup",
+    "name": "OnPhysGunOnlyPickup",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_OnPlayerPickup",
+    "name": "OnPlayerPickup",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_OnOutOfWorld",
+    "name": "OnOutOfWorld",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_massScale",
+    "name": "massscale",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_gravityScale",
+    "name": "GravityScale",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_angularDamping",
+    "name": "AngularDamping",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_linearDamping",
+    "name": "LinearDamping",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_inertiaScale",
+    "name": "inertiascale",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_damageType",
+    "name": "Damagetype",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_iszOverrideScript",
+    "name": "overridescript",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_damageToEnableMotion",
+    "name": "damagetoenablemotion",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_flForceToEnableMotion",
+    "name": "forcetoenablemotion",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_iExploitableByPlayer",
+    "name": "ExploitableByPlayer",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_bAllowPortalFunnel",
+    "name": "allowfunnel",
+    "kind": [
+     "key"
+    ],
+    "field_type": 6
+   },
+   {
+    "field": "m_iPhysicsMode",
+    "name": "physicsmode",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "InputEnableMotion",
+    "name": "EnableMotion",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputDisableMotion",
+    "name": "DisableMotion",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputWake",
+    "name": "Wake",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputSleep",
+    "name": "Sleep",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputDisableFloating",
+    "name": "DisableFloating",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   }
+  ]
+ },
+ "CPlayer": {
+  "base": null,
+  "fields": []
+ },
+ "CPlayerState": {
+  "base": null,
+  "fields": []
+ },
+ "CPointCamera": {
+  "base": "CBaseEntity",
+  "fields": [
+   {
+    "field": "m_FOV",
+    "name": "FOV",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_bFogEnable",
+    "name": "fogEnable",
+    "kind": [
+     "key"
+    ],
+    "field_type": 6
+   },
+   {
+    "field": "InputChangeFOV",
+    "name": "ChangeFOV",
+    "kind": [
+     "input"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "InputSetOnAndTurnOthersOff",
+    "name": "SetOnAndTurnOthersOff",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputSetOn",
+    "name": "SetOn",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputSetOff",
+    "name": "SetOff",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputForceActive",
+    "name": "Activate",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputForceInactive",
+    "name": "Deactivate",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   }
+  ]
+ },
+ "CPlayerResource": {
+  "base": "CBaseEntity",
+  "fields": []
+ },
+ "CPostProcessController": {
+  "base": "CBaseEntity",
+  "fields": [
+   {
+    "field": "m_flPostProcessParameters.m_Value[ PPPN_FADE_TIME ]",
+    "name": "fadetime",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_flPostProcessParameters.m_Value[ PPPN_VIGNETTE_START ]",
+    "name": "vignettestart",
+    "kind": [
+     "key"
+    ],
+    "field_type": 16
+   },
+   {
+    "field": "m_flPostProcessParameters.m_Value[ PPPN_VIGNETTE_END ]",
+    "name": "vignetteend",
+    "kind": [
+     "key"
+    ],
+    "field_type": 16
+   },
+   {
+    "field": "m_flPostProcessParameters.m_Value[ PPPN_VIGNETTE_BLUR_STRENGTH ]",
+    "name": "vignetteblurstrength",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_flPostProcessParameters.m_Value[ PPPN_FADE_TO_BLACK_STRENGTH ]",
+    "name": "fadetoblackstrength",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_flPostProcessParameters.m_Value[ PPPN_SCREEN_BLUR_STRENGTH ]",
+    "name": "screenblurstrength",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "InputSetFadeTime",
+    "name": "SetFadeTime",
+    "kind": [
+     "input"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "InputSetVignetteStart",
+    "name": "SetVignetteStart",
+    "kind": [
+     "input"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "InputSetVignetteEnd",
+    "name": "SetVignetteEnd",
+    "kind": [
+     "input"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "InputSetVignetteBlurStrength",
+    "name": "SetVignetteBlurStrength",
+    "kind": [
+     "input"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "InputSetFadeToBlackStrength",
+    "name": "SetFadeToBlackStrength",
+    "kind": [
+     "input"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "InputSetScreenBlurStrength",
+    "name": "SetScreenBlurStrength",
+    "kind": [
+     "input"
+    ],
+    "field_type": 1
+   }
+  ]
+ },
+ "CDynamicProp": {
+  "base": "CBreakableProp",
+  "fields": [
+   {
+    "field": "m_bDisableBoneFollowers",
+    "name": "DisableBoneFollowers",
+    "kind": [
+     "key"
+    ],
+    "field_type": 6
+   },
+   {
+    "field": "m_bClientSide",
+    "name": "ClientSide",
+    "kind": [
+     "key"
+    ],
+    "field_type": 6
+   },
+   {
+    "field": "m_bAnimateInStaticShadow",
+    "name": "AnimateInStaticShadow",
+    "kind": [
+     "key"
+    ],
+    "field_type": 6
+   }
+  ]
+ },
+ "CScriptProp": {
+  "base": "CDynamicProp",
+  "fields": []
+ },
+ "CDynamicPropLightweight": {
+  "base": "CDynamicProp",
+  "fields": []
+ },
+ "CPropSurvival": {
+  "base": "CBaseAnimating",
+  "fields": []
+ },
+ "CShieldProp": {
+  "base": "CDynamicProp",
+  "fields": []
+ },
+ "CDeathBoxProp": {
+  "base": "CDynamicProp",
+  "fields": []
+ },
+ "CImportantOnEntSound": {
+  "base": "CBaseEntity",
+  "fields": []
+ },
+ "CSpotlightEnd": {
+  "base": "CBaseEntity",
+  "fields": []
+ },
+ "CTeam": {
+  "base": "CBaseEntity",
+  "fields": []
+ },
+ "CHardPointEntity": {
+  "base": "CBaseEntity",
+  "fields": []
+ },
+ "CBaseTrigger": {
+  "base": "CBaseToggle",
+  "fields": [
+   {
+    "field": "m_bDisabled",
+    "name": "StartDisabled",
+    "kind": [
+     "key"
+    ],
+    "field_type": 6
+   },
+   {
+    "field": "m_OnStartTouch",
+    "name": "OnStartTouch",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_OnStartTouchAll",
+    "name": "OnStartTouchAll",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_OnEndTouch",
+    "name": "OnEndTouch",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_OnEndTouchAll",
+    "name": "OnEndTouchAll",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_OnTouching",
+    "name": "OnTouching",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_OnNotTouching",
+    "name": "OnNotTouching",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "InputEnable",
+    "name": "Enable",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputToggle",
+    "name": "Toggle",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputTouchTest",
+    "name": "TouchTest",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputStartTouch",
+    "name": "StartTouch",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputEndTouch",
+    "name": "EndTouch",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   }
+  ]
+ },
+ "CBaseVPhysicsTrigger": {
+  "base": "CBaseEntity",
+  "fields": [
+   {
+    "field": "m_bDisabled",
+    "name": "StartDisabled",
+    "kind": [
+     "key"
+    ],
+    "field_type": 6
+   },
+   {
+    "field": "InputEnable",
+    "name": "Enable",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputToggle",
+    "name": "Toggle",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   }
+  ]
+ },
+ "CPlayerVehicle": {
+  "base": "CBaseAnimating",
+  "fields": []
+ },
+ "CVGuiScreen": {
+  "base": "CBaseEntity",
+  "fields": [
+   {
+    "field": "m_strOverlayMaterial",
+    "name": "overlaymaterial",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_bIsTransparent",
+    "name": "IsTransparent",
+    "kind": [
+     "key"
+    ],
+    "field_type": 6
+   },
+   {
+    "field": "m_flWidth",
+    "name": "width",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_flHeight",
+    "name": "height",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "InputSetActive",
+    "name": "SetActive",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputSetInactive",
+    "name": "SetInactive",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   }
+  ]
+ },
+ "CEntityLinkPage": {
+  "base": "CBaseEntity",
+  "fields": []
+ },
+ "CWorld": {
+  "base": "CBaseEntity",
+  "fields": [
+   {
+    "field": "m_bStartDark",
+    "name": "startdark",
+    "kind": [
+     "key"
+    ],
+    "field_type": 6
+   },
+   {
+    "field": "m_bDisplayTitle",
+    "name": "gametitle",
+    "kind": [
+     "key"
+    ],
+    "field_type": 6
+   }
+  ]
+ },
+ "CWaterLODControl": {
+  "base": "CBaseEntity",
+  "fields": [
+   {
+    "field": "m_flCheapWaterStartDistance",
+    "name": "cheapwaterstartdistance",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_flCheapWaterEndDistance",
+    "name": "cheapwaterenddistance",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_flCheapWaterStartDistance",
+    "name": "SetCheapWaterStartDistance",
+    "kind": [
+     "key",
+     "input"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_flCheapWaterEndDistance",
+    "name": "SetCheapWaterEndDistance",
+    "kind": [
+     "key",
+     "input"
+    ],
+    "field_type": 1
+   }
+  ]
+ },
+ "CBaseViewModel": {
+  "base": "CBaseAnimatingOverlay",
+  "fields": []
+ },
+ "CBeam": {
+  "base": "CBaseEntity",
+  "fields": [
+   {
+    "field": "m_flHDRColorScale",
+    "name": "HDRColorScale",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_flDamage",
+    "name": "damage",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_fSpeed",
+    "name": "ScrollSpeed",
+    "kind": [
+     "key",
+     "input"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "InputWidth",
+    "name": "Width",
+    "kind": [
+     "input"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "InputNoise",
+    "name": "Noise",
+    "kind": [
+     "input"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "InputColorRedValue",
+    "name": "ColorRedValue",
+    "kind": [
+     "input"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "InputColorGreenValue",
+    "name": "ColorGreenValue",
+    "kind": [
+     "input"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "InputColorBlueValue",
+    "name": "ColorBlueValue",
+    "kind": [
+     "input"
+    ],
+    "field_type": 1
+   }
+  ]
+ },
+ "CInfoTargetGravity": {
+  "base": "CBaseEntity",
+  "fields": []
+ },
+ "CCollisionProperty": {
+  "base": null,
+  "fields": [
+   {
+    "field": "m_nSolidType",
+    "name": "solid",
+    "kind": [
+     "key"
+    ],
+    "field_type": 8
+   }
+  ]
+ },
+ "CPropDoor": {
+  "base": "CDynamicProp",
+  "fields": []
+ },
+ "CGlobalNonRewinding": {
+  "base": "CBaseEntity",
+  "fields": []
+ },
+ "CPlayerShared": {
+  "base": null,
+  "fields": []
+ },
+ "CPlayerTasklist": {
+  "base": "CBaseEntity",
+  "fields": []
+ },
+ "CPlayerWaypoint": {
+  "base": "CBaseEntity",
+  "fields": []
+ },
+ "CRopeKeyframe": {
+  "base": "CBaseEntity",
+  "fields": [
+   {
+    "field": "m_iNextLinkName",
+    "name": "NextKey",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_Slack",
+    "name": "Slack",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_Width",
+    "name": "Width",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_TextureScale",
+    "name": "TextureScale",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_subdivStackCount",
+    "name": "Subdiv",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_flScrollSpeed",
+    "name": "ScrollSpeed",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_ziplineMoveSpeedScale",
+    "name": "ZiplineMoveSpeedScale",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "InputSetScrollSpeed",
+    "name": "SetScrollSpeed",
+    "kind": [
+     "input"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "InputSetForce",
+    "name": "SetForce",
+    "kind": [
+     "input"
+    ],
+    "field_type": 3
+   },
+   {
+    "field": "InputBreak",
+    "name": "Break",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   }
+  ]
+ },
+ "CScriptNetData": {
+  "base": "CBaseEntity",
+  "fields": []
+ },
+ "CScriptNetData_SNDC_GLOBAL": {
+  "base": "CScriptNetData",
+  "fields": []
+ },
+ "CScriptNetData_SNDC_PLAYER_GLOBAL": {
+  "base": "CScriptNetData",
+  "fields": []
+ },
+ "CScriptNetData_SNDC_DEATH_BOX": {
+  "base": "CScriptNetData",
+  "fields": []
+ },
+ "CScriptNetData_SNDC_PLAYER_EXCLUSIVE": {
+  "base": "CScriptNetData",
+  "fields": []
+ },
+ "CScriptNetData_SNDC_TITAN_SOUL": {
+  "base": "CScriptNetData",
+  "fields": []
+ },
+ "CScriptMover": {
+  "base": "CScriptProp",
+  "fields": [
+   {
+    "field": "m_OnCollided",
+    "name": "OnCollided",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_spawnAsPhysicsMover",
+    "name": "SpawnAsPhysicsMover",
+    "kind": [
+     "key"
+    ],
+    "field_type": 6
+   }
+  ]
+ },
+ "CScriptMoverTrainNode": {
+  "base": "CBaseEntity",
+  "fields": []
+ },
+ "CSprite": {
+  "base": "CBaseEntity",
+  "fields": [
+   {
+    "field": "m_flSpriteFramerate",
+    "name": "framerate",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_flFrame",
+    "name": "frame",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_flSpriteScale",
+    "name": "SetScale",
+    "kind": [
+     "key",
+     "input"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_flGlowProxySize",
+    "name": "GlowProxySize",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_flHDRColorScale",
+    "name": "HDRColorScale",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_flSpriteScale",
+    "name": "scale",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "InputHideSprite",
+    "name": "HideSprite",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputShowSprite",
+    "name": "ShowSprite",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputToggleSprite",
+    "name": "ToggleSprite",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputColorRedValue",
+    "name": "ColorRedValue",
+    "kind": [
+     "input"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "InputColorGreenValue",
+    "name": "ColorGreenValue",
+    "kind": [
+     "input"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "InputColorBlueValue",
+    "name": "ColorBlueValue",
+    "kind": [
+     "input"
+    ],
+    "field_type": 1
+   }
+  ]
+ },
+ "CStatusEffectPlugin": {
+  "base": "CBaseEntity",
+  "fields": []
+ },
+ "CTriggerPointGravity": {
+  "base": "CTriggerCylinder",
+  "fields": []
+ },
+ "CTriggerSlip": {
+  "base": "CBaseTrigger",
+  "fields": []
+ },
+ "CTriggerPlayerMovement": {
+  "base": "CBaseTrigger",
+  "fields": []
+ },
+ "CInfoPlacementHelper": {
+  "base": "CBaseEntity",
+  "fields": [
+   {
+    "field": "m_OnObjectPlaced",
+    "name": "OnObjectPlaced",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_ObjectPlacedSize",
+    "name": "OnObjectPlacedSize",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_strTargetProxy",
+    "name": "proxy_name",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_strTargetEntity",
+    "name": "attach_target_name",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_flRadius",
+    "name": "radius",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_bSnapToHelperAngles",
+    "name": "snap_to_helper_angles",
+    "kind": [
+     "key"
+    ],
+    "field_type": 6
+   },
+   {
+    "field": "m_bForcePlacement",
+    "name": "force_placement",
+    "kind": [
+     "key"
+    ],
+    "field_type": 6
+   },
+   {
+    "field": "m_bDisabled",
+    "name": "StartDisabled",
+    "kind": [
+     "key"
+    ],
+    "field_type": 6
+   },
+   {
+    "field": "InputEnable",
+    "name": "Enable",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   }
+  ]
+ },
+ "CPortal_PointPush": {
+  "base": "CBaseEntity",
+  "fields": [
+   {
+    "field": "m_bEnabled",
+    "name": "enabled",
+    "kind": [
+     "key"
+    ],
+    "field_type": 6
+   },
+   {
+    "field": "m_flMagnitude",
+    "name": "magnitude",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_flRadius",
+    "name": "radius",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_flInnerRadius",
+    "name": "inner_radius",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_flConeOfInfluence",
+    "name": "influence_cone",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "InputEnable",
+    "name": "Enable",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   }
+  ]
+ },
+ "CPredictedFirstPersonProxy": {
+  "base": "CFirstPersonProxy",
+  "fields": []
+ },
+ "CFirstPersonProxy": {
+  "base": "CBaseAnimating",
+  "fields": []
+ },
+ "CGrappleHook": {
+  "base": "CBaseAnimating",
+  "fields": []
+ },
+ "CScriptTraceVolume": {
+  "base": "CBaseEntity",
+  "fields": [
+   {
+    "field": "m_drawDebug",
+    "name": "DrawDebug",
+    "kind": [
+     "key"
+    ],
+    "field_type": 6
+   }
+  ]
+ },
+ "CTurret": {
+  "base": "CBaseCombatCharacter",
+  "fields": [
+   {
+    "field": "m_settings",
+    "name": "Settings",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   }
+  ]
+ },
+ "CVortexSphere": {
+  "base": "CBaseEntity",
+  "fields": [
+   {
+    "field": "InputEnable",
+    "name": "Enable",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "m_enabled",
+    "name": "enabled",
+    "kind": [
+     "key"
+    ],
+    "field_type": 6
+   },
+   {
+    "field": "m_radius",
+    "name": "radius",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_height",
+    "name": "height",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_bulletFov",
+    "name": "bullet_fov",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   }
+  ]
+ },
+ "CCrossbowBolt": {
+  "base": null,
+  "fields": [
+   {
+    "field": "m_OnWeaponBoltHit",
+    "name": "OnWeaponBoltHit",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   }
+  ]
+ },
+ "CZipline": {
+  "base": "CBaseEntity",
+  "fields": []
+ },
+ "CZiplineEnd": {
+  "base": "CBaseEntity",
+  "fields": []
+ },
+ "CWeaponX": {
+  "base": "CBaseAnimating",
+  "fields": [
+   {
+    "field": "m_OnPlayerPickup",
+    "name": "OnPlayerPickup",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_OnNPCPickup",
+    "name": "OnNPCPickup",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_OnCacheInteraction",
+    "name": "OnCacheInteraction",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "InputHideWeapon",
+    "name": "HideWeapon",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   }
+  ]
+ },
+ "CEnvWindShared": {
+  "base": null,
+  "fields": [
+   {
+    "field": "m_OnGustStart",
+    "name": "OnGustStart",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_OnGustEnd",
+    "name": "OnGustEnd",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   }
+  ]
+ },
+ "CObserverMode": {
+  "base": null,
+  "fields": []
+ },
+ "CKnockBack": {
+  "base": null,
+  "fields": []
+ },
+ "CGameGibManager": {
+  "base": "CBaseEntity",
+  "fields": [
+   {
+    "field": "m_bAllowNewGibs",
+    "name": "allownewgibs",
+    "kind": [
+     "key"
+    ],
+    "field_type": 6
+   },
+   {
+    "field": "m_iMaxPieces",
+    "name": "maxpieces",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "InputSetMaxPieces",
+    "name": "SetMaxPieces",
+    "kind": [
+     "input"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "InputSetMaxPiecesDX8",
+    "name": "SetMaxPiecesDX8",
+    "kind": [
+     "input"
+    ],
+    "field_type": 5
+   }
+  ]
+ },
+ "CMultiDamage": {
+  "base": "CTakeDamageInfo",
+  "fields": []
+ },
+ "CTakeDamageInfo": {
+  "base": null,
+  "fields": []
+ },
+ "CRandSimTimer": {
+  "base": "CSimpleSimTimer",
+  "fields": []
+ },
+ "CStopwatchBase": {
+  "base": "CSimpleSimTimer",
+  "fields": []
+ },
+ "CStopwatch": {
+  "base": "CStopwatchBase",
+  "fields": []
+ },
+ "CRandStopwatch": {
+  "base": "CStopwatchBase",
+  "fields": []
+ },
+ "CSimpleSimTimer": {
+  "base": null,
+  "fields": []
+ },
+ "CSimTimer": {
+  "base": "CSimpleSimTimer",
+  "fields": []
+ },
+ "CLight": {
+  "base": "CBaseEntity",
+  "fields": [
+   {
+    "field": "m_iStyle",
+    "name": "style",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_iDefaultStyle",
+    "name": "defaultstyle",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_iszPattern",
+    "name": "pattern",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "InputSetPattern",
+    "name": "SetPattern",
+    "kind": [
+     "input"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "InputFadeToPattern",
+    "name": "FadeToPattern",
+    "kind": [
+     "input"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "InputToggle",
+    "name": "Toggle",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputTurnOn",
+    "name": "TurnOn",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputTurnOff",
+    "name": "TurnOff",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   }
+  ]
+ },
+ "CEnvLight": {
+  "base": "CLight",
+  "fields": []
+ },
+ "CAI_Path": {
+  "base": "CAI_Component",
+  "fields": []
+ },
+ "CAI_Senses": {
+  "base": "CAI_Component",
+  "fields": []
+ },
+ "CAI_Squad": {
+  "base": null,
+  "fields": []
+ },
+ "CAI_TacticalServices": {
+  "base": "CAI_Component",
+  "fields": []
+ },
+ "CAI_TrackPather": {
+  "base": "CAI_BaseNPC",
+  "fields": [
+   {
+    "field": "m_OnArrived",
+    "name": "OnArrived",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_defaultDesiredSpeed",
+    "name": "desiredSpeed",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "InputSetTrack",
+    "name": "SetTrack",
+    "kind": [
+     "input"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "InputFlyToPathTrack",
+    "name": "FlyToSpecificTrackViaPath",
+    "kind": [
+     "input"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "InputStartPatrol",
+    "name": "StartPatrol",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputStopPatrol",
+    "name": "StopPatrol",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputStartBreakableMovement",
+    "name": "StartBreakableMovement",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputStopBreakableMovement",
+    "name": "StopBreakableMovement",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputChooseFarthestPathPoint",
+    "name": "ChooseFarthestPathPoint",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputChooseNearestPathPoint",
+    "name": "ChooseNearestPathPoint",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputStartLeading",
+    "name": "InputStartLeading",
+    "kind": [
+     "input"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "InputStopLeading",
+    "name": "InputStopLeading",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputStartPatrolBreakable",
+    "name": "StartPatrolBreakable",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputFlyToPathTrack",
+    "name": "FlyToPathTrack",
+    "kind": [
+     "input"
+    ],
+    "field_type": 2
+   }
+  ]
+ },
+ "CAI_ShotRegulator": {
+  "base": null,
+  "fields": []
+ },
+ "CAI_MoveMonitor": {
+  "base": null,
+  "fields": []
+ },
+ "CAI_VelocityMonitor": {
+  "base": null,
+  "fields": []
+ },
+ "CAI_SkitNode": {
+  "base": "CBaseEntity",
+  "fields": []
+ },
+ "CAnimationLayer": {
+  "base": null,
+  "fields": []
+ },
+ "CTether": {
+  "base": null,
+  "fields": []
+ },
+ "CEventAction": {
+  "base": null,
+  "fields": []
+ },
+ "CEntityEventQueue": {
+  "base": null,
+  "fields": []
+ },
+ "CBaseEntityOutput": {
+  "base": null,
+  "fields": []
+ },
+ "CBaseHelicopter": {
+  "base": "CAI_TrackPather",
+  "fields": []
+ },
+ "CPointServerCommand": {
+  "base": "CBaseEntity",
+  "fields": [
+   {
+    "field": "InputCommand",
+    "name": "Command",
+    "kind": [
+     "input"
+    ],
+    "field_type": 2
+   }
+  ]
+ },
+ "CPointBroadcastClientCommand": {
+  "base": "CBaseEntity",
+  "fields": [
+   {
+    "field": "InputCommand",
+    "name": "Command",
+    "kind": [
+     "input"
+    ],
+    "field_type": 2
+   }
+  ]
+ },
+ "CPointClientCommand": {
+  "base": "CBaseEntity",
+  "fields": [
+   {
+    "field": "InputCommand",
+    "name": "Command",
+    "kind": [
+     "input"
+    ],
+    "field_type": 2
+   }
+  ]
+ },
+ "CEnvBeam": {
+  "base": "CBeam",
+  "fields": [
+   {
+    "field": "m_iszStartEntity",
+    "name": "LightningStart",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_iszEndEntity",
+    "name": "LightningEnd",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_life",
+    "name": "life",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_boltWidth",
+    "name": "BoltWidth",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_noiseAmplitude",
+    "name": "NoiseAmplitude",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_speed",
+    "name": "TextureScroll",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_restrike",
+    "name": "StrikeTime",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_iszSpriteName",
+    "name": "texture",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_frameStart",
+    "name": "framestart",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_vEndPointWorld",
+    "name": "targetpoint",
+    "kind": [
+     "key"
+    ],
+    "field_type": 3
+   },
+   {
+    "field": "m_radius",
+    "name": "Radius",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_TouchType",
+    "name": "TouchType",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_nClipStyle",
+    "name": "ClipStyle",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_OnTouchedByEntity",
+    "name": "OnTouchedByEntity",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "InputTurnOn",
+    "name": "TurnOn",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputTurnOff",
+    "name": "TurnOff",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputToggle",
+    "name": "Toggle",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputStrikeOnce",
+    "name": "StrikeOnce",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   }
+  ]
+ },
+ "CPhysicsShake": {
+  "base": null,
+  "fields": []
+ },
+ "CEnvShake": {
+  "base": "CBaseEntity",
+  "fields": [
+   {
+    "field": "m_Amplitude",
+    "name": "amplitude",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_Frequency",
+    "name": "frequency",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_Duration",
+    "name": "duration",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_Radius",
+    "name": "radius",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "InputStartShake",
+    "name": "StartShake",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputStopShake",
+    "name": "StopShake",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputAmplitude",
+    "name": "Amplitude",
+    "kind": [
+     "input"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "InputFrequency",
+    "name": "Frequency",
+    "kind": [
+     "input"
+    ],
+    "field_type": 1
+   }
+  ]
+ },
+ "CEnvLaser": {
+  "base": "CBeam",
+  "fields": [
+   {
+    "field": "m_iszLaserTarget",
+    "name": "LaserTarget",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_iszSpriteName",
+    "name": "EndSprite",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_flStartFrame",
+    "name": "framestart",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "InputTurnOn",
+    "name": "TurnOn",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputTurnOff",
+    "name": "TurnOff",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputToggle",
+    "name": "Toggle",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "m_OnTouchedByEntity",
+    "name": "OnTouchedByEntity",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   }
+  ]
+ },
+ "CEnvExplosion": {
+  "base": "CBaseEntity",
+  "fields": [
+   {
+    "field": "m_iMagnitude",
+    "name": "iMagnitude",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_iMagnitudeHeavyArmor",
+    "name": "iMagnitudeHeavyArmor",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_iRadiusOverride",
+    "name": "iRadiusOverride",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_iInnerRadius",
+    "name": "iInnerRadius",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_flDamageForce",
+    "name": "DamageForce",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_iClassIgnore",
+    "name": "ignoredClass",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "InputExplode",
+    "name": "Explode",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "m_scriptDamageInfo.m_scriptDamageType",
+    "name": "scriptDamageType",
+    "kind": [
+     "key",
+     "input"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_scriptDamageInfo.m_damageSourceIdentifier",
+    "name": "damageSourceId",
+    "kind": [
+     "key",
+     "input"
+    ],
+    "field_type": 5
+   }
+  ]
+ },
+ "CTempEntTester": {
+  "base": "CBaseEntity",
+  "fields": []
+ },
+ "CBreakable": {
+  "base": "CBaseEntity",
+  "fields": [
+   {
+    "field": "m_Explosion",
+    "name": "explosion",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_GibDir",
+    "name": "gibdir",
+    "kind": [
+     "key"
+    ],
+    "field_type": 3
+   },
+   {
+    "field": "m_ExplosionMagnitude",
+    "name": "explodemagnitude",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_flPressureDelay",
+    "name": "PressureDelay",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_iMinHealthDmg",
+    "name": "minhealthdmg",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_impactEnergyScale",
+    "name": "physdamagescale",
+    "kind": [
+     "key",
+     "input"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_OnBreak",
+    "name": "OnBreak",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_OnHealthChanged",
+    "name": "OnHealthChanged",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_PerformanceMode",
+    "name": "PerformanceMode",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "InputBreak",
+    "name": "Break",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputSetHealth",
+    "name": "SetHealth",
+    "kind": [
+     "input"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "InputAddHealth",
+    "name": "AddHealth",
+    "kind": [
+     "input"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "InputRemoveHealth",
+    "name": "RemoveHealth",
+    "kind": [
+     "input"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "InputSetMass",
+    "name": "SetMass",
+    "kind": [
+     "input"
+    ],
+    "field_type": 1
+   }
+  ]
+ },
+ "CGameUIEntity": {
+  "base": "CBaseEntity",
+  "fields": [
+   {
+    "field": "m_flFieldOfView",
+    "name": "FieldOfView",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "InputDeactivate",
+    "name": "Deactivate",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputActivate",
+    "name": "Activate",
+    "kind": [
+     "input"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_playerOn",
+    "name": "PlayerOn",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_playerOff",
+    "name": "PlayerOff",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_pressedMoveLeft",
+    "name": "PressedMoveLeft",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_pressedMoveRight",
+    "name": "PressedMoveRight",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_pressedForward",
+    "name": "PressedForward",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_pressedBack",
+    "name": "PressedBack",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_pressedAttack",
+    "name": "PressedAttack",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_pressedJump",
+    "name": "PressedJump",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_pressedUse",
+    "name": "PressedUse",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_pressedReload",
+    "name": "PressedReload",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_pressedUseAndReload",
+    "name": "PressedUseAndReload",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_pressedSpeed",
+    "name": "PressedSpeed",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_pressedZoom",
+    "name": "PressedZoom",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_pressedOffhand0",
+    "name": "PressedOffhand0",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_pressedOffhand1",
+    "name": "PressedOffhand1",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_pressedOffhand2",
+    "name": "PressedOffhand2",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_pressedOffhand3",
+    "name": "PressedOffhand3",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_pressedOffhand4",
+    "name": "PressedOffhand4",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_pressedDuck",
+    "name": "PressedDuck",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_pressedWeaponCycle",
+    "name": "PressedWeaponCycle",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_pressedPauseMenu",
+    "name": "PressedPauseMenu",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_unpressedMoveLeft",
+    "name": "UnpressedMoveLeft",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_unpressedMoveRight",
+    "name": "UnpressedMoveRight",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_unpressedForward",
+    "name": "UnpressedForward",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_unpressedBack",
+    "name": "UnpressedBack",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_unpressedAttack",
+    "name": "UnpressedAttack",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_unpressedJump",
+    "name": "UnpressedJump",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_unpressedUse",
+    "name": "UnpressedUse",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_unpressedReload",
+    "name": "UnpressedReload",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_unpressedUseAndReload",
+    "name": "UnpressedUseAndReload",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_unpressedSpeed",
+    "name": "UnpressedSpeed",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_unpressedZoom",
+    "name": "UnpressedZoom",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_unpressedOffhand0",
+    "name": "UnpressedOffhand1",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_unpressedOffhand1",
+    "name": "UnpressedOffhand1",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_unpressedOffhand2",
+    "name": "UnpressedOffhand2",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_unpressedOffhand3",
+    "name": "UnpressedOffhand3",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_unpressedOffhand4",
+    "name": "UnpressedOffhand4",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_unpressedDuck",
+    "name": "UnpressedDuck",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_unpressedWeaponCycle",
+    "name": "UnpressedWeaponCycle",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_unpressedPauseMenu",
+    "name": "UnpressedPauseMenu",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_xaxis",
+    "name": "XAxis",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_yaxis",
+    "name": "YAxis",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_attackaxis",
+    "name": "AttackAxis",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   }
+  ]
+ },
+ "CGameOperator": {
+  "base": "CGameUIEntity",
+  "fields": [
+   {
+    "field": "m_iszPrimaryDropPod",
+    "name": "primarypod",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_iszSecondaryDropPod",
+    "name": "secondarypod",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "InputSetPrimaryDropPod",
+    "name": "SetPrimaryDropPod",
+    "kind": [
+     "input"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "InputSetSecondaryDropPod",
+    "name": "SetSecondaryDropPod",
+    "kind": [
+     "input"
+    ],
+    "field_type": 2
+   }
+  ]
+ },
+ "CItem": {
+  "base": "CBaseAnimating",
+  "fields": [
+   {
+    "field": "m_OnPlayerTouch",
+    "name": "OnPlayerTouch",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_OnCacheInteraction",
+    "name": "OnCacheInteraction",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   }
+  ]
+ },
+ "CWorldItem": {
+  "base": "CBaseAnimating",
+  "fields": []
+ },
+ "CInfoCameraLink": {
+  "base": "CBaseEntity",
+  "fields": [
+   {
+    "field": "m_strPointCamera",
+    "name": "PointCamera",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "InputSetCamera",
+    "name": "SetCamera",
+    "kind": [
+     "input"
+    ],
+    "field_type": 2
+   }
+  ]
+ },
+ "CGameText": {
+  "base": "CRulePointEntity",
+  "fields": [
+   {
+    "field": "m_iszMessage",
+    "name": "message",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_textParms.channel",
+    "name": "channel",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_textParms.x",
+    "name": "x",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_textParms.y",
+    "name": "y",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_textParms.effect",
+    "name": "effect",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_textParms.fadeinTime",
+    "name": "fadein",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_textParms.fadeoutTime",
+    "name": "fadeout",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_textParms.holdTime",
+    "name": "holdtime",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_textParms.fxTime",
+    "name": "fxtime",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "InputDisplay",
+    "name": "Display",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputSetText",
+    "name": "SetText",
+    "kind": [
+     "input"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "InputSetPosX",
+    "name": "SetPosX",
+    "kind": [
+     "input"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "InputSetPosY",
+    "name": "SetPosY",
+    "kind": [
+     "input"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "InputSetTextColor",
+    "name": "SetTextColor",
+    "kind": [
+     "input"
+    ],
+    "field_type": 9
+   },
+   {
+    "field": "InputSetTextColor2",
+    "name": "SetTextColor2",
+    "kind": [
+     "input"
+    ],
+    "field_type": 9
+   }
+  ]
+ },
+ "CRuleEntity": {
+  "base": "CBaseEntity",
+  "fields": [
+   {
+    "field": "m_iszMaster",
+    "name": "master",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   }
+  ]
+ },
+ "CRulePointEntity": {
+  "base": "CRuleEntity",
+  "fields": []
+ },
+ "CMessageEntity": {
+  "base": "CBaseEntity",
+  "fields": [
+   {
+    "field": "m_radius",
+    "name": "radius",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_messageText",
+    "name": "message",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_bDeveloperOnly",
+    "name": "developeronly",
+    "kind": [
+     "key"
+    ],
+    "field_type": 6
+   },
+   {
+    "field": "InputEnable",
+    "name": "Enable",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   }
+  ]
+ },
+ "CGamePlayerEquip": {
+  "base": "CRulePointEntity",
+  "fields": []
+ },
+ "CTriggerBrush": {
+  "base": "CBaseEntity",
+  "fields": [
+   {
+    "field": "m_OnStartTouch",
+    "name": "OnStartTouch",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_OnEndTouch",
+    "name": "OnEndTouch",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_OnUse",
+    "name": "OnUse",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_iInputFilter",
+    "name": "InputFilter",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_iDontMessageParent",
+    "name": "DontMessageParent",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "InputEnable",
+    "name": "Enable",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   }
+  ]
+ },
+ "CNPC_Flyer": {
+  "base": "CAI_BaseFlyingBot",
+  "fields": []
+ },
+ "CNPC_Goliath": {
+  "base": "CAI_BaseActor",
+  "fields": []
+ },
+ "CNPC_Gunship": {
+  "base": "CBaseHelicopter",
+  "fields": []
+ },
+ "CNPC_MeleeOnly": {
+  "base": "CAI_BaseActor",
+  "fields": []
+ },
+ "CSearchPath": {
+  "base": "CBaseEntity",
+  "fields": [
+   {
+    "field": "m_preference",
+    "name": "preference",
+    "kind": [
+     "key"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_maxCount",
+    "name": "maxCount",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_pathType",
+    "name": "pathType",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   }
+  ]
+ },
+ "CPathCorner": {
+  "base": "CBaseEntity",
+  "fields": [
+   {
+    "field": "m_scriptFuncName",
+    "name": "scriptFunc",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_forkTarget",
+    "name": "forkTarget",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_forkChance",
+    "name": "forkChance",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_flWaitTime",
+    "name": "waitTime",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_OnPass",
+    "name": "OnPass",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "InputSetNextPathCorner",
+    "name": "SetNextPathCorner",
+    "kind": [
+     "input"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "InputInPass",
+    "name": "InPass",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   }
+  ]
+ },
+ "CPathTrack": {
+  "base": "CBaseEntity",
+  "fields": [
+   {
+    "field": "m_flRadius",
+    "name": "radius",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_altName",
+    "name": "altpath",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_eOrientationType",
+    "name": "orientationtype",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_OnPass",
+    "name": "OnPass",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "InputPass",
+    "name": "InPass",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputEnableAlternatePath",
+    "name": "EnableAlternatePath",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputDisableAlternatePath",
+    "name": "DisableAlternatePath",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputToggleAlternatePath",
+    "name": "ToggleAlternatePath",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputEnablePath",
+    "name": "EnablePath",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputDisablePath",
+    "name": "DisablePath",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputTogglePath",
+    "name": "TogglePath",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   }
+  ]
+ },
+ "CBoneFollowerManager": {
+  "base": null,
+  "fields": []
+ },
+ "CPhysicsEntitySolver": {
+  "base": "CBaseEntity",
+  "fields": []
+ },
+ "CPhysicsNPCSolver": {
+  "base": "CBaseEntity",
+  "fields": []
+ },
+ "CPhysExplosion": {
+  "base": "CBaseEntity",
+  "fields": [
+   {
+    "field": "m_damage",
+    "name": "magnitude",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_radius",
+    "name": "radius",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_targetEntityName",
+    "name": "targetentityname",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_flInnerRadius",
+    "name": "inner_radius",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_scriptDamageInfo.m_scriptDamageType",
+    "name": "scriptDamageType",
+    "kind": [
+     "key",
+     "input"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_scriptDamageInfo.m_damageSourceIdentifier",
+    "name": "damageSourceId",
+    "kind": [
+     "key",
+     "input"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "InputExplode",
+    "name": "Explode",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputExplodeAndRemove",
+    "name": "ExplodeAndRemove",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "m_OnPushedPlayer",
+    "name": "OnPushedPlayer",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   }
+  ]
+ },
+ "CConstantForceController": {
+  "base": null,
+  "fields": []
+ },
+ "CPhysConvert": {
+  "base": "CBaseEntity",
+  "fields": [
+   {
+    "field": "m_OnConvert",
+    "name": "OnConvert",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_swapModel",
+    "name": "swapmodel",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_flMassOverride",
+    "name": "massoverride",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "InputConvertTarget",
+    "name": "ConvertTarget",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   }
+  ]
+ },
+ "CPhysImpact": {
+  "base": "CBaseEntity",
+  "fields": [
+   {
+    "field": "m_damage",
+    "name": "magnitude",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_distance",
+    "name": "distance",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_directionEntityName",
+    "name": "directionentityname",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "InputImpact",
+    "name": "Impact",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   }
+  ]
+ },
+ "CPhysForce": {
+  "base": "CBaseEntity",
+  "fields": [
+   {
+    "field": "m_nameAttach",
+    "name": "attach1",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_force",
+    "name": "force",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_forceTime",
+    "name": "forcetime",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "InputActivate",
+    "name": "Activate",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputDeactivate",
+    "name": "Deactivate",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputForceScale",
+    "name": "scale",
+    "kind": [
+     "input"
+    ],
+    "field_type": 1
+   }
+  ]
+ },
+ "CRevertSaved": {
+  "base": "CBaseEntity",
+  "fields": [
+   {
+    "field": "m_loadTime",
+    "name": "loadtime",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_Duration",
+    "name": "duration",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_HoldTime",
+    "name": "holdtime",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "InputReload",
+    "name": "Reload",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   }
+  ]
+ },
+ "CMovementSpeedMod": {
+  "base": "CBaseEntity",
+  "fields": [
+   {
+    "field": "InputSpeedMod",
+    "name": "ModifySpeed",
+    "kind": [
+     "input"
+    ],
+    "field_type": 1
+   }
+  ]
+ },
+ "CPlayerLocalData": {
+  "base": null,
+  "fields": []
+ },
+ "CFogParams": {
+  "base": null,
+  "fields": []
+ },
+ "CPointPlayerMoveConstraint": {
+  "base": "CBaseEntity",
+  "fields": [
+   {
+    "field": "m_flRadius",
+    "name": "radius",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_flConstraintWidth",
+    "name": "width",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_flSpeedFactor",
+    "name": "speedfactor",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "InputTurnOn",
+    "name": "TurnOn",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputTurnOff",
+    "name": "TurnOff",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "m_OnConstraintBroken",
+    "name": "OnConstraintBroken",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   }
+  ]
+ },
+ "CPointSpotlight": {
+  "base": "CBaseEntity",
+  "fields": [
+   {
+    "field": "m_flSpotlightMaxLength",
+    "name": "SpotlightLength",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_flSpotlightGoalWidth",
+    "name": "SpotlightWidth",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_flHDRColorScale",
+    "name": "HDRColorScale",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "InputLightOn",
+    "name": "LightOn",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputLightOff",
+    "name": "LightOff",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputSetColor",
+    "name": "SetColor",
+    "kind": [
+     "input"
+    ],
+    "field_type": 9
+   },
+   {
+    "field": "InputForceUpdate",
+    "name": "ForceUpdate",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "m_OnOn",
+    "name": "OnLightOn",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_OnOff",
+    "name": "OnLightOff",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   }
+  ]
+ },
+ "CPointTemplate": {
+  "base": "CBaseEntity",
+  "fields": [
+   {
+    "field": "m_iszTemplateEntityNames[0]",
+    "name": "Template01",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_iszTemplateEntityNames[1]",
+    "name": "Template02",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_iszTemplateEntityNames[2]",
+    "name": "Template03",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_iszTemplateEntityNames[3]",
+    "name": "Template04",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_iszTemplateEntityNames[4]",
+    "name": "Template05",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_iszTemplateEntityNames[5]",
+    "name": "Template06",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_iszTemplateEntityNames[6]",
+    "name": "Template07",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_iszTemplateEntityNames[7]",
+    "name": "Template08",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_iszTemplateEntityNames[8]",
+    "name": "Template09",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_iszTemplateEntityNames[9]",
+    "name": "Template10",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_iszTemplateEntityNames[10]",
+    "name": "Template11",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_iszTemplateEntityNames[11]",
+    "name": "Template12",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_iszTemplateEntityNames[12]",
+    "name": "Template13",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_iszTemplateEntityNames[13]",
+    "name": "Template14",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_iszTemplateEntityNames[14]",
+    "name": "Template15",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_iszTemplateEntityNames[15]",
+    "name": "target",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "InputForceSpawn",
+    "name": "ForceSpawn",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "m_pOutputOnSpawned",
+    "name": "OnEntitySpawned",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   }
+  ]
+ },
+ "CEnvDropZone": {
+  "base": "CBaseEntity",
+  "fields": [
+   {
+    "field": "m_Radius",
+    "name": "radius",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_Width",
+    "name": "width",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_iszDropPoints",
+    "name": "droppoints",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "InputTurnOn",
+    "name": "TurnOn",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputTurnOn",
+    "name": "TurnOff",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputSetColor",
+    "name": "SetColor",
+    "kind": [
+     "input"
+    ],
+    "field_type": 9
+   },
+   {
+    "field": "InputSetWidth",
+    "name": "SetWidth",
+    "kind": [
+     "input"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "InputFireOutput",
+    "name": "FireOutput",
+    "kind": [
+     "input"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_pOutputOnDropPodIncoming",
+    "name": "OnDropPodIncoming",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_pOutputOnDropPodImpact",
+    "name": "OnDropPodImpact",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_pOutputOnDropPointIncoming",
+    "name": "OnDropPointIncoming",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_pOutputOnDropPointImpact",
+    "name": "OnDropPointImpact",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   }
+  ]
+ },
+ "CDropPoint": {
+  "base": "CBaseEntity",
+  "fields": [
+   {
+    "field": "m_pOutputOnDropPodIncoming",
+    "name": "OnDropPodIncoming",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_pOutputOnDropPodImpact",
+    "name": "OnDropPodImpact",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "InputFireOutput",
+    "name": "FireOutput",
+    "kind": [
+     "input"
+    ],
+    "field_type": 2
+   }
+  ]
+ },
+ "CDropPodProp": {
+  "base": "CDynamicProp",
+  "fields": [
+   {
+    "field": "m_BoostSpeed",
+    "name": "boostspeed",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_minArc",
+    "name": "minarc",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_maxArc",
+    "name": "maxarc",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_explosionMagnitude",
+    "name": "expmagnitude",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_outerRadius",
+    "name": "outerradius",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_innerRadius",
+    "name": "innerradius",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_boostEnabled",
+    "name": "boostenabled",
+    "kind": [
+     "key"
+    ],
+    "field_type": 6
+   },
+   {
+    "field": "m_attachActivator",
+    "name": "attachactivator",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_iszLaunchParent",
+    "name": "launchparent",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "InputSetDropTarget",
+    "name": "SetDropTarget",
+    "kind": [
+     "input"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "InputLaunch",
+    "name": "Launch",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputLaunchAtEntityOrigin",
+    "name": "LaunchAtEntityOrigin",
+    "kind": [
+     "input"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "InputFireOutput",
+    "name": "FireOutput",
+    "kind": [
+     "input"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_pOutputOnLaunched",
+    "name": "OnLaunch",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_pOutputOnImpact",
+    "name": "OnImpact",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   }
+  ]
+ },
+ "CServerNetworkProperty": {
+  "base": null,
+  "fields": []
+ },
+ "CSkyboxSwapper": {
+  "base": "CBaseEntity",
+  "fields": [
+   {
+    "field": "m_iszSkyboxName",
+    "name": "SkyboxName",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "InputTrigger",
+    "name": "Trigger",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   }
+  ]
+ },
+ "CEnvSoundscapeProxy": {
+  "base": "CEnvSoundscape",
+  "fields": [
+   {
+    "field": "m_MainSoundscapeName",
+    "name": "MainSoundscapeName",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   }
+  ]
+ },
+ "CEnvSoundscape": {
+  "base": "CBaseEntity",
+  "fields": [
+   {
+    "field": "m_OnPlay",
+    "name": "OnPlay",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_flRadius",
+    "name": "radius",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_positionNames[0]",
+    "name": "position0",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_positionNames[1]",
+    "name": "position1",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_positionNames[2]",
+    "name": "position2",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_positionNames[3]",
+    "name": "position3",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_positionNames[4]",
+    "name": "position4",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_positionNames[5]",
+    "name": "position5",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_positionNames[6]",
+    "name": "position6",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_positionNames[7]",
+    "name": "position7",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_bRequireLOS",
+    "name": "requireLOS",
+    "kind": [
+     "key"
+    ],
+    "field_type": 6
+   },
+   {
+    "field": "m_bDisabled",
+    "name": "StartDisabled",
+    "kind": [
+     "key"
+    ],
+    "field_type": 6
+   },
+   {
+    "field": "InputEnable",
+    "name": "Enable",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputToggleEnabled",
+    "name": "ToggleEnabled",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   }
+  ]
+ },
+ "CSoundEnt": {
+  "base": "CBaseEntity",
+  "fields": []
+ },
+ "CSound": {
+  "base": null,
+  "fields": []
+ },
+ "CEnvSoundscapeTriggerable": {
+  "base": "CEnvSoundscape",
+  "fields": []
+ },
+ "CTriggerSoundscape": {
+  "base": "CBaseTrigger",
+  "fields": [
+   {
+    "field": "m_SoundscapeName_DEPRECATED",
+    "name": "soundscape",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   }
+  ]
+ },
+ "CSpawner": {
+  "base": "CBaseEntity",
+  "fields": []
+ },
+ "CBaseDMStart": {
+  "base": "CBaseEntity",
+  "fields": [
+   {
+    "field": "m_Master",
+    "name": "master",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   }
+  ]
+ },
+ "CTeamSpawnPoint": {
+  "base": "CBaseEntity",
+  "fields": [
+   {
+    "field": "m_OnPlayerSpawn",
+    "name": "OnPlayerSpawn",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_iDisabled",
+    "name": "StartDisabled",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "InputEnable",
+    "name": "Enable",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   }
+  ]
+ },
+ "CTeamVehicleSpawnPoint": {
+  "base": "CTeamSpawnPoint",
+  "fields": [
+   {
+    "field": "m_OnVehicleSpawn",
+    "name": "OnVehicleSpawn",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   }
+  ]
+ },
+ "CTriggerRemove": {
+  "base": "CBaseTrigger",
+  "fields": [
+   {
+    "field": "m_OnRemove",
+    "name": "OnRemove",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   }
+  ]
+ },
+ "CTriggerHurt": {
+  "base": "CBaseTrigger",
+  "fields": [
+   {
+    "field": "m_flDamage",
+    "name": "damage",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_flDamageCap",
+    "name": "damagecap",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_bitsDamageInflict",
+    "name": "damagetype",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_damageModel",
+    "name": "damagemodel",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_OnHurt",
+    "name": "OnHurt",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_OnHurtPlayer",
+    "name": "OnHurtPlayer",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_scriptDamageInfo.m_scriptDamageType",
+    "name": "scriptDamageType",
+    "kind": [
+     "key",
+     "input"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_scriptDamageInfo.m_damageSourceIdentifier",
+    "name": "damageSourceId",
+    "kind": [
+     "key",
+     "input"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_flDamage",
+    "name": "SetDamage",
+    "kind": [
+     "key",
+     "input"
+    ],
+    "field_type": 1
+   }
+  ]
+ },
+ "CTriggerLook": {
+  "base": "CTriggerMultiple",
+  "fields": [
+   {
+    "field": "m_flFieldOfView",
+    "name": "FieldOfView",
+    "kind": [
+     "key",
+     "input"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_flLookTime",
+    "name": "LookTime",
+    "kind": [
+     "key",
+     "input"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_flTimeoutDuration",
+    "name": "timeout",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_OnTimeout",
+    "name": "OnTimeout",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   }
+  ]
+ },
+ "CTriggerMultiple": {
+  "base": "CBaseTrigger",
+  "fields": [
+   {
+    "field": "m_OnTrigger",
+    "name": "OnTrigger",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "InputTrigger",
+    "name": "Trigger",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   }
+  ]
+ },
+ "CTriggerGravity": {
+  "base": "CBaseTrigger",
+  "fields": []
+ },
+ "CAI_ChangeTarget": {
+  "base": "CBaseEntity",
+  "fields": [
+   {
+    "field": "m_iszNewTarget",
+    "name": "m_iszNewTarget",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "InputActivate",
+    "name": "Activate",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   }
+  ]
+ },
+ "CTriggerTeleport": {
+  "base": "CBaseTrigger",
+  "fields": [
+   {
+    "field": "m_iLandmark",
+    "name": "landmark",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_bUseLandmarkAngles",
+    "name": "UseLandmarkAngles",
+    "kind": [
+     "key"
+    ],
+    "field_type": 6
+   },
+   {
+    "field": "InputSetTarget",
+    "name": "SetRemoteDestination",
+    "kind": [
+     "input"
+    ],
+    "field_type": 2
+   }
+  ]
+ },
+ "CTriggerPush": {
+  "base": "CBaseTrigger",
+  "fields": [
+   {
+    "field": "m_vecPushDir",
+    "name": "pushdir",
+    "kind": [
+     "key"
+    ],
+    "field_type": 3
+   },
+   {
+    "field": "m_flAlternateTicksFix",
+    "name": "alternateticksfix",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_flSpeed",
+    "name": "pushspeed",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "InputSetPushDirection",
+    "name": "SetPushDirection",
+    "kind": [
+     "input"
+    ],
+    "field_type": 3
+   }
+  ]
+ },
+ "CTriggerCamera": {
+  "base": "CBaseEntity",
+  "fields": [
+   {
+    "field": "m_fov",
+    "name": "fov",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_fovSpeed",
+    "name": "fov_rate",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_trackSpeed",
+    "name": "trackspeed",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_iszTargetAttachment",
+    "name": "targetattachment",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_OnEndFollow",
+    "name": "OnEndFollow",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "InputEnable",
+    "name": "Enable",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputSetTarget",
+    "name": "SetTarget",
+    "kind": [
+     "input"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "InputSetTargetAttachment",
+    "name": "SetTargetAttachment",
+    "kind": [
+     "input"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "InputReturnToEyes",
+    "name": "ReturnToEyes",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputTeleportToView",
+    "name": "TeleportToView",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputSetPath",
+    "name": "SetPath",
+    "kind": [
+     "input"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "InputSetTrackSpeed",
+    "name": "SetTrackSpeed",
+    "kind": [
+     "input"
+    ],
+    "field_type": 1
+   }
+  ]
+ },
+ "CTriggerViewProxy": {
+  "base": "CBaseEntity",
+  "fields": [
+   {
+    "field": "m_sProxy",
+    "name": "proxy",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_sProxyAttachment",
+    "name": "proxyattachment",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_nOffsetType",
+    "name": "offsettype",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_flTiltFraction",
+    "name": "tiltfraction",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_bUseFakeAcceleration",
+    "name": "usefakeacceleration",
+    "kind": [
+     "key"
+    ],
+    "field_type": 6
+   },
+   {
+    "field": "m_bSkewAccelerationForward",
+    "name": "skewaccelerationforward",
+    "kind": [
+     "key"
+    ],
+    "field_type": 6
+   },
+   {
+    "field": "m_flAccelerationScalar",
+    "name": "accelerationscalar",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_bEaseAnglesToCamera",
+    "name": "easeanglestocamera",
+    "kind": [
+     "key"
+    ],
+    "field_type": 6
+   },
+   {
+    "field": "InputEnable",
+    "name": "Enable",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputTeleportPlayerToProxy",
+    "name": "TeleportPlayerToProxy",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   }
+  ]
+ },
+ "CTriggerWind": {
+  "base": "CBaseVPhysicsTrigger",
+  "fields": [
+   {
+    "field": "m_nSpeedNoise",
+    "name": "SpeedNoise",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_nDirNoise",
+    "name": "DirectionNoise",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_nHoldBase",
+    "name": "HoldTime",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_nHoldNoise",
+    "name": "HoldNoise",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "InputSetSpeed",
+    "name": "SetSpeed",
+    "kind": [
+     "input"
+    ],
+    "field_type": 5
+   }
+  ]
+ },
+ "CPhysicsWind": {
+  "base": null,
+  "fields": []
+ },
+ "CTriggerProximity": {
+  "base": "CBaseTrigger",
+  "fields": [
+   {
+    "field": "m_iszMeasureTarget",
+    "name": "measuretarget",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_fRadius",
+    "name": "radius",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_NearestEntityDistance",
+    "name": "NearestEntityDistance",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   }
+  ]
+ },
+ "CTriggerCylinder": {
+  "base": "CTriggerMultiple",
+  "fields": []
+ },
+ "CTriggerAutoCrouch": {
+  "base": "CBaseTrigger",
+  "fields": []
+ },
+ "CTriggerLocation": {
+  "base": "CTriggerMultiple",
+  "fields": [
+   {
+    "field": "m_location",
+    "name": "location",
+    "kind": [
+     "key",
+     "input"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_precise",
+    "name": "precise",
+    "kind": [
+     "key",
+     "input"
+    ],
+    "field_type": 6
+   }
+  ]
+ },
+ "CTriggerImpact": {
+  "base": "CTriggerMultiple",
+  "fields": [
+   {
+    "field": "m_flMagnitude",
+    "name": "Magnitude",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_flNoise",
+    "name": "Noise",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_flViewkick",
+    "name": "Viewkick",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "InputImpact",
+    "name": "Impact",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputSetMagnitude",
+    "name": "SetMagnitude",
+    "kind": [
+     "input"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_pOutputForce",
+    "name": "ImpactForce",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   }
+  ]
+ },
+ "CAI_BaseActor": {
+  "base": "CAI_BaseNPC",
+  "fields": [
+   {
+    "field": "m_onNewLookTarget",
+    "name": "OnNewLookTarget",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   }
+  ]
+ },
+ "CAI_InterestTarget_t": {
+  "base": null,
+  "fields": []
+ },
+ "CAI_BaseFlyingBot": {
+  "base": "CAI_BaseNPC",
+  "fields": []
+ },
+ "CAI_BehaviorBase": {
+  "base": "CAI_Component",
+  "fields": []
+ },
+ "CAI_Component": {
+  "base": null,
+  "fields": []
+ },
+ "CAI_AssaultBehavior": {
+  "base": "CAI_BehaviorBase",
+  "fields": [
+   {
+    "field": "m_OnAssaultClear",
+    "name": "OnAssaultClear",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   }
+  ]
+ },
+ "CAssaultPoint": {
+  "base": "CBaseEntity",
+  "fields": [
+   {
+    "field": "m_flAllowDiversionRadius",
+    "name": "allowdiversionradius",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_flArrivalTolerance",
+    "name": "arrivaltolerance",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_bFaceAssaultPointAngles",
+    "name": "faceAssaultPointAngles",
+    "kind": [
+     "key"
+    ],
+    "field_type": 6
+   },
+   {
+    "field": "m_bFinalDestination",
+    "name": "finalDestination",
+    "kind": [
+     "key"
+    ],
+    "field_type": 6
+   }
+  ]
+ },
+ "CAI_FollowBehavior": {
+  "base": "CAI_BehaviorBase",
+  "fields": []
+ },
+ "CAI_SearchBehavior": {
+  "base": "CAI_BehaviorBase",
+  "fields": []
+ },
+ "CAI_BlendedMotor": {
+  "base": "CAI_Motor",
+  "fields": []
+ },
+ "CAI_PatrolBehavior": {
+  "base": "CAI_BehaviorBase",
+  "fields": []
+ },
+ "CAI_Combatant": {
+  "base": "CAI_BaseActor",
+  "fields": [
+   {
+    "field": "m_maxSnipingRetry",
+    "name": "maxSnipingRetry",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_maxSniperShots",
+    "name": "maxSniperShots",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_iTacticalVariant",
+    "name": "tacticalvariant",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_iPathfindingVariant",
+    "name": "pathfindingvariant",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   }
+  ]
+ },
+ "CAI_DynamicLink": {
+  "base": "CBaseEntity",
+  "fields": [
+   {
+    "field": "m_nSrcEditID",
+    "name": "startnode",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_nDestEditID",
+    "name": "endnode",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_nLinkState",
+    "name": "initialstate",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_strAllowUse",
+    "name": "AllowUse",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_bPreciseMovement",
+    "name": "preciseMovement",
+    "kind": [
+     "key"
+    ],
+    "field_type": 6
+   },
+   {
+    "field": "m_nLinkType",
+    "name": "linktype",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_nPriority",
+    "name": "Priority",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "InputTurnOn",
+    "name": "TurnOn",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputTurnOff",
+    "name": "TurnOff",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   }
+  ]
+ },
+ "CAI_DynamicLinkController": {
+  "base": "CBaseEntity",
+  "fields": [
+   {
+    "field": "m_nLinkState",
+    "name": "initialstate",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_strAllowUse",
+    "name": "AllowUse",
+    "kind": [
+     "key"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "m_nPriority",
+    "name": "Priority",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "m_bInvertAllow",
+    "name": "InvertAllow",
+    "kind": [
+     "key"
+    ],
+    "field_type": 6
+   },
+   {
+    "field": "m_bUseAirLinkRadius",
+    "name": "useairlinkradius",
+    "kind": [
+     "key"
+    ],
+    "field_type": 6
+   },
+   {
+    "field": "InputTurnOn",
+    "name": "TurnOn",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputTurnOff",
+    "name": "TurnOff",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputSetAllowed",
+    "name": "SetAllowed",
+    "kind": [
+     "input"
+    ],
+    "field_type": 2
+   },
+   {
+    "field": "InputSetInvert",
+    "name": "SetInvert",
+    "kind": [
+     "input"
+    ],
+    "field_type": 6
+   }
+  ]
+ },
+ "CAI_Hint": {
+  "base": "CBaseEntity",
+  "fields": [
+   {
+    "field": "m_nodeFOV",
+    "name": "nodeFOV",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   }
+  ]
+ },
+ "CAI_RadialLinkController": {
+  "base": "CBaseEntity",
+  "fields": [
+   {
+    "field": "m_flRadius",
+    "name": "radius",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   }
+  ]
+ },
+ "CNodeEnt": {
+  "base": "CBaseEntity",
+  "fields": []
+ },
+ "CTraverseRef": {
+  "base": "CBaseEntity",
+  "fields": [
+   {
+    "field": "traverseType",
+    "name": "traverseType",
+    "kind": [
+     "key"
+    ],
+    "field_type": 5
+   }
+  ]
+ },
+ "CAI_TestHull": {
+  "base": "CAI_BaseNPC",
+  "fields": []
+ },
+ "CAI_Enemies": {
+  "base": "CAI_Component",
+  "fields": []
+ },
+ "CAI_LocalNavigator": {
+  "base": "CAI_Component",
+  "fields": []
+ },
+ "CAI_Motor": {
+  "base": "CAI_Component",
+  "fields": []
+ },
+ "CAI_MoveAndShootOverlay": {
+  "base": "CAI_Component",
+  "fields": []
+ },
+ "CAI_MoveProbe": {
+  "base": "CAI_Component",
+  "fields": []
+ },
+ "CAI_Navigator": {
+  "base": "CAI_Component",
+  "fields": []
+ },
+ "CAI_Pathfinder": {
+  "base": "CAI_Component",
+  "fields": []
+ },
+ "CNPC_Bullseye": {
+  "base": "CAI_BaseNPC",
+  "fields": [
+   {
+    "field": "m_OnTargeted",
+    "name": "OnTargeted",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_OnReleased",
+    "name": "OnReleased",
+    "kind": [
+     "key",
+     "output"
+    ],
+    "field_type": 11
+   },
+   {
+    "field": "m_flMinDistValidEnemy",
+    "name": "mindist",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_fieldOfViewCos",
+    "name": "minangle",
+    "kind": [
+     "key"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "m_bAlwaysTransmitToClient",
+    "name": "alwaystransmit",
+    "kind": [
+     "key"
+    ],
+    "field_type": 6
+   },
+   {
+    "field": "InputTargeted",
+    "name": "InputTargeted",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   },
+   {
+    "field": "InputReleased",
+    "name": "InputReleased",
+    "kind": [
+     "input"
+    ],
+    "field_type": 0
+   }
+  ]
+ },
+ "CWindowHint": {
+  "base": "CGameplayHint",
+  "fields": [
+   {
+    "field": "normal",
+    "name": "normal",
+    "kind": [
+     "key",
+     "input"
+    ],
+    "field_type": 3
+   },
+   {
+    "field": "right",
+    "name": "right",
+    "kind": [
+     "key",
+     "input"
+    ],
+    "field_type": 3
+   },
+   {
+    "field": "halfSize[0]",
+    "name": "halfwidth",
+    "kind": [
+     "key",
+     "input"
+    ],
+    "field_type": 1
+   },
+   {
+    "field": "halfSize[1]",
+    "name": "halfheight",
+    "kind": [
+     "key",
+     "input"
+    ],
+    "field_type": 1
+   }
+  ]
+ },
+ "CWallrunCurve": {
+  "base": "CGameplayHint",
+  "fields": [
+   {
+    "field": "width",
+    "name": "width",
+    "kind": [
+     "key",
+     "input"
+    ],
+    "field_type": 5
+   },
+   {
+    "field": "height",
+    "name": "height",
+    "kind": [
+     "key",
+     "input"
+    ],
+    "field_type": 5
+   }
+  ]
+ },
+ "CGameplayHint": {
+  "base": "CBaseEntity",
+  "fields": []
+ },
+ "CZiplinePhysicsAttachedEntity": {
+  "base": null,
+  "fields": []
+ },
+ "CZiplinePhysics": {
+  "base": null,
+  "fields": []
+ },
+ "CZiplinePhysicsNode": {
+  "base": null,
+  "fields": []
+ },
+ "CNPC_Marvin": {
+  "base": "CAI_BaseActor",
+  "fields": []
+ },
+ "CNPC_Pilot": {
+  "base": "CAI_Combatant",
+  "fields": []
+ },
+ "CNPC_Soldier": {
+  "base": "CAI_Combatant",
+  "fields": []
+ }
+}

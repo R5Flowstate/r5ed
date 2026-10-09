@@ -1,0 +1,11 @@
+{
+  "airAcceleration": "37500",
+  "airSpeed": "30",
+  "airFriction": "0",
+  "airDrag": "0",
+  "gravityScale": "1.0667",
+  "doubleJump": "0",
+  "wallrun": "0",
+  "climbEnabled": "0",
+  "mantleAngleScale": "0"
+}

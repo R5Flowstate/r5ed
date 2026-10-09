@@ -1,0 +1,10 @@
+target/
+node_modules/
+web/dist/
+web/public/pkg/
+*.log
+# the crash logs are the evidence in agent-kit, not build noise
+!agent-kit/crash/**/*.log
+/fixtures
+__pycache__/
+r5ed.config.json

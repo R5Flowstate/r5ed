@@ -1,0 +1,41 @@
+[package]
+name = "r5ed-compile"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[lib]
+name = "r5ed_compile"
+path = "src/lib.rs"
+
+[[bin]]
+name = "r5ed-compile"
+path = "src/main.rs"
+
+[dependencies]
+rdoc = { workspace = true, features = ["native"] }
+rcomp = { workspace = true }
+rbsp = { workspace = true }
+rir = { workspace = true }
+# The command-line compiler bakes on every core; the page build of rcomp
+# leaves threads out.
+rbake = { workspace = true, default-features = false, features = ["parallel"] }
+rpak = { workspace = true }
+rterrain = { workspace = true, features = ["parallel"] }
+image = { version = "0.25", default-features = false, features = ["png"] }
+glam.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+uuid.workspace = true
+anyhow.workspace = true
+thiserror.workspace = true
+indexmap.workspace = true
+clap = { version = "4", features = ["derive"] }
+
+[dev-dependencies]
+rbsp.workspace = true
+rpak.workspace = true
+rdoc = { workspace = true, features = ["native"] }
+rterrain = { workspace = true }
+r5ed-host = { path = "../r5ed-host" }
+serde_json.workspace = true

@@ -1,0 +1,25 @@
+{
+  "name": "r5ed-web",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "check": "tsc --noEmit",
+    "test": "vitest run",
+    "build": "vite build && node scripts/size.mjs",
+    "size": "node scripts/size.mjs"
+  },
+  "dependencies": {
+    "solid-js": "^1.9.3"
+  },
+  "devDependencies": {
+    "@webgpu/types": "^0.1.52",
+    "jsdom": "^25.0.1",
+    "playwright-core": "^1.56.1",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.7",
+    "vite-plugin-solid": "^2.11.0",
+    "vitest": "^3.2.4"
+  }
+}

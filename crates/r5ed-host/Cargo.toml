@@ -1,0 +1,40 @@
+[package]
+name = "r5ed-host"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+build = "build.rs"
+
+[lib]
+name = "r5ed_host"
+path = "src/lib.rs"
+
+[[bin]]
+name = "r5ed-host"
+path = "src/main.rs"
+
+# A deterministic child process for the job runner's tests: it records its argv,
+# prints progress lines and can be told to hang, so timeout and cancellation are
+# observable without depending on any real tool.
+[[bin]]
+name = "r5ed-faketool"
+path = "src/bin/faketool.rs"
+
+[dependencies]
+rpak = { workspace = true }
+rbsp = { workspace = true }
+anyhow = { workspace = true }
+thiserror = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+uuid = { workspace = true }
+axum = { version = "0.8", default-features = false, features = ["http1", "json", "query", "tokio", "ws"] }
+tokio = { version = "1", default-features = false, features = ["rt-multi-thread", "macros", "net", "io-util", "time", "process", "fs", "sync", "signal"] }
+tower = { version = "0.5", default-features = false }
+tower-http = { version = "0.6", default-features = false, features = ["limit", "timeout", "set-header"] }
+rust-embed = { version = "8", default-features = false, features = ["include-exclude", "interpolate-folder-path"] }
+futures-util = { version = "0.3", default-features = false, features = ["sink"] }
+
+[dev-dependencies]
+uuid = { workspace = true }
+rbsp = { workspace = true }

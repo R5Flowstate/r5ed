@@ -1,0 +1,26 @@
+[package]
+name = "rdoc"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[features]
+default = ["native"]
+# `std::fs` and the schema generator binary. Everything else goes through traits.
+native = []
+
+[dependencies]
+serde.workspace = true
+serde_json.workspace = true
+indexmap.workspace = true
+uuid.workspace = true
+glam.workspace = true
+thiserror.workspace = true
+robust.workspace = true
+spade.workspace = true
+
+[[bin]]
+name = "r5ed-schema"
+path = "src/bin/r5ed-schema.rs"
+required-features = ["native"]
+
