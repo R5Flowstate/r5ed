@@ -62,7 +62,15 @@ def load(args_ents, args_world):
 def export(dump, places, glb_dir, used_path):
     statics_path = glb_dir / "static_models.json"
     statics = json.loads(statics_path.read_text())
-    used = json.loads(used_path.read_text())
+    # iw4world's meshes carry the world's materials; without them iw4mat converts
+    # nothing but the entity models' own. One entry per material: a mesh per class
+    # and zone would list the same material many times.
+    if used_path.exists():
+        used = json.loads(used_path.read_text())
+    else:
+        manifest = json.loads((glb_dir / "world_manifest.json").read_text())
+        used = [{"material": m, "model": False} for m in dict.fromkeys(
+            x["material"] for x in manifest["meshes"])]
     have_mat = {u["material"] for u in used}
     added, missing = [], []
     for name in sorted({p[1] for p in places}):

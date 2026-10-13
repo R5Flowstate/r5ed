@@ -43,6 +43,37 @@ DETAIL_FADE_START, DETAIL_FADE_END = 1, 4
 ESRGAN = os.environ.get("REALESRGAN", "realesrgan-ncnn-vulkan.exe")
 PREFIX = "h3/valhalla"
 
+# The S21 emissive shader draws the mask as it is stored, and an H3 self_illum
+# bitmap tops out near 0.6 over roughly 5% of the texels: lamp glass reads as
+# dark paint at 1:1. The lamp heads need to read as sources, not decals.
+EMISSIVE_GAIN = 3.0
+
+# H3 diffuse maps are dark by design (concrete ~0.02 linear): H3's brighter
+# baked light and exposure carry the frame. Under Apex light they need a linear
+# albedo gain to land in Apex's albedo range; each texture's gain stops where
+# its brightest texels would clip.
+ALBEDO_GAIN = 1.0
+ALBEDO_CEILING = 0.9
+
+
+def srgb_to_linear(c):
+    return np.where(c <= 0.04045, c / 12.92, ((c + 0.055) / 1.055) ** 2.4)
+
+
+def linear_to_srgb(c):
+    return np.where(c <= 0.0031308, c * 12.92, 1.055 * np.power(np.maximum(c, 0), 1 / 2.4) - 0.055)
+
+
+def albedo_gain(rgba):
+    if ALBEDO_GAIN == 1.0:
+        return rgba
+    lin = srgb_to_linear(np.clip(rgba[..., :3], 0, 1))
+    top = float(np.percentile(lin.max(axis=-1), 99.5))
+    g = min(ALBEDO_GAIN, ALBEDO_CEILING / max(top, 1e-3))
+    out = rgba.copy()
+    out[..., :3] = linear_to_srgb(np.clip(lin * g, 0, 1))
+    return out
+
 FORMATS = {"BC1_UNORM": 0, "BC1_UNORM_SRGB": 1, "BC4_UNORM": 6, "BC5_UNORM": 8, "BC7_UNORM": 12, "BC7_UNORM_SRGB": 13}
 SLOT_FORMAT = {
     "_col": "BC7_UNORM_SRGB", "albedoTexture": "BC7_UNORM_SRGB",
@@ -184,16 +215,33 @@ class Sources:
             except Exception as e:
                 print(f"  tile pre-fit failed: {e}")
             big = self.work / "up" / f"{self._key(rel)}_3x3_x4.png"
-            subprocess.run([ESRGAN, "-i", str(tile), "-o", str(big), "-n", "realesrgan-x4plus", "-s", "4"],
-                           capture_output=True, check=True)
-            b = np.asarray(Image.open(big).convert("RGB"))
-            # Centre third of whatever the tile actually was (it may have
-            # been pre-fit below 3x source before upscaling).
-            bh, bw = b.shape[:2]
-            u = b[bh // 3:2 * bh // 3, bw // 3:2 * bw // 3]
-            Image.fromarray(u).save(out)
-            tile.unlink()
-            big.unlink()
+            ok = False
+            for attempt in range(3):
+                try:
+                    subprocess.run([ESRGAN, "-i", str(tile), "-o", str(big), "-n", "realesrgan-x4plus", "-s", "4"],
+                                   capture_output=True, check=True)
+                    ok = True
+                    break
+                except subprocess.CalledProcessError as e:
+                    print(f"  ESRGAN attempt {attempt + 1}/3 failed ({e.returncode}), retrying")
+            if not ok:
+                # GPU contention (a running game starves Vulkan); Lanczos keeps
+                # the pipeline moving, stat-matched to the source below.
+                print(f"  ESRGAN failed 3x, Lanczos fallback for {tile.name}")
+                w4, h4 = src.shape[1] * 4, src.shape[0] * 4
+                Image.fromarray((np.clip(src[..., :3], 0, 1) * 255).round().astype(np.uint8)).resize(
+                    (w4, h4), Image.Lanczos).save(out)
+                tile.unlink(missing_ok=True)
+                big.unlink(missing_ok=True)
+            else:
+                b = np.asarray(Image.open(big).convert("RGB"))
+                # Centre third of whatever the tile actually was (it may have
+                # been pre-fit below 3x source before upscaling).
+                bh, bw = b.shape[:2]
+                u = b[bh // 3:2 * bh // 3, bw // 3:2 * bw // 3]
+                Image.fromarray(u).save(out)
+                tile.unlink()
+                big.unlink()
         rgb = np.asarray(Image.open(out).convert("RGB")).astype(np.float32) / 255.0
         s_mean, s_std = src[..., :3].reshape(-1, 3).mean(0), src[..., :3].reshape(-1, 3).std(0) + 1e-4
         o_mean, o_std = rgb.reshape(-1, 3).mean(0), rgb.reshape(-1, 3).std(0) + 1e-4
@@ -258,12 +306,6 @@ def highpass(x, radius):
 def gloss_map(rgb, base, spread):
     lum = luminance(rgb)
     return np.clip(base + (lum - lum.mean()) * spread, 0.02, 0.95)
-
-
-def cavity_map(rgb, depth=2.2):
-    lum = luminance(rgb)
-    hp = highpass(lum, max(2.0, rgb.shape[0] / 128))
-    return np.clip(1.0 + np.minimum(hp, 0) * depth, 0.55, 1.0)
 
 
 def neutral_detail(rgb):
@@ -449,15 +491,24 @@ def short(tex):
 
 
 def main():
+    global PREFIX, ALBEDO_GAIN
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("dump", help="h3dump output with materials.json")
     ap.add_argument("work", help="scratch + repak assets root")
     ap.add_argument("--project", required=True, help="the h2import project (h2_gameplay.json: centre, scale)")
     ap.add_argument("--skip", default="",
                     help="comma-separated H3 material names to leave to the fallback map (water, drops)")
+    ap.add_argument("--prefix", default=PREFIX,
+                    help="asset namespace under world/ (per-map, so two H3 ports never share guids)")
+    ap.add_argument("--stem", default="mp_rr_valhalla_src",
+                    help="repak manifest name for the materials source pak")
+    ap.add_argument("--albedo-gain", type=float, default=ALBEDO_GAIN,
+                    help="linear albedo gain (H3 maps are dark by design; The Pit uses 4)")
     args = ap.parse_args()
+    ALBEDO_GAIN = args.albedo_gain
 
     dump, work = Path(args.dump), Path(args.work).resolve()
+    PREFIX = args.prefix
     meta = json.loads((Path(args.project) / "h2_gameplay.json").read_text())
     centre, S = meta["centre"], float(meta["scale"])
     projected = world_projected(dump)
@@ -474,6 +525,8 @@ def main():
                     "cavityTexture": "_cav", "specTexture": "_spc",
                     "opacityMultiplyTexture": "opacityMultiplyTexture",
                     "emissiveTexture": "emissiveTexture", "layerBlendTexture": "_bm"}[slot]
+        if slot == "albedoTexture":
+            img = albedo_gain(img)
         return bank.write(key, img, fmt_slot, slot, fade_to)
 
     flat_nml = lambda slot: bank.flat("_nml", slot, (0.5, 0.5, 0.0, 1.0))
@@ -638,12 +691,13 @@ def main():
             per_layer.append(det_src)
             ok.append(True)
         nrm /= np.linalg.norm(nrm, axis=2, keepdims=True) + 1e-6
-        small = fit(alb, 2048)
         macro = {
             "albedoTexture": T(f"{h3name}_col", rgba_of(np.clip(alb, 0, 1)), "albedoTexture"),
             "normalTexture": T(f"{h3name}_nml", normal_rgba(nrm), "normalTexture"),
             "glossTexture": T(f"{h3name}_gls", grey(np.clip(fit(gls[..., None], 2048)[..., 0], 0.02, 0.6)), "glossTexture"),
-            "cavityTexture": T(f"{h3name}_cav", grey(cavity_map(small, 2.8 if rockish else 1.2)), "cavityTexture"),
+            # H3 materials carry no occlusion map; one built from albedo darkens
+            # every dark texel a second time.
+            "cavityTexture": bank.flat("_cav", "cavityTexture", (1.0, 1.0, 1.0, 1.0)),
         }
         dets = {}
         for i, lay in enumerate(layers):
@@ -755,7 +809,7 @@ def main():
             col = src.upscaled(dif["file"], cap) if usable(dif, GRAY) else None
             if col is None:
                 # Illum-only (additive glow): the illum map is the whole look.
-                lit = np.clip(illum[..., :3] * tint(m, "self_illum"), 0, 1)
+                lit = np.clip(illum[..., :3] * tint(m, "self_illum") * EMISSIVE_GAIN, 0, 1)
                 alb, ntex, gls = np.clip(lit * 0.5, 0, 1), flat_nml("normalTexture"), None
             else:
                 # Every map shares UV0, which carries the diffuse tiling; the
@@ -773,7 +827,7 @@ def main():
                 alb = np.clip(col[..., :3] * tint(m, "albedo"), 0, 1)
                 ki = rep(ill_entry)
                 illum = sample_tiled(illum, ki[0], ki[1], W, H)
-                lit = np.clip(illum[..., :3] * tint(m, "self_illum"), 0, 1)
+                lit = np.clip(illum[..., :3] * tint(m, "self_illum") * EMISSIVE_GAIN, 0, 1)
                 ntex = flat_nml("normalTexture")
                 if usable(nml_entry, DEFAULT_VEC):
                     kn = rep(nml_entry)
@@ -890,7 +944,7 @@ def main():
                 "albedoTexture": T(f"{h3name}_col", rgba_of(np.clip(col[..., :3] * tint(m, "albedo"), 0, 1)), "albedoTexture"),
                 "normalTexture": ntex,
                 "glossTexture": T(f"{h3name}_gls", grey(gloss_map(gloss_in, 0.4 if metal else 0.26, 0.8)), "glossTexture"),
-                "cavityTexture": T(f"{h3name}_cav", grey(cavity_map(col[..., :3], 1.2)), "cavityTexture"),
+                "cavityTexture": bank.flat("_cav", "cavityTexture", (1.0, 1.0, 1.0, 1.0)),
                 "detailTexture": det_tex,
                 "detailNormalTexture": det_nml,
             }
@@ -900,9 +954,9 @@ def main():
     (work / "uv_factor.json").write_text(json.dumps(uv_factor, indent=1))
 
     files = list(bank.entries.values()) + files
-    manifest = {"version": 8, "name": "mp_rr_valhalla_src", "assetsDir": str(assets).replace("\\", "/") + "/",
+    manifest = {"version": 8, "name": args.stem, "assetsDir": str(assets).replace("\\", "/") + "/",
                 "outputDir": str(work / "out").replace("\\", "/") + "/", "headerFlags": 32, "files": files}
-    (work / "mp_rr_valhalla_src.json").write_text(json.dumps(manifest, indent=1))
+    (work / f"{args.stem}.json").write_text(json.dumps(manifest, indent=1))
     (work / "material_map.json").write_text(json.dumps(name_map, indent=1))
     print(f"{sum(1 for f in files if f['_type'] == 'matl')} materials, {len(bank.entries)} textures")
 

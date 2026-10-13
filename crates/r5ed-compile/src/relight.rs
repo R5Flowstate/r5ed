@@ -521,6 +521,7 @@ pub fn run(args: &Args) -> Result<Value> {
         prop_lump_index: (0..props.instances.len() as u32).collect(),
         shadow_only: Vec::new(),
         see_through,
+        shadow_transmission: Vec::new(),
         probes_ignore_props: true,
         lights,
         settings: BakeSettings {

@@ -582,7 +582,7 @@ fn build_target(
         .unwrap_or_default();
     let mut prop_stats = Stats::default();
     props::emit(prop_sources, tables, &mut bsp, &mut prop_stats)?;
-    let ranges = props::MeshRanges { first_transparent: index.first_transparent_mesh, first_sky, sun_normal };
+    let ranges = props::MeshRanges { first_decal: index.first_decal_mesh, first_transparent: index.first_transparent_mesh, first_sky, sun_normal };
     props::write_level_info(&mut bsp, ranges, &mut prop_stats);
     report.record("static_props", stage);
 
@@ -1742,6 +1742,13 @@ fn bake_scene(doc: &MapDoc, surfaces: &[RenderSurface], props: &[props::PropSour
     // light's way and bounces nothing: decals, glass, light cards.
     scene.see_through =
         scene.surfaces.iter().enumerate().filter(|(_, s)| !s.cast_shadows).map(|(i, _)| i as u32).collect();
+    scene.shadow_transmission = scene
+        .surfaces
+        .iter()
+        .enumerate()
+        .filter_map(|(i, s)| b.shadow_transmission.get(&s.material).map(|t| (i as u32, t.clamp(0.0, 1.0))))
+        .filter(|(_, t)| *t > 0.0)
+        .collect();
     for (i, p) in props.iter().enumerate().filter(|(_, p)| !p.sky) {
         scene.props.push(p.instance());
         scene.prop_lump_index.push(i as u32);
@@ -1893,6 +1900,7 @@ mod tests {
                 vertex_format: rir::VertexFormat::LitBump,
                 surface_prop: "dirt".into(),
                 translucent: false,
+                decal: false,
                 nodraw: false,
                 textures: Default::default(),
             },

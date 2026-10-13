@@ -41,6 +41,9 @@ pub struct MaterialInfo {
     pub vertex_format: VertexFormat,
     pub surface_prop: String,
     pub translucent: bool,
+    /// A translucent material drawn with depth bias: a world decal.
+    #[serde(default)]
+    pub decal: bool,
     pub nodraw: bool,
     /// Texture slot -> texture guid. A slot the caller could not resolve is
     /// absent rather than zero, so a real guid is never confused with a miss.
@@ -57,6 +60,8 @@ pub struct RawMaterial {
     pub shader_type: String,
     pub surface_prop: String,
     pub translucent: bool,
+    #[serde(default)]
+    pub decal: bool,
     pub nodraw: bool,
     /// Texture slot -> the value exactly as written.
     pub textures: BTreeMap<u32, String>,
@@ -109,6 +114,9 @@ fn hex_u32(v: &serde_json::Value, key: &str) -> Result<u32> {
 const DEPTH_WRITE_BIT: u32 = 0x10;
 /// The same engine flag set spells NODRAW in bit 3 of the uber buffer flags.
 const NODRAW_BIT: u32 = 0x8;
+/// `rasterizerFlags` bit 4 is depth bias: set on every shipped world decal (0x16),
+/// clear on glass and screens (0x6).
+const DEPTH_BIAS_BIT: u32 = 0x10;
 
 /// A texture slot is either `0x<guid>` or a relative export path, so the only
 /// characters either form can hold are these.
@@ -133,6 +141,7 @@ impl MaterialInfo {
             vertex_format,
             surface_prop: raw.surface_prop,
             translucent: raw.translucent,
+            decal: raw.decal,
             nodraw: raw.nodraw,
             textures,
         }
@@ -162,6 +171,7 @@ pub fn parse_material_json(text: &str) -> Result<RawMaterial> {
         .to_string();
     let depth_stencil = if v.get("depthStencilFlags").is_some() { hex_u32(&v, "depthStencilFlags")? } else { DEPTH_WRITE_BIT };
     let uber = hex_u32(&v, "uberBufferFlags")?;
+    let raster = if v.get("rasterizerFlags").is_some() { hex_u32(&v, "rasterizerFlags")? } else { 0 };
     let mut textures = BTreeMap::new();
     if let Some(map) = v.get("$textures").and_then(serde_json::Value::as_object) {
         for (slot, value) in map {
@@ -188,6 +198,7 @@ pub fn parse_material_json(text: &str) -> Result<RawMaterial> {
         shader_type,
         surface_prop,
         translucent: depth_stencil & DEPTH_WRITE_BIT == 0,
+        decal: depth_stencil & DEPTH_WRITE_BIT == 0 && raster & DEPTH_BIAS_BIT != 0,
         nodraw: uber & NODRAW_BIT != 0,
         textures,
     })
@@ -284,6 +295,15 @@ mod tests {
         assert_eq!(m.textures[&0], 0xAAAA_AAAA_AAAA_AAAA);
         assert!(m.textures.get(&1).is_none());
         assert_eq!(m.vertex_format, VertexFormat::LitBump);
+    }
+
+    #[test]
+    fn decal_is_translucent_with_depth_bias() {
+        let decal = REAL.replace("\"rasterizerFlags\": \"0x6\"", "\"rasterizerFlags\": \"0x16\"");
+        assert!(parse_material_json(&decal).unwrap().decal);
+        assert!(!parse_material_json(REAL).unwrap().decal, "translucent without depth bias is not a decal");
+        let opaque = decal.replace("\"depthStencilFlags\": \"0x5\"", "\"depthStencilFlags\": \"0x17\"");
+        assert!(!parse_material_json(&opaque).unwrap().decal, "a depth-writing material is never a decal");
     }
 
     #[test]

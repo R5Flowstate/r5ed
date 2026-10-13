@@ -126,22 +126,37 @@ def is_air(iw_name):
     return any(w in leaf for w in AIR_WORDS) and "trunk" not in leaf
 
 
+def studiomdl(game, qc):
+    r = subprocess.run([str(STUDIOMDL), "-game", str(game), "-nop4", "-nox360", "-quiet", str(qc)],
+                       cwd=qc.parent, capture_output=True, text=True, errors="replace")
+    return r.returncode == 0 and (game / "models" / MODEL_DIR / f"{qc.stem}.mdl").is_file()
+
+
 def compile_model(name, glb, work, game, colliding, prims=None):
     src = work / "src" / name
     src.mkdir(parents=True, exist_ok=True)
     write_smd(src / "ref.smd", glb, material_path, prims)
     qc = [f'$modelname "{MODEL_DIR}/{name}.mdl"', '$cdmaterials ""', "$staticprop",
           '$body body "ref.smd"', '$sequence idle "ref.smd"']
+    out = game / "models" / MODEL_DIR / f"{name}.mdl"
+    hulls = []
     if colliding:
         solid = [p for p in (prims if prims is not None else glb_triangles(glb)) if not is_air(p[0])]
         if solid:
             write_smd(src / "phys.smd", glb, None, solid)
-            qc.append('$collisionmodel "phys.smd" { $concave $maxconvexpieces 256 }')
-    (src / f"{name}.qc").write_text("\n".join(qc) + "\n")
-    r = subprocess.run([str(STUDIOMDL), "-game", str(game), "-nop4", "-nox360", "-quiet", str(src / f"{name}.qc")],
-                       cwd=src, capture_output=True, text=True, errors="replace")
-    ok = (game / "models" / MODEL_DIR / f"{name}.mdl").is_file()
-    return name, ok, "" if ok else (r.stdout[-600:] + r.stderr[-300:])
+            hulls = ['$collisionmodel "phys.smd" { $concave $maxconvexpieces 256 }',
+                     '$collisionmodel "phys.smd"']
+    ok = False
+    for hull in hulls + [None]:
+        qc_path = src / f"{name}.qc"
+        qc_path.write_text("\n".join(qc + [hull] if hull else qc) + "\n")
+        out.unlink(missing_ok=True)
+        if studiomdl(game, qc_path):
+            ok = True
+            break
+    # IVP cannot decompose every concave soup; the plain hull keeps the prop solid
+    # instead of dropping it out of the map.
+    return name, ok, "" if ok else "studiomdl failed"
 
 
 def main():

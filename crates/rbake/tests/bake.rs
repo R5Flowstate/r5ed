@@ -278,13 +278,23 @@ fn probes_not_in_solid() {
             "a probe left the world bounds"
         );
     }
-    // Inside the closed room every point is enclosed; outside it, open.
+    // The room's walls face inward: its interior is where the player stands.
     let inside = Vec3::new(0.0, 0.0, 128.0);
-    assert!(hierarchy.inside_solid(inside), "the room encloses its interior");
-    assert!(!rbake::probes::in_open_space(&hierarchy, inside, spacing), "a point inside the room counts as open");
-    let outside = Vec3::new(0.0, 0.0, 1024.0);
-    assert!(!hierarchy.inside_solid(outside), "the room does not enclose what is above it");
-    assert!(rbake::probes::in_open_space(&hierarchy, outside, spacing), "a point above the room is open");
+    assert!(!hierarchy.inside_solid(inside), "the inside of a room is not solid");
+    assert!(rbake::probes::in_open_space(&hierarchy, inside, spacing), "a probe inside a room is kept");
+    assert!(positions.len() > 100, "a closed room gets a probe grid, got {}", positions.len());
+    let below = Vec3::new(0.0, 0.0, -64.0);
+    assert!(hierarchy.inside_solid(below), "under the floor is solid");
+    // A crate's faces point out: inside it is solid.
+    let mut crate_scene = common::box_room(64.0, 128.0);
+    for f in &mut crate_scene.surfaces {
+        f.indices = f.indices.chunks_exact(3).flat_map(|t| [t[0], t[2], t[1]]).collect();
+    }
+    let cg = rbake::bvh::scene_geometry(&crate_scene).expect("geometry");
+    let ch = rbake::Bvh::build(&cg.tris).expect("hierarchy");
+    assert!(ch.inside_solid(Vec3::new(0.0, 0.0, 64.0)), "the inside of a crate is solid");
+    assert!(!ch.inside_solid(Vec3::new(300.0, 0.0, 64.0)), "beside the crate is open");
+    assert!(!ch.inside_solid(Vec3::new(0.0, 0.0, 400.0)), "above the crate is open");
     // A placement that is too dense to be useful is an error, not a hang.
     let mut tight = scene.clone();
     tight.settings.probe_spacing = 0.5;

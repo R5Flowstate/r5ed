@@ -129,6 +129,9 @@ impl Probes {
     }
 }
 
+/// Open space a probe needs around it, in units.
+const PROBE_CLEARANCE: f32 = 48.0;
+
 /// The probe grid: points every `spacing` inside the world bounds, plus the
 /// designer's own, culled to open space.
 pub fn place_probes(
@@ -181,7 +184,10 @@ pub fn in_open_space(bvh: &Bvh, p: Vec3, probe_radius: f32) -> bool {
     if bvh.inside_solid(p) {
         return false;
     }
-    let r = probe_radius.max(1.0) * 0.5;
+    // Room for a character, not half the grid step: at a coarse step the
+    // larger test culled every probe in a corridor or under a low roof, and
+    // whatever stood indoors took a probe from outside.
+    let r = (probe_radius.max(1.0) * 0.5).min(PROBE_CLEARANCE);
     if bvh.occluded(&crate::bvh::Ray::new(p, Vec3::X, 0.01, r))
         || bvh.occluded(&crate::bvh::Ray::new(p, Vec3::NEG_X, 0.01, r))
         || bvh.occluded(&crate::bvh::Ray::new(p, Vec3::Y, 0.01, r))
@@ -262,7 +268,7 @@ pub fn bake_probes(
     let prop_indices = scene
         .props
         .iter()
-        .map(|prop| visible_nearest_index(&positions, prop, bvh))
+        .map(|prop| visible_nearest_index(&positions, &probes, prop, bvh))
         .collect();
     let parent_infos = vec![lmp::LightProbeParentInfo::over(refs.len(), tree.len())];
     Ok(Probes {
@@ -281,7 +287,16 @@ const PROP_PROBE_CANDIDATES: usize = 32;
 /// alone is often across a wall or under an awning, which lights neighbouring
 /// props of one pile from opposite sides of a shadow. The line stops at the
 /// prop's bounding sphere so the prop's own surfaces do not block it.
-fn visible_nearest_index(positions: &[Vec3], prop: &rir::StaticPropInstance, bvh: &Bvh) -> u32 {
+///
+/// A single centre ray threads doorways: a prop deep inside takes an outdoor
+/// probe through the slit and draws standing in full sun, 961 of them on one
+/// map. The line has to see the prop's volume, not a point: the centre plus a
+/// flank on each cross axis, offset at the prop end, with at least one flank
+/// per axis clearing alongside the centre. Anything thinner is a slit and
+/// falls through to the ordinary candidates. Of the seen candidates one that
+/// sees the sun wins, nearest first on a tie; without a sunlit candidate the
+/// prop keeps the nearest, which is what a prop genuinely under cover takes.
+fn visible_nearest_index(positions: &[Vec3], probes: &[Probe], prop: &rir::StaticPropInstance, bvh: &Bvh) -> u32 {
     let centre = prop.world_centre();
     let scale = if prop.scale > 0.0 { prop.scale } else { 1.0 };
     let radius = if prop.bounds_min.cmple(prop.bounds_max).all() {
@@ -289,6 +304,8 @@ fn visible_nearest_index(positions: &[Vec3], prop: &rir::StaticPropInstance, bvh
     } else {
         0.0
     };
+    // Half-width of the volume a sight-line must see, in world units.
+    const FLANK: f32 = 20.0;
     let mut order: Vec<(f32, u32)> = positions.iter().enumerate().map(|(i, q)| (q.distance_squared(centre), i as u32)).collect();
     let keep = PROP_PROBE_CANDIDATES.min(order.len());
     if keep == 0 {
@@ -299,19 +316,63 @@ fn visible_nearest_index(positions: &[Vec3], prop: &rir::StaticPropInstance, bvh
         order.truncate(keep);
     }
     order.sort_by(|a, b| a.0.total_cmp(&b.0).then(a.1.cmp(&b.1)));
+    let mut multi_lit: Option<u32> = None;
+    let mut multi_any: Option<u32> = None;
+    let mut single_lit: Option<u32> = None;
+    let mut single_any: Option<u32> = None;
     for &(d2, i) in &order {
         let probe = positions[i as usize];
         let dist = d2.sqrt();
-        let reach = dist - radius;
-        if reach <= 0.0 {
-            return i;
+        if dist < 1e-3 {
+            let lit = probes.get(i as usize).map(|p| p.sky[3] > 0).unwrap_or(false);
+            if lit && single_lit.is_none() {
+                single_lit = Some(i);
+            }
+            if single_any.is_none() {
+                single_any = Some(i);
+            }
+            continue;
         }
-        let dir = (centre - probe) / dist;
-        if !bvh.occluded(&crate::bvh::Ray::new(probe, dir, 0.01, reach)) {
-            return i;
+        let reach = dist - radius;
+        let rdir = (centre - probe) / dist;
+        let single = reach <= 0.0
+            || !bvh.occluded(&crate::bvh::Ray::new(probe, rdir, 0.01, reach));
+        if !single {
+            continue;
+        }
+        let lit = probes.get(i as usize).map(|p| p.sky[3] > 0).unwrap_or(false);
+        if lit && single_lit.is_none() {
+            single_lit = Some(i);
+        }
+        if single_any.is_none() {
+            single_any = Some(i);
+        }
+        let up = if rdir.z.abs() > 0.9 { Vec3::X } else { Vec3::Z };
+        let t1 = rdir.cross(up).normalize_or_zero();
+        let t2 = rdir.cross(t1).normalize_or_zero();
+        let mut axis_clear = [false, false];
+        for (a, t) in [(0, t1), (1, t2)] {
+            for s in [1.0, -1.0] {
+                let o = centre + t * (FLANK * s);
+                let back = (probe - o).length();
+                if back > 0.01
+                    && !bvh.occluded(&crate::bvh::Ray::new(o, (probe - o) / back, 0.01, back))
+                {
+                    axis_clear[a] = true;
+                    break;
+                }
+            }
+        }
+        if axis_clear[0] && axis_clear[1] {
+            if lit && multi_lit.is_none() {
+                multi_lit = Some(i);
+            }
+            if multi_any.is_none() {
+                multi_any = Some(i);
+            }
         }
     }
-    order[0].1
+    multi_lit.or(multi_any).or(single_lit).or(single_any).unwrap_or_else(|| order[0].1)
 }
 
 /// Lights a probe: an ambient term and a linear gradient per channel, taken
@@ -407,7 +468,12 @@ fn sun_visibility_at(ctx: &DirectContext, bvh: &Bvh, position: Vec3, dir: Vec3) 
         return 1.0;
     }
     // `dir` is the way the sun's light travels; the shadow ray goes back toward it.
-    if bvh.occluded(&crate::bvh::Ray::new(position, -dir, 0.01, f32::MAX)) {
+    // The origin steps off the surface first: a probe placed flush against a wall
+    // face starts the ray inside that wall and reads as fully occluded, which costs
+    // the whole neighbourhood around it the sun. One ray decides the sun's on/off
+    // state for every prop the probe lights, so it has to survive geometry it is
+    // only touching.
+    if bvh.occluded(&crate::bvh::Ray::new(position + -dir * 0.05, -dir, 0.01, f32::MAX)) {
         0.0
     } else {
         1.0

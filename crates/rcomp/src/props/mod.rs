@@ -267,8 +267,8 @@ pub fn emit(
 /// Where the world's mesh ranges end, as the level info records them.
 #[derive(Clone, Copy, Debug, Default, PartialEq)]
 pub struct MeshRanges {
-    /// World meshes before this are opaque; rcomp writes no decal meshes, so
-    /// this is also the first decal mesh.
+    /// World meshes before this are opaque; decals run from here to `first_transparent`.
+    pub first_decal: u32,
     pub first_transparent: u32,
     /// The end of the world model's meshes.
     pub first_sky: u32,
@@ -288,7 +288,7 @@ pub fn write_level_info(bsp: &mut Bsp, ranges: MeshRanges, stats: &mut Stats) {
         _ => 0,
     };
     let info = LevelInfo {
-        first_decal_mesh: ranges.first_transparent,
+        first_decal_mesh: ranges.first_decal,
         first_transparent_mesh: ranges.first_transparent,
         first_sky_mesh: ranges.first_sky,
         first_static_prop_index: rbsp::lumps::level::first_static_prop_index(ranges.first_sky),
@@ -450,7 +450,7 @@ mod tests {
             &mut stats,
         )
         .expect("the prop list writes");
-        write_level_info(&mut bsp, MeshRanges { first_transparent: 1, first_sky: 1, sun_normal: [0.0; 3] }, &mut stats);
+        write_level_info(&mut bsp, MeshRanges { first_decal: 1, first_transparent: 1, first_sky: 1, sun_normal: [0.0; 3] }, &mut stats);
         assert_eq!(out.len(), 3);
         assert_eq!(stats.props, 3);
         assert_eq!(level_info_props(&bsp), 3);
@@ -488,7 +488,7 @@ mod tests {
         let mut stats = Stats::default();
         emit(&[source("mdl/a/one.rmdl")], &AssetTables::default(), &mut bsp, &mut stats)
             .expect("the prop list writes");
-        let ranges = MeshRanges { first_transparent: 3, first_sky: 5, sun_normal: [0.0, 0.0, -1.0] };
+        let ranges = MeshRanges { first_decal: 3, first_transparent: 3, first_sky: 5, sun_normal: [0.0, 0.0, -1.0] };
         write_level_info(&mut bsp, ranges, &mut stats);
         let parsed = rbsp::lumps::parse(rbsp::ids::LEVEL_INFO, Version::DediV47, bsp.lump(rbsp::ids::LEVEL_INFO))
             .expect("level info parses");

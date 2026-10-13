@@ -4,8 +4,8 @@ Idempotent: every object it owns is named iw4_* and rewritten on each run.
 
 usage: iw4env.py <project dir> <map dump dir> <world dir> --grade-out <file.raw_hdr>
 
-  <map dump dir>  the OAT dump of the map zone (vision/<map>.vision and
-                  maps/createart/<map>_art.gsc)
+  <map dump dir>  the OAT dump of the map zone (vision/<map>.vision, when the map
+                  has one, and maps/createart/<map>_art.gsc)
   <world dir>     the <map>.d3dbsp.world dump (comworld.json)
 
 The grade is baked for the S21 post chain: the volume holds
@@ -343,7 +343,7 @@ def main():
     proj, dump, world = Path(a.project), Path(a.dump), Path(a.world)
     doc = json.loads((proj / "map.json").read_text())
     stem = doc["meta"]["stem"]
-    base = next(dump.glob("vision/*.vision")).stem
+    base = dump.name
     layers = {l["name"]: l["id"] for l in doc["layers"]}
     lights_layer = layers.get("lights", doc["layers"][0]["id"])
     ents_layer = layers.get("entities", doc["layers"][0]["id"])
@@ -377,7 +377,9 @@ def main():
         peak = max(fog["color"])
         if peak > 0.0:
             doc["settings"]["bake"]["sky_color"] = [round(c / peak, 6) for c in fog["color"]]
-    v = vision(dump / "vision" / f"{base}.vision")
+    # A map whose zone ships no vision of its own leaves the film dvars at their
+    # defaults, so an absent file is not an error: {} is that same default film.
+    v = vision(dump / "vision" / f"{base}.vision") if (dump / "vision" / f"{base}.vision").exists() else {}
     size = bake_grade(v, a.grade_out, neutral_tint=a.neutral_tint)
     doc["objects"].append(grade_entity(stem, ents_layer))
 

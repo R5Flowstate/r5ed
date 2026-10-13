@@ -552,6 +552,11 @@ pub struct BakeSettings {
     /// light: light cards, foliage sheets, decals.
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub occluder_skip: Vec<String>,
+    /// Fraction of baked light that passes through a surface of the material,
+    /// by material path: the alpha-tested coverage of leaves, grates and fences.
+    /// Unlisted surfaces that cast shadows block all of it.
+    #[serde(default, skip_serializing_if = "std::collections::BTreeMap::is_empty")]
+    pub shadow_transmission: std::collections::BTreeMap<String, f32>,
 }
 
 impl Default for BakeSettings {
@@ -568,6 +573,7 @@ impl Default for BakeSettings {
             cubemap_points: Vec::new(),
             albedo: Default::default(),
             occluder_skip: Vec::new(),
+            shadow_transmission: Default::default(),
         }
     }
 }

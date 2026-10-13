@@ -95,6 +95,7 @@ pub fn box_room(half: f32, height: f32) -> BakeScene {
         prop_lump_index: Vec::new(),
         shadow_only: Vec::new(),
         see_through: Vec::new(),
+        shadow_transmission: Vec::new(),
         probes_ignore_props: false,
         lights: vec![BakeLight {
             object: None,
@@ -161,6 +162,7 @@ pub fn plane_with_box(extent: f32, box_min: Vec3, box_max: Vec3) -> BakeScene {
         prop_lump_index: Vec::new(),
         shadow_only: Vec::new(),
         see_through: Vec::new(),
+        shadow_transmission: Vec::new(),
         probes_ignore_props: false,
         lights: vec![BakeLight {
             object: None,

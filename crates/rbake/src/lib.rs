@@ -146,7 +146,7 @@ pub fn bake_in_layout(
 ) -> Result<Lighting> {
     light::check_scene(scene)?;
     let geometry = bvh::scene_geometry(scene)?;
-    let hierarchy = Bvh::build(&geometry.tris)?;
+    let hierarchy = Bvh::build_scene(&geometry)?;
     let tri_albedo = triangle_albedo(scene, &geometry, albedo);
     let light_index = light::LightIndex::build(&scene.lights);
     let ctx = light::DirectContext {
@@ -234,11 +234,12 @@ pub fn bake_in_layout(
     for p in &mut pages {
         denoise::denoise_page(scene, &layout, p, 2, strength);
     }
-    if layout.fixed {
-        for p in &mut pages {
-            let covered = page_coverage(scene, &layout, p);
-            denoise::fill_uncovered(p, &covered, FIXED_FILL_RADIUS);
-        }
+    // Every texel a bilinear tap at a chart's edge can reach takes the chart's
+    // own light, sky direction and sun visibility; left at zero, the padding
+    // darkened every chart edge and speckled charts only a few texels wide.
+    for p in &mut pages {
+        let covered = page_coverage(scene, &layout, p);
+        denoise::fill_uncovered(p, &covered, FILL_RADIUS);
     }
     report.denoised_texels = layout.charts.iter().map(|c| (c.inner[0] * c.inner[1]) as usize).sum();
 
@@ -247,7 +248,7 @@ pub fn bake_in_layout(
         // prop, so the probes are traced without the props in the way.
         let bare = rir::BakeScene { prop_occluders: Vec::new(), ..scene.clone() };
         let bare_geometry = bvh::scene_geometry(&bare)?;
-        let bare_bvh = Bvh::build(&bare_geometry.tris)?;
+        let bare_bvh = Bvh::build_scene(&bare_geometry)?;
         let bare_albedo = triangle_albedo(&bare, &bare_geometry, albedo);
         let bare_ctx = light::DirectContext { bvh: &bare_bvh, tris: &bare_bvh.triangles, albedo: &bare_albedo, ..ctx };
         probes::bake_probes(scene, &bare_ctx, &bare_bvh)?
@@ -333,8 +334,9 @@ fn triangle_albedo(scene: &rir::BakeScene, geometry: &bvh::SceneGeometry, albedo
         .collect()
 }
 
-/// Texels a fixed layout's padding is filled out to.
-const FIXED_FILL_RADIUS: u32 = 4;
+/// Texels past a chart's covered area that take its edge values: the padding
+/// and any texel inside the chart no triangle reached.
+const FILL_RADIUS: u32 = 4;
 
 /// Which texels of a page some chart's triangles reach.
 fn page_coverage(scene: &rir::BakeScene, layout: &ChartLayout, page: &BakedPage) -> Vec<bool> {

@@ -339,6 +339,7 @@ mod tests {
                     vertex_format: rir::VertexFormat::Unlit,
                     surface_prop: "concrete".into(),
                     translucent: false,
+                    decal: false,
                     nodraw: false,
                     textures: BTreeMap::new(),
                 },

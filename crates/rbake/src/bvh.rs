@@ -164,6 +164,9 @@ pub struct Bvh {
     pub indices: Vec<u32>,
     pub triangles: Vec<Tri>,
     pub root: Bounds,
+    /// Per triangle, the chance a ray passes through it; empty when every
+    /// triangle is opaque.
+    pub pass: Vec<f32>,
 }
 
 /// A node before the breadth-first renumber, when its children are two explicit
@@ -197,6 +200,7 @@ impl Bvh {
             indices: Vec::new(),
             triangles: clean,
             root: Bounds::empty(),
+            pass: Vec::new(),
         };
         if bvh.triangles.is_empty() {
             bvh.nodes.push(Node { lo: Vec3::ZERO, hi: Vec3::ZERO, left_or_first: 0, count: 0 });
@@ -394,6 +398,34 @@ impl Bvh {
         lo
     }
 
+    /// Builds over the scene geometry, keeping its partial occluders when no
+    /// triangle was dropped (the pass table is indexed like `triangles`).
+    pub fn build_scene(g: &SceneGeometry) -> Result<Self> {
+        let mut bvh = Self::build(&g.tris)?;
+        if g.pass.iter().any(|p| *p > 0.0) && bvh.triangles.len() == g.pass.len() {
+            bvh.pass = g.pass.clone();
+        }
+        Ok(bvh)
+    }
+
+    /// Whether `ray` goes through triangle `tri` at a hole: drawn per ray and
+    /// triangle, so many rays average to the triangle's coverage.
+    fn passes(&self, ray: &Ray, tri: u32) -> bool {
+        let Some(&p) = self.pass.get(tri as usize) else { return false };
+        if p <= 0.0 {
+            return false;
+        }
+        let mut h = tri.wrapping_mul(0x9E37_79B9);
+        for v in [ray.origin.x, ray.origin.y, ray.origin.z, ray.dir.x, ray.dir.y, ray.dir.z] {
+            h ^= v.to_bits();
+            h = h.wrapping_mul(0x85EB_CA6B);
+            h ^= h >> 13;
+        }
+        h = h.wrapping_mul(0xC2B2_AE35);
+        h ^= h >> 16;
+        ((h >> 8) as f32 / (1u32 << 24) as f32) < p
+    }
+
     /// The closest hit along `ray` within `t_max`, as (distance, triangle).
     pub fn closest_hit(&self, ray: &Ray) -> Option<Hit> {
         if self.nodes.is_empty() || self.triangles.is_empty() {
@@ -417,7 +449,7 @@ impl Bvh {
                     let ti = node.left_or_first as usize + i;
                     let Some(&tri_idx) = self.indices.get(ti) else { continue };
                     if let Some((t, front)) = intersect_tri(ray, &self.triangles[tri_idx as usize]) {
-                        if t < best.t {
+                        if t < best.t && !self.passes(ray, tri_idx) {
                             best = Hit { t, tri: tri_idx, front };
                             found = true;
                         }
@@ -463,7 +495,7 @@ impl Bvh {
                 for i in 0..node.count as usize {
                     let ti = node.left_or_first as usize + i;
                     let Some(&tri_idx) = self.indices.get(ti) else { continue };
-                    if intersect_tri(ray, &self.triangles[tri_idx as usize]).is_some() {
+                    if intersect_tri(ray, &self.triangles[tri_idx as usize]).is_some() && !self.passes(ray, tri_idx) {
                         return true;
                     }
                 }
@@ -482,46 +514,33 @@ impl Bvh {
         false
     }
 
-    /// True when the point is inside any triangle's solid, by ray parity
-    /// along a fixed direction.
+    /// True when the point sits inside solid geometry: most of the faces it
+    /// sees, looking every way, are seen from behind. A ray parity count read
+    /// the inside of every closed hollow building as solid, and a mesh map's
+    /// halls are exactly that.
     pub fn inside_solid(&self, p: Vec3) -> bool {
         if self.nodes.is_empty() {
             return false;
         }
-        let dir = Vec3::new(0.5773503, 0.5773503, 0.5773503);
-        let ray = Ray::new(p + dir * 0.01, dir, 0.0, 1.0e9);
-        let mut crossings = 0u32;
-        let mut stack = [0u32; TRAVERSAL_CAP];
-        let mut sp = 1usize;
-        stack[0] = 0;
-        while sp > 0 {
-            sp -= 1;
-            let n = stack[sp];
-            let Some(node) = self.nodes.get(n as usize).copied() else { continue };
-            if !intersect_bounds(&ray, node.lo, node.hi) {
-                continue;
-            }
-            if node.is_leaf() {
-                for i in 0..node.count as usize {
-                    let ti = node.left_or_first as usize + i;
-                    let Some(&tri_idx) = self.indices.get(ti) else { continue };
-                    if intersect_tri(&ray, &self.triangles[tri_idx as usize]).is_some() {
-                        crossings += 1;
-                    }
-                }
-                continue;
-            }
-            let l = node.left_or_first;
-            if sp + 2 <= TRAVERSAL_CAP {
-                stack[sp] = l;
-                stack[sp + 1] = l + 1;
-                sp += 2;
+        const D: f32 = 0.577_350_3;
+        let dirs = [
+            Vec3::X, Vec3::NEG_X, Vec3::Y, Vec3::NEG_Y, Vec3::Z, Vec3::NEG_Z,
+            Vec3::new(D, D, D), Vec3::new(-D, D, D), Vec3::new(D, -D, D), Vec3::new(-D, -D, D),
+            Vec3::new(D, D, -D), Vec3::new(-D, D, -D), Vec3::new(D, -D, -D), Vec3::new(-D, -D, -D),
+        ];
+        let (mut back, mut front) = (0u32, 0u32);
+        for d in dirs {
+            let ray = Ray::new(p, d, 0.01, 1.0e9);
+            let Some(hit) = self.closest_hit(&ray) else { continue };
+            let t = &self.triangles[hit.tri as usize];
+            // The engine fronts clockwise faces: (c - a) x (b - a).
+            if d.dot((t.c - t.a).cross(t.b - t.a)) > 0.0 {
+                back += 1;
             } else {
-                stack[sp] = l;
-                sp += 1;
+                front += 1;
             }
         }
-        crossings % 2 == 1
+        back > front
     }
 }
 
@@ -641,13 +660,17 @@ pub struct SceneGeometry {
     pub surface: Vec<u32>,
     /// Index into the scene's prop occluders per triangle.
     pub prop: Vec<u32>,
+    /// Chance a ray passes each triangle (0 = opaque).
+    pub pass: Vec<f32>,
 }
 
 /// Builds the tracer geometry of a scene.
 pub fn scene_geometry(scene: &rir::BakeScene) -> Result<SceneGeometry> {
     let mut out = SceneGeometry::default();
     let clear: std::collections::HashSet<u32> = scene.see_through.iter().copied().collect();
+    let partial: std::collections::HashMap<u32, f32> = scene.shadow_transmission.iter().copied().collect();
     for (si, s) in scene.surfaces.iter().enumerate() {
+        let pass = partial.get(&(si as u32)).copied().unwrap_or(0.0);
         if clear.contains(&(si as u32)) {
             continue;
         }
@@ -673,6 +696,7 @@ pub fn scene_geometry(scene: &rir::BakeScene) -> Result<SceneGeometry> {
             out.kinds.push(0);
             out.surface.push(si as u32);
             out.prop.push(u32::MAX);
+            out.pass.push(pass);
         }
     }
     for (pi, (_, positions, indices)) in scene.prop_occluders.iter().enumerate() {
@@ -691,6 +715,7 @@ pub fn scene_geometry(scene: &rir::BakeScene) -> Result<SceneGeometry> {
             out.kinds.push(2);
             out.surface.push(u32::MAX);
             out.prop.push(pi as u32);
+            out.pass.push(0.0);
         }
     }
     for (bi, (positions, indices)) in scene.shadow_only.iter().enumerate() {
@@ -709,6 +734,7 @@ pub fn scene_geometry(scene: &rir::BakeScene) -> Result<SceneGeometry> {
             out.kinds.push(3);
             out.surface.push(u32::MAX);
             out.prop.push(u32::MAX);
+            out.pass.push(0.0);
         }
     }
     Ok(out)
@@ -727,5 +753,51 @@ pub fn geometry_bounds(g: &SceneGeometry) -> Bounds {
         Bounds { lo: Vec3::ZERO, hi: Vec3::ZERO }
     } else {
         b
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    fn slab(pass: f32) -> Bvh {
+        let g = SceneGeometry {
+            tris: vec![
+                Tri::new(Vec3::new(-100.0, -100.0, 10.0), Vec3::new(100.0, -100.0, 10.0), Vec3::new(100.0, 100.0, 10.0)),
+                Tri::new(Vec3::new(-100.0, -100.0, 10.0), Vec3::new(100.0, 100.0, 10.0), Vec3::new(-100.0, 100.0, 10.0)),
+            ],
+            kinds: vec![0, 0],
+            surface: vec![0, 0],
+            prop: vec![u32::MAX, u32::MAX],
+            pass: vec![pass, pass],
+        };
+        Bvh::build_scene(&g).unwrap()
+    }
+
+    fn blocked_share(bvh: &Bvh) -> f32 {
+        let mut blocked = 0;
+        let n = 4000;
+        for i in 0..n {
+            let x = (i % 63) as f32 - 31.0;
+            let y = (i / 63) as f32 - 31.0;
+            let dir = Vec3::new(0.01 * (i % 7) as f32, 0.01 * (i % 5) as f32, 1.0).normalize();
+            if bvh.occluded(&Ray::new(Vec3::new(x, y, 0.0), dir, 0.01, 100.0)) {
+                blocked += 1;
+            }
+        }
+        blocked as f32 / n as f32
+    }
+
+    #[test]
+    fn a_partial_occluder_blocks_its_coverage() {
+        assert_eq!(blocked_share(&slab(0.0)), 1.0, "an opaque slab blocks every ray");
+        assert_eq!(blocked_share(&slab(1.0)), 0.0, "a fully open slab blocks none");
+        let half = blocked_share(&slab(0.6));
+        assert!((half - 0.4).abs() < 0.05, "a slab passing 60% blocks about 40%, got {half}");
+        let first = slab(0.6);
+        let ray = Ray::new(Vec3::new(3.0, 4.0, 0.0), Vec3::Z, 0.01, 100.0);
+        assert_eq!(first.occluded(&ray), first.occluded(&ray), "the same ray always gets the same answer");
+        let hit = first.closest_hit(&ray).is_some();
+        assert_eq!(hit, first.occluded(&ray), "closest_hit and occluded agree on a hole");
     }
 }

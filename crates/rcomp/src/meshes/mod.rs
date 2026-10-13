@@ -40,6 +40,8 @@ pub const MESH_FLAG_WORLD: u32 = 0x0010_0000;
 /// [`MESH_FLAG_PLAIN`] and without [`MESH_FLAG_WORLD`], 0x404 on every one in
 /// staging_mu1.
 pub const MESH_FLAG_SKY: u32 = 0x0000_0004;
+/// Set on every decal-range mesh of staging_mu1 (0x100210).
+pub const MESH_FLAG_DECAL: u32 = 0x0000_0010;
 /// The material a face uses to show the skybox through it.
 pub const SKY_MATERIAL: &str = "tools/toolsskybox";
 /// `TEXTURE_DATA` for the sky material, as shipped maps write it.
@@ -122,7 +124,9 @@ pub struct RenderIndex {
     /// The highest vertex index each sort's meshes reach, which is what the
     /// sort's `lightmap_vertex_count` holds.
     pub sort_last_vertex: Vec<u32>,
-    /// World meshes are opaque up to here and translucent after it.
+    /// World meshes are opaque up to here; decals follow, drawn in mesh order.
+    pub first_decal_mesh: u32,
+    /// Translucent world meshes start here.
     pub first_transparent_mesh: u32,
     /// World meshes end here and the world's sky meshes follow.
     pub first_sky_mesh: u32,
@@ -192,9 +196,12 @@ fn finish_sort(
     index.sort_first_vertex[si] = sort_base;
     index.sort_last_vertex[si] = sort_last;
     if sort_model == 0 && sort_class == 0 {
-        index.first_transparent_mesh = mesh_count;
+        index.first_decal_mesh = mesh_count;
     }
     if sort_model == 0 && sort_class < 2 {
+        index.first_transparent_mesh = mesh_count;
+    }
+    if sort_model == 0 && sort_class < 3 {
         index.first_sky_mesh = mesh_count;
     }
 }
@@ -499,14 +506,17 @@ pub fn emit_render_paged(
             -1
         }
     };
-    // Sorts run model by model, then opaque, translucent and sky, so every
+    // Sorts run model by model, then opaque, decal, translucent and sky, so every
     // model's meshes are one contiguous run and the world's split the way the
     // level info's mesh ranges describe.
     let class = |material: &str| -> u8 {
+        let info = assets.materials.get(material);
         if is_sky_material(material) {
-            2
-        } else if assets.materials.get(material).is_some_and(|m| m.translucent) {
+            3
+        } else if info.is_some_and(|m| m.decal) {
             1
+        } else if info.is_some_and(|m| m.translucent) {
+            2
         } else {
             0
         }
@@ -531,6 +541,7 @@ pub fn emit_render_paged(
         sort_material: sorts.clone(),
         sort_first_vertex: vec![0; sorts.len()],
         sort_last_vertex: vec![0; sorts.len()],
+        first_decal_mesh: 0,
         first_transparent_mesh: 0,
         first_sky_mesh: 0,
     };
@@ -553,7 +564,10 @@ pub fn emit_render_paged(
         let format = format_of(&material);
         let kind = vertex_kind(format);
         let lightmapped = is_lightmapped(format);
-        let flags = if is_sky_material(&material) { MESH_FLAG_PLAIN | MESH_FLAG_SKY } else { mesh_flags(format, lightmapped) };
+        let mut flags = if is_sky_material(&material) { MESH_FLAG_PLAIN | MESH_FLAG_SKY } else { mesh_flags(format, lightmapped) };
+        if sort_keys[si].1 == 1 {
+            flags |= MESH_FLAG_DECAL;
+        }
         let mut sort_last = 0u32;
         let (sort_model, sort_class, page) = (sort_keys[si].0, sort_keys[si].1, sort_keys[si].3);
         // Lit sorts get their own window, the shipped layout. Unlit sorts stay

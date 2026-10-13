@@ -24,9 +24,24 @@ import r5edenv  # noqa: E402
 
 TEXCONV = r5edenv.get("R5ED_TEXCONV", required=False) or "texconv"
 
-# Props that draw but never block baked light: alpha-tested foliage cards and glass.
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from iw4props import AIR_WORDS  # noqa: E402  what MW2 itself calls air, shared with collision
+
+# Stock material names for the same class: alpha-tested foliage cards and glass.
 OCCLUDER_SKIP = ["foliage_ivy", "gardenflowers", "fern", "foliage_tree", "foliage_cod5_tree", "treefacade",
                  "window"]
+
+
+def occluder_skip(props):
+    """The bake blocks light with every prop that casts shadows, so a card that
+    draws but is not solid would shade a wall as if it were concrete. The skip
+    list is what the map actually places, not a fixed set: a map whose foliage
+    the hardcoded stock names never cover would bake every card as a slab."""
+    seen = [t for t in OCCLUDER_SKIP if any(t in m.lower() for m in props)]
+    for token in AIR_WORDS:
+        if token.rstrip("_") and any(token in m.lower() for m in props):
+            seen.append(token)
+    return seen
 
 
 def srgb_decode(c):
@@ -126,6 +141,7 @@ def main():
                 else:
                     table[s21] = colour
     props = 0
+    prop_models = [o["kind"].get("model", "") for o in doc["objects"] if o["kind"].get("type") == "prop"]
     for smd in sorted(Path(args.props_src).glob("*/ref.smd")):
         colour = smd_albedo(smd, converted)
         if colour is not None:
@@ -136,10 +152,13 @@ def main():
     # tinted whole walls, and their colour came back as blotchy noise from the bake.
     lum = lambda c: round(0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2], 4)
     bake["albedo"] = {k: [lum(v)] * 3 for k, v in sorted(table.items())}
-    bake["occluder_skip"] = OCCLUDER_SKIP
+    skip = occluder_skip(prop_models)
+    bake["occluder_skip"] = skip
     (project / "map.json").write_text(json.dumps(doc, indent=1))
+    skipped = sum(1 for m in prop_models if any(s in m.lower() for s in skip))
     print(f"albedo: {len(table) - props} materials, {props} prop models; {len(missing)} materials unresolved"
           + (f" ({', '.join(missing[:5])})" if missing else ""))
+    print(f"occluder_skip: {skipped}/{len(prop_models)} props draw without blocking baked light: {skip}")
 
 
 if __name__ == "__main__":

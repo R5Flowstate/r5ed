@@ -23,6 +23,8 @@ pub struct MaterialInfo {
     pub vertex_format: VertexFormat,
     pub surface_prop: String,
     pub translucent: bool,
+    #[serde(default)]
+    pub decal: bool,
     pub nodraw: bool,
     /// Texture slot name -> texture guid.
     pub textures: std::collections::BTreeMap<String, u64>,
@@ -220,6 +222,10 @@ pub struct BakeScene {
     /// over the face they mark, water, glass and light cards.
     #[serde(default)]
     pub see_through: Vec<u32>,
+    /// Surfaces that let part of the light through, as (surface, fraction):
+    /// alpha-tested leaves and grates, whose holes the tracer cannot see.
+    #[serde(default)]
+    pub shadow_transmission: Vec<(u32, f32)>,
     /// Light probes are traced without the static props: each sits at its
     /// prop's lighting origin, inside the prop.
     #[serde(default)]

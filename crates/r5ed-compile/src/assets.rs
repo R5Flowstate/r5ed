@@ -891,6 +891,7 @@ fn to_rir_material(info: rpak::MaterialInfo) -> MaterialInfo {
         },
         surface_prop: info.surface_prop,
         translucent: info.translucent,
+        decal: info.decal,
         nodraw: info.nodraw,
         textures,
     }
@@ -1094,6 +1095,7 @@ mod tests {
             vertex_format: VertexFormat::LitBump,
             surface_prop: "concrete".into(),
             translucent: false,
+            decal: false,
             nodraw: false,
             textures: Default::default(),
         }
