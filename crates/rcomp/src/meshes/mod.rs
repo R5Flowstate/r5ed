@@ -250,12 +250,16 @@ struct Run {
     hi: Vec3,
 }
 
-/// Splits a surface's triangle list into runs a single mesh can address.
-fn split_indices(
-    indices: &[u32],
-    vertex_count: usize,
-    surface: usize,
-) -> Result<Vec<Run>, MeshError> {
+/// Edge of the grid cell a mesh is confined to. The engine picks a mesh's
+/// cubemap and culls its lights and shadows by the mesh bounds, so one mesh
+/// spanning the map lights every room with the same values; shipped meshes
+/// are about 140 units across at the median and 1200 at p90.
+pub const MESH_CELL: f32 = 1024.0;
+
+/// Splits a surface's triangle list into runs a single mesh can address; with
+/// `local`, one set of runs per grid cell the triangle centroids fall in.
+fn split_indices(indices: &[u32], positions: &[Vec3], surface: usize, local: bool) -> Result<Vec<Run>, MeshError> {
+    let vertex_count = positions.len();
     if !indices.len().is_multiple_of(3) {
         return Err(MeshError::SurfaceTriangles(surface, indices.len()));
     }
@@ -268,19 +272,29 @@ fn split_indices(
     let mut locals: Vec<u32> = Vec::new();
     let mut used: Vec<u32> = Vec::with_capacity(MAX_MESH_VERTICES.min(4096));
     let mut slot: HashMap<u32, u32> = HashMap::new();
-    for t in indices.chunks_exact(3) {
-        let full = used.len() + t.iter().filter(|i| !slot.contains_key(i)).count();
-        // One below the cap leaves room for the pad triangle `finish_run` may add.
-        if !used.is_empty() && (full > MAX_MESH_VERTICES || locals.len() / 3 >= MAX_MESH_TRIANGLES - 1) {
+    let mut cells: std::collections::BTreeMap<[i32; 3], Vec<usize>> = std::collections::BTreeMap::new();
+    for (ti, t) in indices.chunks_exact(3).enumerate() {
+        let c = if local { (positions[t[0] as usize] + positions[t[1] as usize] + positions[t[2] as usize]) / (3.0 * MESH_CELL) } else { Vec3::ZERO };
+        cells.entry([c.x.floor() as i32, c.y.floor() as i32, c.z.floor() as i32]).or_default().push(ti);
+    }
+    for tris in cells.values() {
+        if !locals.is_empty() {
             out.push(finish_run(&mut locals, &mut used, &mut slot));
         }
-        for &i in t {
-            let next = used.len() as u32;
-            let s = *slot.entry(i).or_insert_with(|| {
-                used.push(i);
-                next
-            });
-            locals.push(s);
+        for t in tris.iter().map(|&ti| &indices[ti * 3..ti * 3 + 3]) {
+            let full = used.len() + t.iter().filter(|i| !slot.contains_key(i)).count();
+            // One below the cap leaves room for the pad triangle `finish_run` may add.
+            if !used.is_empty() && (full > MAX_MESH_VERTICES || locals.len() / 3 >= MAX_MESH_TRIANGLES - 1) {
+                out.push(finish_run(&mut locals, &mut used, &mut slot));
+            }
+            for &i in t {
+                let next = used.len() as u32;
+                let s = *slot.entry(i).or_insert_with(|| {
+                    used.push(i);
+                    next
+                });
+                locals.push(s);
+            }
         }
     }
     if !locals.is_empty() {
@@ -582,7 +596,7 @@ pub fn emit_render_paged(
             if index.mesh_of_surface[fi] == u32::MAX {
                 index.mesh_of_surface[fi] = meshes.len() as u32;
             }
-            for mut run in split_indices(&s.indices, s.positions.len(), fi)? {
+            for mut run in split_indices(&s.indices, &s.positions, fi, lightmapped)? {
                 let mut keys: Vec<VertexKey> = Vec::with_capacity(run.used.len());
                 for &u in &run.used {
                     let vtx = surface_vertex(s, u as usize);

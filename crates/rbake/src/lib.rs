@@ -230,9 +230,11 @@ pub fn bake_in_layout(
     if let Some(v) = &gpu_vis {
         apply_gpu_visibility(&layout, &mut pages, v);
     }
-    let strength = if mode == BakeMode::Preview { 0.5 } else { 0.85 };
+    // Image 0 and the sky vector vary slowly across a surface, so the final
+    // filter reaches 30 texels; the normal guide keeps it off other faces.
+    let (iterations, strength) = if mode == BakeMode::Preview { (2, 0.5) } else { (4, 0.9) };
     for p in &mut pages {
-        denoise::denoise_page(scene, &layout, p, 2, strength);
+        denoise::denoise_page(scene, &layout, p, iterations, strength);
     }
     // Every texel a bilinear tap at a chart's edge can reach takes the chart's
     // own light, sky direction and sun visibility; left at zero, the padding
@@ -287,6 +289,9 @@ pub fn bake_in_layout(
     #[cfg(not(feature = "parallel"))]
     let mut maps: Vec<BakedCubemap> = positions.iter().map(render).collect::<Result<_>>()?;
     cube_meter.finish();
+    for m in maps.iter_mut() {
+        m.ambient_scale = cubemap_ambient_scale(scene, &probe_set, m.position);
+    }
     if mode != BakeMode::Preview {
         if let Some(captured) = capture::from_env()? {
             report.cubemaps_captured = apply_capture(&mut maps, &captured, scene, &probe_set);
@@ -692,25 +697,31 @@ fn apply_capture(maps: &mut [BakedCubemap], captured: &capture::CapturedSet, sce
     let Some(size) = captured.cubemaps.first().map(|c| c.face_size()) else {
         return 0;
     };
-    let sky = scene.settings.sky_color * scene.settings.sky_intensity;
     let mut used = 0;
     for m in maps.iter_mut() {
         match captured.at(m.position) {
             Some(c) => {
-                let (open, ambient) = probe_set
-                    .nearest(m.position)
-                    .and_then(|i| probe_set.probes.get(i as usize))
-                    .map(|p| {
-                        // Openness: the length of the probe's sky vector (words 0-2).
-                        let v = Vec3::new(p.sky[0] as f32, p.sky[1] as f32, p.sky[2] as f32) / probes::SKY_WORD_SCALE;
-                        (v.length().min(1.0), probes::probe_ambient_rgb(p))
-                    })
-                    .unwrap_or((1.0, Vec3::ZERO));
-                *m = c.to_baked(m.position, size, capture::ambient_scale(open, sky, ambient));
+                *m = c.to_baked(m.position, size, cubemap_ambient_scale(scene, probe_set, m.position));
                 used += 1;
             }
             None => *m = cubemap::resized(m, size),
         }
     }
     used
+}
+
+/// The 0x2B reflection normaliser at a cubemap: one over the light the nearest
+/// probe receives, the sky through its openness plus its ambient.
+fn cubemap_ambient_scale(scene: &rir::BakeScene, probe_set: &probes::Probes, position: Vec3) -> f32 {
+    let sky = scene.settings.sky_color * scene.settings.sky_intensity;
+    let (open, ambient) = probe_set
+        .nearest(position)
+        .and_then(|i| probe_set.probes.get(i as usize))
+        .map(|p| {
+            // Openness: the length of the probe's sky vector (words 0-2).
+            let v = Vec3::new(p.sky[0] as f32, p.sky[1] as f32, p.sky[2] as f32) / probes::SKY_WORD_SCALE;
+            (v.length().min(1.0), probes::probe_ambient_rgb(p))
+        })
+        .unwrap_or((1.0, Vec3::ZERO));
+    capture::ambient_scale(open, sky, ambient)
 }

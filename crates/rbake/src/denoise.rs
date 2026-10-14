@@ -13,6 +13,8 @@ use crate::light::BakedPage;
 #[derive(Clone, Copy, Debug, Default, PartialEq)]
 pub struct Sample {
     pub colour: Vec3,
+    /// The sky vector image 1 stores, filtered with the colour.
+    pub dir: Vec3,
     pub normal: Vec3,
     /// True when a triangle covered the texel.
     pub covered: bool,
@@ -25,11 +27,56 @@ pub fn denoise_chart(chart: &Chart, samples: &mut [Sample], iterations: u32, str
     if w == 0 || h == 0 || samples.len() != w * h {
         return;
     }
+    if strength <= 0.0 {
+        return;
+    }
+    clamp_speckles(w, h, samples);
     for i in 0..iterations {
-        if strength <= 0.0 {
-            return;
-        }
         filter_chart(chart, samples, strength, i);
+    }
+}
+
+/// How far above its neighbourhood's median a texel may sit before it counts
+/// as a speckle: one ray that found a sunlit patch the rest missed.
+const SPECKLE_RATIO: f32 = 2.5;
+
+/// Pulls each texel brighter than its 3x3 neighbourhood's median by more than
+/// [`SPECKLE_RATIO`] down to that bound. A filter only spreads such a texel
+/// into a blob; real light edges span more than one texel and keep their
+/// neighbours' support.
+fn clamp_speckles(w: usize, h: usize, samples: &mut [Sample]) {
+    let lum = |c: Vec3| c.dot(Vec3::new(0.2126, 0.7152, 0.0722));
+    let src = samples.to_vec();
+    let mut near: Vec<f32> = Vec::with_capacity(9);
+    for y in 0..h {
+        for x in 0..w {
+            let at = y * w + x;
+            if !src[at].covered {
+                continue;
+            }
+            near.clear();
+            for dy in -1i64..=1 {
+                for dx in -1i64..=1 {
+                    let (sx, sy) = (x as i64 + dx, y as i64 + dy);
+                    if sx < 0 || sy < 0 || sx >= w as i64 || sy >= h as i64 {
+                        continue;
+                    }
+                    let c = src[sy as usize * w + sx as usize];
+                    if c.covered {
+                        near.push(lum(c.colour));
+                    }
+                }
+            }
+            if near.len() < 5 {
+                continue;
+            }
+            near.sort_by(f32::total_cmp);
+            let bound = near[near.len() / 2] * SPECKLE_RATIO + 1e-4;
+            let l = lum(src[at].colour);
+            if l > bound {
+                samples[at].colour = src[at].colour * (bound / l);
+            }
+        }
     }
 }
 
@@ -69,8 +116,9 @@ pub fn dilate_chart(chart: &Chart, samples: &mut [Sample], radius: u32) {
 }
 
 fn filter_chart(chart: &Chart, samples: &mut [Sample], strength: f32, iteration: u32) {
+    const B: [f32; 5] = [1.0 / 16.0, 4.0 / 16.0, 6.0 / 16.0, 4.0 / 16.0, 1.0 / 16.0];
     let (w, h) = (chart.inner[0] as usize, chart.inner[1] as usize);
-    let kernel = a_trous_kernel(iteration);
+    let step = 1i64 << iteration;
     let src = samples.to_vec();
     for y in 0..h {
         for x in 0..w {
@@ -78,14 +126,11 @@ fn filter_chart(chart: &Chart, samples: &mut [Sample], strength: f32, iteration:
             if !centre.covered {
                 continue;
             }
-            let mut acc = centre.colour * kernel[0][0];
-            let mut wsum: f32 = kernel[0][0];
-            for (dy, row) in kernel.iter().enumerate() {
-                for (dx, kw) in row.iter().enumerate() {
-                    if *kw <= 0.0 || (dx == 1 && dy == 1) {
-                        continue;
-                    }
-                    let (sx, sy) = (x as i64 + dx as i64 - 1, y as i64 + dy as i64 - 1);
+            let n0 = centre.normal.normalize_or_zero();
+            let (mut acc, mut acc_dir, mut acc_len, mut wsum) = (Vec3::ZERO, Vec3::ZERO, 0.0f32, 0.0f32);
+            for (j, bj) in B.iter().enumerate() {
+                for (i, bi) in B.iter().enumerate() {
+                    let (sx, sy) = (x as i64 + (i as i64 - 2) * step, y as i64 + (j as i64 - 2) * step);
                     if sx < 0 || sy < 0 || sx >= w as i64 || sy >= h as i64 {
                         continue;
                     }
@@ -93,39 +138,25 @@ fn filter_chart(chart: &Chart, samples: &mut [Sample], strength: f32, iteration:
                     if !cand.covered {
                         continue;
                     }
-                    let wn = cand.normal.normalize_or_zero().dot(centre.normal.normalize_or_zero()).max(0.0);
-                    let wn = wn * wn;
-                    let k = *kw * wn;
+                    let wn = cand.normal.normalize_or_zero().dot(n0).max(0.0);
+                    let k = bi * bj * wn * wn;
                     acc += cand.colour * k;
+                    acc_dir += cand.dir * k;
+                    acc_len += cand.dir.length() * k;
                     wsum += k;
                 }
             }
             if wsum <= 0.0 {
                 continue;
             }
-            let filtered = acc / wsum;
-            samples[y * w + x].colour = centre.colour.mul_add(Vec3::splat(1.0 - strength), filtered * strength);
+            let t = &mut samples[y * w + x];
+            t.colour = centre.colour.lerp(acc / wsum, strength);
+            // Averaging directions shortens the vector, and its length is the
+            // sky's openness: the filtered direction keeps the filtered length.
+            let dir = acc_dir.normalize_or_zero() * (acc_len / wsum);
+            t.dir = centre.dir.lerp(dir, strength);
         }
     }
-}
-
-/// The 3x3 B-spline kernel a-trous filtering uses, widened by the step.
-pub fn a_trous_kernel(step: u32) -> [[f32; 3]; 3] {
-    let s = 1u32 << step;
-    let b = [1.0f32 / 16.0, 4.0 / 16.0, 6.0 / 16.0, 4.0 / 16.0, 1.0 / 16.0];
-    let mut k = [[0.0f32; 3]; 3];
-    for (j, row) in k.iter_mut().enumerate() {
-        for (i, slot) in row.iter_mut().enumerate() {
-            *slot = b[j] * b[i] * (s * s) as f32;
-        }
-    }
-    let total: f32 = k.iter().flatten().sum();
-    for row in k.iter_mut() {
-        for slot in row.iter_mut() {
-            *slot /= total;
-        }
-    }
-    k
 }
 
 /// Filter every chart of a page and write the result back.
@@ -154,7 +185,7 @@ pub fn denoise_page(scene: &rir::BakeScene, layout: &ChartLayout, page: &mut Bak
                     continue;
                 }
                 let Some(Some(t)) = texels.get(y * w + x) else { continue };
-                samples[y * w + x] = Sample { colour: page.colour(px, py), normal: t.normal, covered: true };
+                samples[y * w + x] = Sample { colour: page.colour(px, py), dir: page.dir[page.width as usize * py + px], normal: t.normal, covered: true };
             }
         }
         dilate_chart(chart, &mut samples, 2);
@@ -172,9 +203,14 @@ pub fn denoise_page(scene: &rir::BakeScene, layout: &ChartLayout, page: &mut Bak
                 if layout.fixed && !s.covered {
                     continue;
                 }
-                let prev = page.colour(px, py);
                 let sun = page.sun(px, py);
-                page.set(px, py, s.colour.max(prev), sun);
+                // A fixed layout's charts share rectangles: each keeps the light
+                // of whichever chart lit the texel most.
+                let colour = if layout.fixed { s.colour.max(page.colour(px, py)) } else { s.colour };
+                page.set(px, py, colour, sun);
+                if s.covered {
+                    page.set_dir(px, py, s.dir);
+                }
             }
         }
     }

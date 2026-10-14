@@ -306,6 +306,21 @@ fn probes_not_in_solid() {
     );
 }
 
+/// Probes stand on the floor at a character's height, never under it, so a
+/// crouched player's nearest probe is the one beside them.
+#[test]
+fn probes_stand_on_floors() {
+    let mut scene = common::box_room(512.0, 512.0);
+    scene.world_mins.z = -4096.0;
+    let geometry = rbake::bvh::scene_geometry(&scene).expect("geometry");
+    let hierarchy = rbake::Bvh::build(&geometry.tris).expect("hierarchy");
+    let positions = rbake::probes::place_probes(scene.world_mins, scene.world_maxs, 128.0, &[], &hierarchy)
+        .expect("probe placement");
+    assert!(positions.iter().all(|p| p.z > 0.0), "a probe was placed under the floor");
+    let low = positions.iter().filter(|p| (p.z - rbake::probes::PROBE_FLOOR_HEIGHT).abs() < 0.5).count();
+    assert!(low >= 16, "only {low} probes at character height over the floor");
+}
+
 /// The bake's probes carry a non-negative ambient term, and the prop indices
 /// all name a real probe.
 #[test]

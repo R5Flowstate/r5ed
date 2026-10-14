@@ -292,6 +292,23 @@ fn emit_render_reports_a_pool_the_index_cannot_address() {
 }
 
 #[test]
+fn emit_render_confines_each_mesh_to_one_cell() {
+    let mut s = strip(4, 0);
+    s.positions = vec![Vec3::ZERO, Vec3::X * 8.0, Vec3::Y * 8.0, Vec3::new(5000.0, 0.0, 0.0), Vec3::new(5008.0, 0.0, 0.0), Vec3::new(5000.0, 8.0, 0.0)];
+    s.normals = vec![Vec3::Z; 6];
+    s.uv0 = vec![Vec2::ZERO; 6];
+    s.uv1 = vec![Vec2::ZERO; 6];
+    s.colors = vec![[255; 4]; 6];
+    s.indices = vec![0, 1, 2, 3, 4, 5];
+    let mut bsp = Bsp::new(51, 1, 0);
+    let index = emit_render(&[s], &AssetTables::default(), &mut bsp).expect("two cells");
+    assert_eq!(index.meshes.len(), 2, "triangles a map apart do not share a mesh");
+    for m in &index.meshes {
+        assert!((m.bounds_max - m.bounds_min).max_element() <= MESH_CELL, "a mesh stays inside one cell");
+    }
+}
+
+#[test]
 fn emit_render_paged_splits_a_sort_past_the_window() {
     // A sort's meshes count from the sort's first vertex in u16, so one lit
     // material past 65536 vertices takes a second sort with the same key.
@@ -310,7 +327,7 @@ fn emit_render_paged_splits_a_sort_past_the_window() {
         assert!(m.first_vertex as usize + m.vertex_count as usize <= MAX_MESH_VERTICES, "a mesh runs past its sort window");
         covered += m.triangle_count as usize;
     }
-    assert_eq!(covered, 80000, "every triangle is in exactly one run");
+    assert!(covered >= 80000 && covered - 80000 <= index.meshes.len(), "every triangle is in exactly one run, plus at most one pad each");
     let sorts = rbsp::lumps::render::parse_material_sorts(bsp.lump(ids::MATERIAL_SORT), Version::ClientV51).expect("sorts");
     assert_eq!(sorts.len(), 2, "the material repeats across two sorts");
     assert_eq!((sorts[0].tex_data, sorts[1].tex_data), (0, 0), "both sorts sample the one material");

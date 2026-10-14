@@ -3,7 +3,7 @@ paks the game always has loaded.
 
     py gate_guidrefs.py <pak> <client|dedi>
 
-client: the resident client paks (common*, startup*, ui*) of R5ED_GAME_ROOT/paks/Win64
+client: the resident client paks (common*, startup*, ui*, mp_lobby*) of R5ED_GAME_ROOT/paks/Win64
 dedi:   every pak in R5ED_GAME_ROOT/paks/Win64_server
 The asset lists come from RSX and are cached in R5ED_SCRATCH, keyed by the paks' sizes
 and times. Walks the pak's guid-ref table, the one the engine's consistency check walks.
@@ -21,7 +21,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import r5edenv  # noqa: E402
 import rpak  # noqa: E402
 
-RESIDENT = ("common", "startup", "ui")
+RESIDENT = ("common", "startup", "ui", "mp_lobby")
 
 
 def universe(side):
@@ -32,21 +32,24 @@ def universe(side):
         paks = sorted((root / "Win64_server").glob("*.rpak"))
     if not paks:
         raise SystemExit(f"no {side} paks under {root}")
-    key = hashlib.sha1("|".join(f"{p.name}:{p.stat().st_size}:{p.stat().st_mtime_ns}" for p in paks).encode()).hexdigest()[:16]
-    out = r5edenv.scratch("guid_lists") / f"{side}_{key}.csv"
-    if not out.is_file():
-        rsx = r5edenv.get("R5ED_RSX")
-        tmp = out.with_suffix(".tmp.csv")
-        subprocess.run([rsx, "-nogui", "-nocachedb", "--list", str(tmp), "--listformat", "csv", *map(str, paks)],
-                       cwd=out.parent, capture_output=True, check=True)
-        tmp.replace(out)
+    # mp_lobby lists in its own RSX run: adding it to the common run crashes RSX.
+    groups = [[p for p in paks if not p.name.startswith("mp_lobby")], [p for p in paks if p.name.startswith("mp_lobby")]]
     known = {}
-    with open(out, newline="", encoding="utf-8", errors="replace") as f:
-        for row in csv.DictReader(f):
-            try:
-                known[int(row["guid"], 16)] = row.get("type", "")
-            except (KeyError, ValueError):
-                pass
+    for group in filter(None, groups):
+        key = hashlib.sha1("|".join(f"{p.name}:{p.stat().st_size}:{p.stat().st_mtime_ns}" for p in group).encode()).hexdigest()[:16]
+        out = r5edenv.scratch("guid_lists") / f"{side}_{key}.csv"
+        if not out.is_file():
+            rsx = r5edenv.get("R5ED_RSX")
+            tmp = out.with_suffix(".tmp.csv")
+            subprocess.run([rsx, "-nogui", "-nocachedb", "--list", str(tmp), "--listformat", "csv", *map(str, group)],
+                           cwd=out.parent, capture_output=True, check=True)
+            tmp.replace(out)
+        with open(out, newline="", encoding="utf-8", errors="replace") as f:
+            for row in csv.DictReader(f):
+                try:
+                    known[int(row["guid"], 16)] = row.get("type", "")
+                except (KeyError, ValueError):
+                    pass
     return known
 
 

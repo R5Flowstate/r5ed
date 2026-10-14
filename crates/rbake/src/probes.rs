@@ -12,7 +12,7 @@ use rbsp::lumps::lighting as lmp;
 
 use crate::bvh::Bvh;
 use crate::error::{Error, Result};
-use crate::light::{sky_light, sky_visibility, DirectContext};
+use crate::light::DirectContext;
 
 /// The engine reads every ambient coefficient as the stored value over 8192,
 /// in linear light, so 1.0 is stored as 8192 and the range tops out near 4.
@@ -132,8 +132,27 @@ impl Probes {
 /// Open space a probe needs around it, in units.
 const PROBE_CLEARANCE: f32 = 48.0;
 
-/// The probe grid: points every `spacing` inside the world bounds, plus the
-/// designer's own, culled to open space.
+/// Height above a floor the lowest probe of a column stands at: where a
+/// standing or crouched character's lighting origin is. The client lights an
+/// object from the nearest probe, so a column whose lowest probe floated a
+/// grid step up lit everyone on the floor from above the walls shading them.
+pub const PROBE_FLOOR_HEIGHT: f32 = 40.0;
+/// Probes stacked above each floor, `spacing` apart, below its ceiling.
+const PROBE_LAYERS: usize = 4;
+/// How close to a ceiling a probe may stand.
+const PROBE_CEILING_GAP: f32 = 24.0;
+/// Floors per column, top down.
+const PROBE_FLOORS_PER_COLUMN: usize = 16;
+/// Headroom a floor needs to be stood on.
+const PROBE_FLOOR_HEADROOM: f32 = 72.0;
+/// Clearance a probe near a floor needs from walls, so a corridor keeps its own.
+const PROBE_FLOOR_CLEARANCE: f32 = 32.0;
+
+/// The probes: a column every `spacing` over the world bounds, and in each
+/// column a stack above every floor a character can stand on, the lowest at
+/// [`PROBE_FLOOR_HEIGHT`]; plus the designer's own points. Culled to open
+/// space. Nothing is placed under the lowest floor of a column, where a probe
+/// sees neither sky nor sun and paints whatever samples it black.
 pub fn place_probes(
     world_mins: Vec3,
     world_maxs: Vec3,
@@ -146,35 +165,70 @@ pub fn place_probes(
     } else {
         192.0
     };
-    let mut out: Vec<Vec3> = Vec::new();
-    let size = world_maxs - world_mins;
-    let per_axis = [
-        (size.x / step).floor().clamp(0.0, 4096.0) as usize,
-        (size.y / step).floor().clamp(0.0, 4096.0) as usize,
-        (size.z / step).floor().clamp(0.0, 4096.0) as usize,
-    ];
-    let total: usize = per_axis.iter().map(|n| n.saturating_add(1)).product();
+    let size = (world_maxs - world_mins).max(Vec3::ZERO);
+    let cells = |len: f32| (len / step).ceil().clamp(1.0, 1.0e7) as usize;
+    let (nx, ny) = (cells(size.x), cells(size.y));
+    let total = nx.saturating_mul(ny);
     if total > 4_000_000 {
         return Err(Error::lighting(format!(
-            "a probe every {step} units over the world bounds needs {total} points; raise probe_spacing"
+            "a probe column every {step} units over the world bounds needs {total} columns; raise probe_spacing"
         )));
     }
-    let inset = step * 0.25;
-    for iz in 0..=per_axis[2] {
-        for iy in 0..=per_axis[1] {
-            for ix in 0..=per_axis[0] {
-                let p = world_mins + Vec3::new(ix as f32 * step, iy as f32 * step, iz as f32 * step);
-                out.push(p);
+    let column = |i: usize| -> Vec<Vec3> {
+        let x = world_mins.x + ((i % nx) as f32 + 0.5) * size.x / nx as f32;
+        let y = world_mins.y + ((i / nx) as f32 + 0.5) * size.y / ny as f32;
+        let mut out = Vec::new();
+        for (floor, ceiling) in floors_under(bvh, x, y, world_mins.z, world_maxs.z) {
+            let top = ceiling.min(world_maxs.z) - PROBE_CEILING_GAP;
+            let mut z = floor + PROBE_FLOOR_HEIGHT;
+            for layer in 0..PROBE_LAYERS {
+                if z > top {
+                    break;
+                }
+                let p = Vec3::new(x, y, z);
+                let clearance = if layer == 0 { PROBE_FLOOR_CLEARANCE } else { step };
+                if in_open_space(bvh, p, clearance) {
+                    out.push(p);
+                }
+                z += step;
             }
         }
-    }
-    let _ = inset;
-    let mut out: Vec<Vec3> = out.into_iter().filter(|p| in_open_space(bvh, *p, step)).collect();
+        out
+    };
+    #[cfg(feature = "parallel")]
+    let mut out: Vec<Vec3> = {
+        use rayon::prelude::*;
+        (0..total).into_par_iter().flat_map_iter(column).collect()
+    };
+    #[cfg(not(feature = "parallel"))]
+    let mut out: Vec<Vec3> = (0..total).flat_map(column).collect();
     // Placed points are kept as they are, as cubemap points are: the open-space
     // test is a parity count that only holds on closed geometry, and a shipped
     // map's own probe positions are already where its probes belong.
     out.extend(extra.iter().copied().filter(|p| p.is_finite()));
     Ok(out)
+}
+
+/// The surfaces a character could stand on in the column at (x, y), highest
+/// first, each with the height of whatever is above it.
+fn floors_under(bvh: &Bvh, x: f32, y: f32, bottom: f32, top: f32) -> Vec<(f32, f32)> {
+    let mut out = Vec::new();
+    let mut from = top + 1.0;
+    let mut ceiling = f32::INFINITY;
+    while from > bottom && out.len() < PROBE_FLOORS_PER_COLUMN {
+        let ray = crate::bvh::Ray::new(Vec3::new(x, y, from), Vec3::NEG_Z, 0.0, from - bottom + 1.0);
+        let Some(hit) = bvh.closest_hit(&ray) else { break };
+        let p = hit.point(&ray);
+        // Seen from straight above, a flat face is the top of whatever it
+        // bounds whichever way it is wound; a probe inside a solid is culled later.
+        let flat = bvh.triangles.get(hit.tri as usize).map(|t| t.normal().normalize_or_zero().z.abs()).unwrap_or(0.0);
+        if flat > 0.7 && ceiling - p.z >= PROBE_FLOOR_HEADROOM {
+            out.push((p.z, ceiling));
+        }
+        ceiling = p.z;
+        from = p.z - 1.0;
+    }
+    out
 }
 
 /// A point is usable when it is outside every solid and can see open sky or at
@@ -394,7 +448,6 @@ fn shade_probe(ctx: &DirectContext, bvh: &Bvh, position: Vec3, sun: Vec3, rays: 
     dirs.push(-t);
     dirs.push(b);
     dirs.push(-b);
-    let dir_rays = (rays / 2).max(8);
     let mut per_dir: Vec<Vec3> = Vec::with_capacity(dirs.len());
     for d in &dirs {
         // The client lights a probed object with the sun itself, gated by the
@@ -404,17 +457,12 @@ fn shade_probe(ctx: &DirectContext, bvh: &Bvh, position: Vec3, sun: Vec3, rays: 
         for l in ctx.lights_at(position).filter(|l| l.kind != rir::LightType::Sun) {
             acc += ctx.direct(l, position, *d, f32::MAX).colour;
         }
-        // Occluded per direction, so a roof takes the sky out of the gradient
-        // as well as the ambient; the floor stands in for bounce light.
-        let seen = sky_visibility(bvh, position, *d, dir_rays);
-        acc += sky_light(ctx.settings, *d, 0.25 + 0.75 * seen);
-        // Bounce light, as a lightmap texel takes it: without it a character
-        // read darker than the lit walls around it.
+        // The client adds the open sky from the sky words times the sky ambient
+        // light, as for a lightmap texel, so the stored ambient is bounce light:
+        // staging_mu1's sunlit probes hold 0.08 under a 0.43 sky.
         acc += crate::light::indirect(ctx, position, *d, Vec3::ONE, Vec3::ZERO, PROBE_BOUNCE_RAYS, ctx.settings.bounces);
         per_dir.push(acc);
     }
-    // sky_light already carries the sky intensity; scaling the sum by it again
-    // took a night map's probes (sky intensity 0.13) to an eighth of their light.
     let ambient = per_dir.iter().fold(Vec3::ZERO, |a, v| a + *v) / per_dir.len() as f32;
     let mut probe = Probe {
         position,

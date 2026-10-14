@@ -37,8 +37,10 @@ def g_int(v):
 staged = {g_int(f["$guid"]) for f in man["files"] if "$guid" in f}
 
 
+# mp_lobby stays loaded in a match; a map copy of its shaders replaces the real
+# ones and loses the entries RSX cannot export (null pointer, nonzero size).
 def resident(g):
-    return any(p.startswith(("common", "startup", "ui")) for p in paks_of.get(g, ()))
+    return any(p.startswith(("common", "startup", "ui", "mp_lobby")) for p in paks_of.get(g, ()))
 
 
 DECOMP = os.path.abspath(os.environ.get("H2_PAK_SCRATCH", "paks_dec"))
